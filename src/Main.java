@@ -1,10 +1,14 @@
 import models.Project;
+import models.Task;
 import models.services.ProjectService;
+import models.services.TaskService;
 
 public class Main {
     static void main(String[] args) {
-        ProjectService.createSoftwareProject("P001", "Jakes Project",  "Testing Out", 2000, 3);
-        ProjectService.createHardwareProject("P002", "Jakes Project",  "Testing Out", 2000, 3);
-        ProjectService.filterProjectsBudgetRange(1000, 1999);
+        TaskService.addTask("Design", "P11", "Pending" );
+        System.out.println(Task.getAllTask()[0].getStatus());
+        TaskService.updateTaskStatus("P11", "C");
+        System.out.println(Task.getAllTask()[0].getStatus());
+
     }
 }
