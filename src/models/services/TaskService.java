@@ -1,40 +1,40 @@
 package models.services;
 
+import models.Project;
 import models.Task;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 public class TaskService {
-    public static void addTask(String id, String name, String status){
-        new Task(id, name, status);
+
+    public static void addTask(String id, String name, String status, Project project){
+        new Task(id, name, status, project);
     }
 
-    public static void updateTaskStatus(String id, String status){
-        for (Task task : Task.getAllTask()) {
+    public static void updateTaskStatus(String id, String status, Project project){
+        for (Task task : Task.getProjectTasks(project)) {
             if (task == null){
                 continue;
             }
-            System.out.println(task.getName());
             if (Objects.equals(task.getId(), id)){
-                System.out.println(Objects.equals(task.getId(), id));
                 task.setStatus(status);
             }
         }
         System.out.println("updating ....");
     }
 
-    public static void removeTask(String id){
-        int taskIndex = getArrIndex(Task.getAllTask(), id);
-        for (int i = taskIndex; i < Task.getAllTask().length - 1; i++) {
-            Task.getAllTask()[i] = Task.getAllTask()[i + 1];
+    public static void removeTask(String id, Project project){
+        int taskIndex = getTaskIndex(Task.getProjectTasks(project), id);
+        for (int i = taskIndex; i < Task.getProjectTasks(project).length - 1; i++) {
+            Task.getProjectTasks(project)[i] = Task.getProjectTasks(project)[i + 1];
         }
-        Task.getAllTask()[Task.getAllTask().length - 1] = null;
+        Task.getProjectTasks(project)[Task.getProjectTasks(project).length - 1] = null;
     }
 
-    public static int getArrIndex(Task[] task, String id){
+    private static int getTaskIndex(Task[] task, String taskId){
+        // Find the index of a task based on its ID
         for (int i = 0; i < task.length; i++){
-            if (task[i] != null && task[i].getId().equals(id)){
+            if (task[i] != null && task[i].getId().equals(taskId)){
                 return i;
             }
         }
