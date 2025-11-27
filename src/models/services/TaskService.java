@@ -6,8 +6,8 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class TaskService {
-    public static void addTask(String name, String id, String status){
-        new Task(name, id, status);
+    public static void addTask(String id, String name, String status){
+        new Task(id, name, status);
     }
 
     public static void updateTaskStatus(String id, String status){
@@ -15,10 +15,13 @@ public class TaskService {
             if (task == null){
                 continue;
             }
+            System.out.println(task.getName());
             if (Objects.equals(task.getId(), id)){
+                System.out.println(Objects.equals(task.getId(), id));
                 task.setStatus(status);
             }
         }
+        System.out.println("updating ....");
     }
 
     public static void removeTask(String id){
