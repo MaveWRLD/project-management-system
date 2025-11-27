@@ -1,4 +1,5 @@
 package models.interfaces;
 
-public class Completable {
+public interface Completable {
+    boolean isCompleted();
 }

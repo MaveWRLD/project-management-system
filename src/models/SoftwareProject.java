@@ -7,6 +7,7 @@ public class SoftwareProject extends Project {
 
     public SoftwareProject(String id, String name, String description, int budget, int teamSize) {
         super(id, name, description, budget, teamSize);
+        setType("Software Project");
     }
 
     @Override

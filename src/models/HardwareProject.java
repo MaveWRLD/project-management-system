@@ -6,6 +6,7 @@ import java.text.NumberFormat;
 public class HardwareProject extends Project {
     public HardwareProject(String id, String name, String description, int budget, int teamSize) {
         super(id, name, description, budget, teamSize);
+        setType("Hardware Project");
     }
 
     /*public void addTask(String taskId, String taskName, String status ){

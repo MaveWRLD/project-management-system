@@ -4,23 +4,20 @@ public abstract class Project {
 
     private String id;
     private String name;
-
-    public void setType(String type) {
-
-        this.type = type;
-    }
-
     private String type;
     private String description;
     private int budget;
     private int teamSize;
+    private Task[] tasks;
+    private static int count = 0;
+    private static Project[] allProjects = new Project[5];
+
+//    private int numberOfTask = Task.getAllTask().length;
 
     public static Project[] getAllProjects() {
         return allProjects;
     }
 
-    private static Project[] allProjects = new Project[5];
-    private static int count = 0;
 
     public Project(String id, String name, String description, int budget, int teamSize) {
         this.id = id;
@@ -28,8 +25,8 @@ public abstract class Project {
         this.description = description;
         this.budget = budget;
         this.teamSize = teamSize;
+        // this.tasks = new Task[numberOfTask];
         allProjects[count++] = this;
-
     }
 
 
@@ -44,6 +41,9 @@ public abstract class Project {
         }
     }
 
+    public void addTask(Task task){
+        tasks[numberOfTask] = task;
+    }
 
     public String getId() {
         return id;
@@ -67,5 +67,9 @@ public abstract class Project {
 
     public int getTeamSize() {
         return teamSize;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

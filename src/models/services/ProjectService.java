@@ -5,14 +5,15 @@ import models.Project;
 import models.SoftwareProject;
 
 public class ProjectService {
-    public static void createSoftwareProject(String id, String name, String description, int budget, int teamSize){
+
+    public void createSoftwareProject(String id, String name, String description, int budget, int teamSize){
         new SoftwareProject(id, name, description, budget, teamSize);
     }
-    public static void createHardwareProject(String id, String name, String description, int budget, int teamSize){
+    public void createHardwareProject(String id, String name, String description, int budget, int teamSize){
         new HardwareProject(id, name, description, budget, teamSize);
     }
 
-    public static void filterSoftwareProject(){
+    public void filterSoftwareProject(){
         for (Project project : Project.getAllProjects()){
             if (project instanceof SoftwareProject){
                 System.out.println(project.getId() + " | " + project.getName() + " | " + project.getBudget() + " | " + project.getTeamSize())
@@ -21,7 +22,7 @@ public class ProjectService {
         }
     }
 
-    public static void filterHardwareProject(){
+    public void filterHardwareProject(){
         for (Project project : Project.getAllProjects()){
             if (project instanceof HardwareProject){
                 System.out.println(project.getId() + " | " + project.getName() + " | " + project.getBudget() + " | " + project.getTeamSize());
@@ -29,7 +30,7 @@ public class ProjectService {
         }
     }
 
-    public static void filterProjectsBudgetRange(int minBudget, int maxBudget){
+    public void filterProjectsBudgetRange(int minBudget, int maxBudget){
         var found = false;
         for (Project project : Project.getAllProjects()){
             if (project == null){
