@@ -1,40 +1,65 @@
 package models.services;
 
+import models.HardwareProject;
 import models.Project;
+import models.SoftwareProject;
 import models.Task;
 
-import java.util.Objects;
 
 public class TaskService {
 
-    //Task task = new Task();
-    public void addTask(String id, String name, String status, Project project){
+
+    public void displayTask(SoftwareProject softwareProject){
+        System.out.println("ID  | NAME | Status ");
+        for (Task task : softwareProject.getTasks()) {
+            if (task != null){
+                System.out.println(task.getId() + " | " + task.getName() + " | " + task.getStatus());
+            }
+        }
+        
+    }
+
+    public void createTask(String id, String name, String status, Project project){
         new Task(id, name, status);
     }
 
-    public void updateTaskStatus(String status){
-
+    public void updateTaskStatus(String status, String taskID, SoftwareProject project){
+        for (int i = 0; i < project.getTasks().length; i++){
+                if (project.getTasks()[i] == null){
+                    continue;
+                }
+                if (project.getTasks()[i].getId().equals(taskID)){
+                    project.getTasks()[i].setStatus(status);
+                }
+        }
     }
 
-//    public void updateTaskStatus(String taskID, String status, Project project){
-//        for (Task task : getProjectTasks(project)) {
-//            if (task == null){
-//                continue;
-//            }
-//            if (Objects.equals(task.getId(), taskID)){
-//                task.setStatus(status);
-//            }
-//        }
-//        System.out.println("updating ....");
-//    }
+    public void updateTaskStatus(String status, String taskID, HardwareProject project){
+        for (int i = 0; i < project.getTasks().length; i++){
+                if (project.getTasks()[i] == null){
+                    continue;
+                }
+                if (project.getTasks()[i].getId().equals(taskID)){
+                    project.getTasks()[i].setStatus(status);
+                }
+        }
+    }
 
-//    public void removeTask(String id, Project project){
-//        int taskIndex = getTaskIndex(Task.getProjectTasks(project), id);
-//        for (int i = taskIndex; i < Task.getProjectTasks(project).length - 1; i++) {
-//            Task.getProjectTasks(project)[i] = Task.getProjectTasks(project)[i + 1];
-//        }
-//        Task.getProjectTasks(project)[Task.getProjectTasks(project).length - 1] = null;
-//    }
+    public void removeTask(String taskId, SoftwareProject project){
+        int taskIndex = getTaskIndex(project.getTasks(), taskId);
+        for (int i = taskIndex; i < project.getTasks().length; i++) {
+            project.getTasks()[i] = project.getTasks()[i + 1];
+        }
+        project.getTasks()[project.getTasks().length - 1] = null;
+    }
+
+    public void removeTask(String taskId, HardwareProject project){
+        int taskIndex = getTaskIndex(project.getTasks(), taskId);
+        for (int i = taskIndex; i < project.getTasks().length; i++) {
+            project.getTasks()[i] = project.getTasks()[i + 1];
+        }
+        project.getTasks()[project.getTasks().length - 1] = null;
+    }
 
     private int getTaskIndex(Task[] task, String taskId){
         // Find the index of a task based on its ID
