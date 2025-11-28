@@ -6,24 +6,7 @@ import models.SoftwareProject;
 import models.Task;
 
 public class ProjectService {
-
-    
-
-    // public void createProject(String id, String name, String description, int budget, int teamSize){
-    //     return new HardwareProject(id, name, description, budget, teamSize);
-    // }
-
-    private Project[] projects = Project.getAllProjects();
-
-    public void displayTask(HardwareProject hardwareProject){
-        System.out.println("ID  | NAME | Status ");
-        for (Task task : hardwareProject.getTasks()) {
-            if (task != null){
-                System.out.println(task.getId() + " | " + task.getName() + " | " + task.getStatus());
-            }
-        }
-    }
-
+    private final Project[] projects = Project.getAllProjects();
 
     public void filterProject(String projectType){
         // Filter Project based on project type

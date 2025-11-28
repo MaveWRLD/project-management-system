@@ -1,54 +1,31 @@
 package models;
 
-public class Task {
-    private String id;
+
+import models.interfaces.Completable;
+import models.utils.IDGenerator;
+import models.utils.Status;
+
+public class Task implements Completable {
+    public void setTaskID(String taskID) {
+        this.taskID = taskID;
+    }
+
+    private String taskID;
     private String name;
-    private String status;
-    // private Project project;
+    private Status status;
 
+    private IDGenerator idGenerator= new IDGenerator();
 
-
-    // private Task[] allTask = new Task[25];
-    // private int count = 0;
-
-    public Task(String id, String name, String status) {
-        this.id = id;
-        this.name = name;
-        this.status = status;
-       //  this.project = project;
-        // allTask[count++] = this;
+    public Task createTask(String name, Status status){
+        Task task = new Task();
+        setTaskID(idGenerator.setID('T'));
+        setName(name);
+        setStatus(status);
+        return task;
     }
 
-//    public static Task[] getProjectTasks(Project project) {
-//        Task[] projectTasks = new Task[25];
-//        for (int i = 0; i < allTask.length; i++){
-//            if (allTask[i] == null){
-//                continue;
-//            }
-//            if (allTask[i].getProject() == null){
-//                continue;
-//            }
-//            if (allTask[i].getProject().equals(project)){
-//                projectTasks[i] = allTask[i];
-//            }
-//        }
-//        return projectTasks;
-//    }
-
-//    public Task[] getAllTask() {
-//        return allTask;
-//    }
-
-//    public void setAllTask(Task[] allTask) {
-//        allTask = allTask;
-//    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public String getTaskID() {
+        return taskID;
     }
 
     public String getName() {
@@ -59,25 +36,17 @@ public class Task {
         this.name = name;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
-//    public static int getCount() {
-//        return count;
-//    }
-//
-//    public static void setCount(int count) {
-//        Task.count = count;
-//    }
-
-//    public Project getProject() {
-//        return project;
-//    }
-
-
+    @Override
+    public boolean isCompleted() {
+        return status == Status.COMPLETED;
+    }
 }
+

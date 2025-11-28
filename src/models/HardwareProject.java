@@ -1,33 +1,37 @@
 package models;
 
+import models.utils.Status;
+
 import java.text.NumberFormat;
 
 public class HardwareProject extends Project {
-    private Task[] tasks = new Task[5];
-
-
-    public HardwareProject(String id, String name, String description, int budget, int teamSize) {
-        super(id, name, "Hardware", description, budget, teamSize);
+    public HardwareProject(String name, String description, int budget, int teamSize) {
+        super(name, "Hardware", description, budget, teamSize);
     }
 
+    @Override
+    public void displayTask(){
+        System.out.println("ID  | NAME | Status ");
+        for (Task task : getTasks()) {
+            if (task != null){
+                System.out.println(task.getTaskID() + " | " + task.getName() + " | " + task.getStatus());
+            }
+        }
 
-    public void addTask(Task task) {
-        int elementsSize = 0;
-        for (int i = 0; i < tasks.length; i++){
-            if (tasks[i] == null){
+    }
+
+    @Override
+    public void updateTaskStatus(Status status, String taskID){
+        for (int i = 0; i < getTasks().length; i++){
+            if (getTasks()[i] == null){
                 continue;
             }
-            elementsSize++;
-        }
-        if (tasks.length == elementsSize){
-            Task[] newTasks = new Task[elementsSize * 2];
-            for (int i = 0; i < newTasks.length; i++){
-            newTasks[i] = tasks[i];
-            tasks = newTasks;
+            if (getTasks()[i].getTaskID().equals(taskID)){
+                getTasks()[i].setStatus(status);
             }
         }
-        tasks[elementsSize] = task;  
     }
+
 
     @Override
     public void getProjectDetails() {
@@ -37,8 +41,12 @@ public class HardwareProject extends Project {
         System.out.println("Project Budget: " + NumberFormat.getCurrencyInstance().format(getBudget()));
     }
 
-
-    public Task[] getTasks() {
-        return tasks;
+    @Override
+    public void removeTask(String taskId) {
+        int taskIndex = getTaskIndex(taskId);
+        for (int i = taskIndex; i < getTasks().length - 1; i++) {
+            getTasks()[i] = getTasks()[i + 1];
+        }
+        getTasks()[getTasks().length - 1] = null;
     }
 }

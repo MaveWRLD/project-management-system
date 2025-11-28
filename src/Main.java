@@ -1,21 +1,31 @@
 import models.HardwareProject;
 import models.Project;
 import models.SoftwareProject;
+import models.utils.Status;
 import models.Task;
 import models.services.ProjectService;
 import models.services.TaskService;
 
 public class Main {
     public static void main(String[] args) {
-        ProjectService projectService = new ProjectService();
-        HardwareProject hardwareProject = new HardwareProject("H1", "Harwarepro", "Difficult", 233, 4);
-        //SoftwareProject softwareProject = new SoftwareProject("S1", "Harwarepro", "Difficult", 233, 4);
-        Task taskSoftware = new Task("T1", "work", "Started");
-        Task taskHardware = new Task("H1", "work", "Started");
+        TaskService taskService = new TaskService();
+        HardwareProject hardwareProject = new HardwareProject("Hardwarepro", "Difficult", 233, 4);
+        SoftwareProject softwareProject = new SoftwareProject("Softwarepro", "Difficult", 233, 4);
+        softwareProject.addTask("Java Basics", Status.COMPLETED);
+        softwareProject.addTask("Java Basics", Status.COMPLETED);
+        softwareProject.addTask("Java Basics", Status.PENDING);
 
-        hardwareProject.addTask(taskHardware);
-       // softwareProject.addTask(taskSoftware);
-        projectService.displayTask(hardwareProject);
+        //softwareProject.addTask("Java Basics", Status.PENDING);
+
+
+        taskService.isCompleted(softwareProject);
+        float percentage = taskService.calculateCompletionPercentage(softwareProject);
+        System.out.println(percentage);
+        Project.displayProjects();
+
+
+
+
         // System.out.println(Task.getProjectTasks(softwareProject)[0].getName());
     }
 }
