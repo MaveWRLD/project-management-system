@@ -6,10 +6,6 @@ import models.utils.IDGenerator;
 import models.utils.Status;
 
 public class Task implements Completable {
-    public void setTaskID(String taskID) {
-        this.taskID = taskID;
-    }
-
     private String taskID;
     private String name;
     private Status status;
@@ -34,6 +30,10 @@ public class Task implements Completable {
         this.status = status;
     }
 
+    public void setTaskID(String taskID) {
+        this.taskID = taskID;
+    }
+    
     @Override
     public boolean isCompleted() {
         return status == Status.COMPLETED;

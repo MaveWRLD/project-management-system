@@ -1,4 +1,71 @@
 package models.services;
 
+import models.Project;
+import models.StatusReport;
+import models.Task;
+
 public class ReportService {
+
+    public StatusReport[] generateReport(Project[] projects){
+        StatusReport[] reports = new StatusReport[100];
+        int i = 0;
+        for (Project project : projects){
+            if (project == null){
+                continue;
+            }
+            reports[i] = new StatusReport(
+                project.getId(), 
+                project.getName(),
+                totalTask(project),
+                completedTasks(project),
+                completionPercentage(project)
+            );
+            ++i;
+        }
+        return reports;
+    }
+
+    private int totalTask(Project project){
+        int totalTask = 0;
+        for (Task task : project.getTasks()){
+        if (task == null){
+            continue;
+            }
+            ++totalTask;
+        }
+        return  totalTask;
+    }
+
+    private int completedTasks(Project project){
+        int completed = 0;
+        for (Task task : project.getTasks()){
+            if (task == null){
+                continue;
+            }
+            if (task.isCompleted()){
+                ++completed;
+            }
+        }
+        return completed;
+    }
+
+    public float completionPercentage(Project project){
+        float completed = completedTasks(project);
+        float totalTasks = totalTask(project);
+        return (completed / totalTasks) * 100;
+    }
+
+    public float completionAverage(Project[] projects){
+        float totalPercentages = 0;
+        float allCompletedTasks = 0;
+        for (Project project : projects){
+            if (project == null){
+                continue;
+            }
+            ++totalPercentages;
+            allCompletedTasks += completionPercentage(project);
+        }
+        return allCompletedTasks / totalPercentages;
+    }
+        
 }

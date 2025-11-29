@@ -13,10 +13,8 @@ public class ProjectService {
                 ;
             }
         }
-        
     }
     
-
     public void filterProject(int minBudget, int maxBudget){
         // Filter Project based on budget range
         var found = false;
@@ -34,7 +32,4 @@ public class ProjectService {
         }
     }
 
-    public Project[] getProjects() {
-        return projects;
-    }
 }
