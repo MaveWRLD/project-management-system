@@ -14,16 +14,6 @@ public class Task implements Completable {
     private String name;
     private Status status;
 
-    private IDGenerator idGenerator= new IDGenerator();
-
-    public Task createTask(String name, Status status){
-        Task task = new Task();
-        setTaskID(idGenerator.setID('T'));
-        setName(name);
-        setStatus(status);
-        return task;
-    }
-
     public String getTaskID() {
         return taskID;
     }

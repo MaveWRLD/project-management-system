@@ -1,9 +1,6 @@
 package models.services;
 
-import models.HardwareProject;
 import models.Project;
-import models.SoftwareProject;
-import models.Task;
 
 public class ProjectService {
     private final Project[] projects = Project.getAllProjects();
@@ -16,7 +13,9 @@ public class ProjectService {
                 ;
             }
         }
+        
     }
+    
 
     public void filterProject(int minBudget, int maxBudget){
         // Filter Project based on budget range
@@ -33,5 +32,9 @@ public class ProjectService {
         if (!found){
             System.out.println("No projects found");
         }
+    }
+
+    public Project[] getProjects() {
+        return projects;
     }
 }
