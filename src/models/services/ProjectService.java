@@ -1,35 +1,54 @@
 package models.services;
 
 import models.Project;
+import models.utils.Status;
 
 public class ProjectService {
     private final Project[] projects = Project.getAllProjects();
 
-    public void filterProject(String projectType){
-        // Filter Project based on project type
+    public Project[] filterProject(String projectType){
+        Project[] filteredProjects = new Project[projects.length];
+        int i = 0;
         for (Project project : projects){
+            if (project == null){
+                continue;
+            }
             if (project.getType().equals(projectType)){
-                System.out.println(project.getId() + " | " + project.getName() + " | " + project.getBudget() + " | " + project.getTeamSize())
-                ;
+               filteredProjects[i] = project;
+               i++;
             }
         }
+        return filteredProjects;
     }
+
     
-    public void filterProject(int minBudget, int maxBudget){
+    public Project[] filterProject(int minBudget, int maxBudget){
         // Filter Project based on budget range
-        var found = false;
+        Project[] filteredProjects = new Project[projects.length];
+        int i = 0;
         for (Project project : projects){
             if (project == null){
                 continue;
             }
             if (project.getBudget() > minBudget && project.getBudget() < maxBudget){
-                System.out.println(project.getId() + " | " + project.getName() + " | " + project.getBudget() + " | " + project.getTeamSize());
-                found = true;
+                filteredProjects[i] = project;
+                i++;
             }
         }
-        if (!found){
-            System.out.println("No projects found");
-        }
+        return filteredProjects;
     }
 
+    public Project filterProjectBYId(String projectID){
+        Project filteredProjects = null;
+        for (Project project : projects){
+            if (project == null){
+                continue;
+            }
+            if (project.getId().equals(projectID)){
+                filteredProjects = project;
+                break;
+            }
+        }
+        return filteredProjects;
+    }
 }

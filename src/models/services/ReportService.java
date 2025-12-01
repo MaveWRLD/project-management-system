@@ -14,29 +14,29 @@ public class ReportService {
                 continue;
             }
             reports[i] = new StatusReport(
-                project.getId(), 
-                project.getName(),
-                totalTask(project),
-                completedTasks(project),
-                completionPercentage(project)
+                    project.getId(),
+                    project.getName(),
+                    totalTask(project),
+                    completedTasks(project),
+                    completionPercentage(project)
             );
             ++i;
         }
         return reports;
     }
 
-    private int totalTask(Project project){
+    public int totalTask(Project project){
         int totalTask = 0;
         for (Task task : project.getTasks()){
-        if (task == null){
-            continue;
+            if (task == null){
+                continue;
             }
             ++totalTask;
         }
         return  totalTask;
     }
 
-    private int completedTasks(Project project){
+    public int completedTasks(Project project){
         int completed = 0;
         for (Task task : project.getTasks()){
             if (task == null){
@@ -52,6 +52,8 @@ public class ReportService {
     public float completionPercentage(Project project){
         float completed = completedTasks(project);
         float totalTasks = totalTask(project);
+        if (completed == 0 || totalTasks == 0)
+            return 0;
         return (completed / totalTasks) * 100;
     }
 
@@ -67,5 +69,5 @@ public class ReportService {
         }
         return allCompletedTasks / totalPercentages;
     }
-        
+
 }

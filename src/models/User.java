@@ -18,5 +18,9 @@ public abstract class User {
         this.role = role;
     }
 
+    public void login(){
+
+    }
+
     //public abstract roleBehavior();
 }

@@ -70,6 +70,8 @@ public abstract class Project {
     }
 
     public Task[] getTasks() {
-        return tasks;
+        if (tasks != null)
+            return tasks;
+        return new Task[5];
     }
 }
