@@ -1,13 +1,13 @@
 package models.utils;
 
 
-import models.Project;
-import models.StatusReport;
-import models.Task;
-import models.User;
+import models.*;
 import models.services.ProjectService;
 import models.services.ReportService;
 import models.services.TaskService;
+import models.services.UserService;
+
+import java.text.NumberFormat;
 import java.util.Scanner;
 
 public class ConsoleMenu {
@@ -20,13 +20,11 @@ public class ConsoleMenu {
     private static final Project[] projects = Project.getAllProjects();
     private static ProjectService projectService = new ProjectService();
     private static TaskService taskService = new TaskService();
-    private static User currentUser = null; // Track logged-in user (start with default or login)
+    private static UserService userService = new UserService();
+    private static User currentUser =  new AdminUser("Jacob Quaye", "kofimave@gmail.com" );
     private static ReportService statusReport = new ReportService();
 
 
-    /**
-     * Main application loop.
-     */
     public static void run() {
         while (true) {
             displayMainMenu();
@@ -42,7 +40,7 @@ public class ConsoleMenu {
                     handleViewStatusReports();
                     break;
                 case 4:
-                    //currentUser = UserService.switchUser(); // Assume switchUser handles login/switch
+                    currentUser = userService.switchUser(currentUser);
                     break;
                 case 5:
                     System.out.println("Exiting...");
@@ -52,10 +50,8 @@ public class ConsoleMenu {
     }
 
     private static void displayMainMenu() {
-        System.out.println("\n-----------------------------");
-        System.out.println("JAVA PROJECT MANAGEMENT SYSTEM");
-        System.out.println("-----------------------------");
-        //System.out.println("Current User: " + currentUser.getName() + " (" + currentUser.getRole() + ")");
+        printHeader("JAVA PROJECT MANAGEMENT SYSTEM");
+        System.out.println("Current User: " + currentUser.getName() + " (" + currentUser.getRole() + ")");
         System.out.println("1. Manage Projects");
         System.out.println("2. Manage Tasks");
         System.out.println("3. View Status Reports");
@@ -65,9 +61,7 @@ public class ConsoleMenu {
 
     private static void handleManageProjects() {
         while (true) {
-            System.out.println("\n-----------------------------");
-            System.out.println("PROJECT CATALOG");
-            System.out.println("-----------------------------");
+            printHeader("PROJECT CATALOG");
             System.out.println("Filter Options:");
             System.out.println("1. View All Projects");
             System.out.println("2. Software Projects Only");
@@ -121,9 +115,7 @@ public class ConsoleMenu {
 
     private static void displayProjectDetails(Project project) {
         while (true) {
-            System.out.println("\n-----------------------------");
-            System.out.println("PROJECT DETAILS: " + project.getId());
-            System.out.println("-----------------------------");
+            printHeader("PROJECT DETAILS: ", project.getId());
             System.out.println("Project Name: " + project.getName());
             System.out.println("Type: " + project.getType());
             System.out.println("Team Size: " + project.getTeamSize());
@@ -143,7 +135,7 @@ public class ConsoleMenu {
             }
 
             double completion = statusReport.completionPercentage(project);
-            System.out.println("Completion Rate: " + String.format("%.0f%%", completion * 100));
+            System.out.println("Completion Rate: " + String.format("%.0f%%", completion));
 
             System.out.println("Options:");
             System.out.println("1. Add New Task");
@@ -169,9 +161,7 @@ public class ConsoleMenu {
     }
 
     private static void addNewTask(String projectId) {
-        System.out.println("\n-----------------------------");
-        System.out.println("ADD NEW TASK");
-        System.out.println("-----------------------------");
+        printHeader(("ADD NEW TASK"));
         String name = ValidationUtils.getValidString("Enter task name: ");
         Status status = ValidationUtils.getValidStatus("Enter initial status (Pending/In Progress/Completed): ");
         Task newTask = taskService.addTask(projectId, name, status);
@@ -195,7 +185,7 @@ public class ConsoleMenu {
 
     private static void removeTask(String projectID) {
         String taskId = ValidationUtils.getValidId("Enter Task ID to remove: ", 'T');
-        boolean success = taskService.removeTask(projectID, taskId);
+        boolean success = taskService.removeTask(currentUser, projectID, taskId);
         if (success) {
             System.out.println("Task removed successfully.");
         } else {
@@ -220,24 +210,48 @@ public class ConsoleMenu {
     private static void handleViewStatusReports() {
         Project[] projects = Project.getAllProjects();
         StatusReport[] reports = statusReport.generateReport(projects);
-        System.out.println("\n-----------------------------");
-        System.out.println("PROJECT STATUS REPORT");
-        System.out.println("-----------------------------");
-        System.out.printf("%-10s | %-20s | %-6s | %-9s | %-10s\n", "Project ID", "Project Name", "Tasks", "Completed", "Progress (%)");
+        printHeader("PROJECT STATUS REPORT");
+        System.out.printf("%-10s | %-20s | %-6s | %-9s | %-10s\n", "Project ID", "Project Name", "Tasks", "Completed", "Progress(%)");
         System.out.println("---------------------------------------------------------------");
-        double totalCompletion = 0;
-        int projectCount = 0;
         for (StatusReport report : reports) {
             if (report != null) {
-                int totalTasks = report.getTotalTask();
-                int completedTasks = report.getCompletedTasks();
-                double progress = report.getCompletionPecentage();
-                System.out.printf("%-10s | %-20s | %-6d | %-9d | %-10.0f%%\n", report.getProjectID(), report.getProjectName(), totalTasks, completedTasks, progress);
-                totalCompletion += progress;
-                projectCount++;
+                System.out.printf("%-10s | %-20s | %-6d | %-9d | %1.0f%%\n",
+                        report.getProjectID(),
+                        report.getProjectName(),
+                        report.getTotalTask(),
+                        report.getCompletedTasks(),
+                        report.getCompletionPecentage());
             }
         }
-        double avgCompletion = (projectCount > 0) ? totalCompletion / projectCount : 0;
-        System.out.println("Average Completion: " + String.format("%.1f%%", avgCompletion));
+        double avgCompletion = statusReport.completionAverage(projects);
+        System.out.println("Average Completion: " + String.format("%.2f%%", avgCompletion));
+    }
+
+    public static void printHeader(String text, String text2) {
+        int padding = 2;
+        int width = text.length() + text2.length() + padding * 2;
+
+        System.out.printf("%s%s%s%n", "\u2554", "\u2550".repeat(width), "\u2557");
+
+        int left = (width - text.length()) / 2;
+        int right = width - text.length() - left;
+
+        System.out.printf("%s%s%s%s%s%n", "\u2551", " ".repeat(left), text, " ".repeat(right), "\u2551");
+
+        System.out.printf("%s%s%s%n", "\u255A", "\u2550".repeat(width), "\u255D");
+    }
+
+    public static void printHeader(String text) {
+        int padding = 2;
+        int width = text.length() + padding * 2;
+
+        System.out.printf("%s%s%s%n", "\u2554", "\u2550".repeat(width), "\u2557");
+
+        int left = (width - text.length()) / 2;
+        int right = width - text.length() - left;
+
+        System.out.printf("%s%s%s%s%s%n", "\u2551", " ".repeat(left), text, " ".repeat(right), "\u2551");
+
+        System.out.printf("%s%s%s%n", "\u255A", "\u2550".repeat(width), "\u255D");
     }
 }

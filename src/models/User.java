@@ -11,7 +11,7 @@ public abstract class User {
 
     private IDGenerator idGenerator = new IDGenerator();
 
-    public User(int id, String name, String email, String role) {
+    public User(String name, String email, String role) {
         this.id = idGenerator.setID('U');
         this.name = name;
         this.email = email;
@@ -20,6 +20,26 @@ public abstract class User {
 
     public void login(){
 
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public IDGenerator getIdGenerator() {
+        return idGenerator;
     }
 
     //public abstract roleBehavior();

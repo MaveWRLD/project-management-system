@@ -57,14 +57,19 @@ public class TaskService {
         return true;
     }
 
-    public boolean removeTask(String projectID, String taskId){
-        Project project = projectService.filterProjectBYId(projectID);
-        int taskIndex = getTaskIndex(projectID, taskId);
-        for (int i = taskIndex; i < project.getTasks().length - 1; i++) {
-            project.getTasks()[i] = project.getTasks()[i + 1];
+    public boolean removeTask(User user, String projectID, String taskId){
+        if (user != null && user.getRole().equals("Admin")){
+            System.out.println("Testing User");
+            Project project = projectService.filterProjectBYId(projectID);
+            int taskIndex = getTaskIndex(projectID, taskId);
+            for (int i = taskIndex; i < project.getTasks().length - 1; i++) {
+                project.getTasks()[i] = project.getTasks()[i + 1];
+            }
+            project.getTasks()[project.getTasks().length - 1] = null;
+            return true;
         }
-        project.getTasks()[project.getTasks().length - 1] = null;
-        return true;
+        System.out.println("You are not allow to perform this action");
+        return false;
     }
 
     private int getTaskIndex(String projectID, String taskId){

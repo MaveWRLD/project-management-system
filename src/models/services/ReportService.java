@@ -61,6 +61,7 @@ public class ReportService {
         float totalPercentages = 0;
         float allCompletedTasks = 0;
         for (Project project : projects){
+            int i = 0;
             if (project == null){
                 continue;
             }
