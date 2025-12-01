@@ -13,13 +13,10 @@ public class ReportService {
             if (project == null){
                 continue;
             }
-            reports[i] = new StatusReport(
-                    project.getId(),
-                    project.getName(),
-                    totalTask(project),
-                    completedTasks(project),
-                    completionPercentage(project)
-            );
+            for (Task task : project.getTasks())
+                if (task != null){
+                    reports[i] = new StatusReport(project.getId(), project.getName(), totalTask(project), completedTasks(project), completionPercentage(project));
+                }
             ++i;
         }
         return reports;
@@ -57,18 +54,23 @@ public class ReportService {
         return (completed / totalTasks) * 100;
     }
 
-    public float completionAverage(Project[] projects){
-        float totalPercentages = 0;
-        float allCompletedTasks = 0;
-        for (Project project : projects){
-            int i = 0;
-            if (project == null){
-                continue;
-            }
-            ++totalPercentages;
-            allCompletedTasks += completionPercentage(project);
+    public float completionAverage(Project[] projects) {
+        float totalPercentageCount = 0;
+        float sumOfPercentages = 0;
+        int i = 0;
+        for (Project project : projects) {
+            if (project == null) continue;
+            for (Task task : project.getTasks())
+                if (task != null){
+                float percent = completionPercentage(project);
+                    sumOfPercentages += percent;
+                    totalPercentageCount++;
+                }
         }
-        return allCompletedTasks / totalPercentages;
+
+        if (totalPercentageCount == 0) return 0;
+
+        return sumOfPercentages / totalPercentageCount;
     }
 
 }
