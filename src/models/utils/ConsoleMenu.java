@@ -62,8 +62,8 @@ public class ConsoleMenu {
     private static void handleManageProjects() {
         while (true) {
             printHeader("PROJECT CATALOG");
-            System.out.println("Filter Options:");
-            System.out.println("1. View All Projects");
+            System.out.println("Filter Options: ");
+            System.out.println("1. View All Projects " +"(" + Project.projectLenght() + ")");
             System.out.println("2. Software Projects Only");
             System.out.println("3. Hardware Projects Only");
             System.out.println("4. Search by Budget Range");

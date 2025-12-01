@@ -21,6 +21,16 @@ public abstract class Project {
         return allProjects;
     }
 
+    public static int projectLenght(){
+        int i = 0;
+        for (Project project : allProjects){
+            if (project != null){
+                i++;
+            }
+        }
+        return i;
+    }
+
     public Project(String name, String type, String description, int budget, int teamSize) {
         this.id = idGenerator.setID('P');
         this.name = name;
