@@ -11,13 +11,9 @@ import java.text.NumberFormat;
 import java.util.Scanner;
 
 public class ConsoleMenu {
-
-    private final String software = "Software";
-    private final String hardware = "Hardware";
-
     //private static ValidationUtils = new ValidationUtils();
     private static final Scanner scanner = new Scanner(System.in);
-    private static final Project[] projects = Project.getAllProjects();
+    //private static final Project[] projects = Project.getAllProjects();
     private static ProjectService projectService = new ProjectService();
     private static TaskService taskService = new TaskService();
     private static UserService userService = new UserService();
@@ -64,23 +60,30 @@ public class ConsoleMenu {
             printHeader("PROJECT CATALOG");
             System.out.println("Filter Options: ");
             System.out.println("1. View All Projects " +"(" + Project.projectLenght() + ")");
-            System.out.println("2. Software Projects Only");
-            System.out.println("3. Hardware Projects Only");
-            System.out.println("4. Search by Budget Range");
+            System.out.println("2. Add Project");
+            System.out.println("3. Software Projects Only");
+            System.out.println("4. Hardware Projects Only");
+            System.out.println("5. Search by Budget Range");
             int filterChoice = ValidationUtils.getValidInt("Enter Filter choice: ", 1, 4);
 
             Project[] filteredProjects = null;
             switch (filterChoice) {
                 case 1:
-                    filteredProjects = projects;
+                    filteredProjects = Project.getAllProjects();
                     break;
                 case 2:
-                    filteredProjects = projectService.filterProject("Software");
+                    String type = ValidationUtils.getValidType("Enter Project type (Hardware/Software): ");
+                    Project newProject = createProject(type);
+                    projectService.addProject(newProject);;
+                    filteredProjects = Project.getAllProjects();
                     break;
                 case 3:
-                    filteredProjects = projectService.filterProject("Hardware");
+                    filteredProjects = projectService.filterProject("Software");
                     break;
                 case 4:
+                    filteredProjects = projectService.filterProject("Hardware");
+                    break;
+                case 5:
                     int minBudget = ValidationUtils.getValidInt("Enter min budget: ", 0);
                     int maxBudget = ValidationUtils.getValidInt("Enter max budget: ", minBudget);
                     filteredProjects = projectService.filterProject(minBudget, maxBudget);
@@ -160,6 +163,25 @@ public class ConsoleMenu {
         }
     }
 
+
+    private static Project createProject(String type) {
+        String name = ValidationUtils.getValidString("Enter project name: ");
+        String description = ValidationUtils.getValidString("Enter project description: ");
+        int budget = ValidationUtils.getValidInt("Enter project budget: ", 1000);
+        int teamSize = ValidationUtils.getValidInt("Enter team size: ", 1);
+        if (type.equalsIgnoreCase("Hardware")) {
+            String component = ValidationUtils.getValidString("Enter component: ");
+            int weight = ValidationUtils.getValidInt("Enter weight: ", 1.0f);
+            return new HardwareProject(name, description, budget, teamSize, component, weight);
+        } else {
+            String technology = ValidationUtils.getValidString("Enter technology: ");
+            String domain = ValidationUtils.getValidString("Enter domain: ");
+            String versioning = ValidationUtils.getValidString("Enter version control tool: ");
+            return new SoftwareProject(name, description, budget, teamSize, technology, domain, versioning);
+        }
+    }
+
+
     private static void addNewTask(String projectId) {
         printHeader(("ADD NEW TASK"));
         String name = ValidationUtils.getValidString("Enter task name: ");
@@ -227,16 +249,16 @@ public class ConsoleMenu {
         System.out.println("Average Completion: " + String.format("%.2f%%", avgCompletion));
     }
 
-    public static void printHeader(String text, String text2) {
+    public static void printHeader(String title, String data) {
         int padding = 2;
-        int width = text.length() + text2.length() + padding * 2;
+        int width = title.length() + data.length() + padding * 2;
 
         System.out.printf("%s%s%s%n", "\u2554", "\u2550".repeat(width), "\u2557");
 
-        int left = (width - text.length()) / 2;
-        int right = width - text.length() - left;
+        int left = (width - title.length()) / 2;
+        int right = width - title.length() - left;
 
-        System.out.printf("%s%s%s%s%s%n", "\u2551", " ".repeat(left), text, " ".repeat(right), "\u2551");
+        System.out.printf("%s%s%s%s%s%n", "\u2551", " ".repeat(left), title, " ".repeat(right), "\u2551");
 
         System.out.printf("%s%s%s%n", "\u255A", "\u2550".repeat(width), "\u255D");
     }

@@ -5,17 +5,29 @@ import models.utils.Status;
 import java.text.NumberFormat;
 
 public class SoftwareProject extends Project {
+    private String technology;
+    private String domain;
+    private String versioning;
 
-    public SoftwareProject(String name, String description, int budget, int teamSize) {
+    public SoftwareProject(String name, String description, int budget, int teamSize, String technology, String domain, String versioning) {
         super(name, "Software", description, budget, teamSize);
+        this.technology = technology;
+        this.domain = domain;
+        this.versioning = versioning;
     }
-    
+
 
     @Override
-    public void getProjectDetails() {
-        System.out.println("Project Details: " + getId());
-        System.out.println("Project Name: " + getName());
-        System.out.println("Team Size: " + getTeamSize());
-        System.out.println("Project Budget: " + NumberFormat.getCurrencyInstance().format(getBudget()));
+    public String[] getProjectDetails() {
+        String budget =  NumberFormat.getCurrencyInstance().format(getBudget());
+        return new String[] {
+                getId(),
+                getName(),
+                Integer.toString(getTeamSize()),
+                budget,
+                technology,
+                domain,
+                versioning
+        };
     }
 }

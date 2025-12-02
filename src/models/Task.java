@@ -9,6 +9,8 @@ public class Task implements Completable {
     private String taskID;
     private String name;
     private Status status;
+    private static IDGenerator idGenerator = new IDGenerator();
+
 
     public String getTaskID() {
         return taskID;

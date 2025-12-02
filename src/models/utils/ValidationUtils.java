@@ -51,6 +51,19 @@ public class ValidationUtils {
         }
     }
 
+    public static String getValidType(String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String input = scanner.nextLine().trim().toUpperCase();
+            if (input.equals("HARDWARE")) {
+                return input;
+            } else if (input.equals("SOFTWARE")) {
+                return input;
+            }
+            System.out.println("Error: Invalid status. Please choose from (Pending, In Progress, Completed).");
+        }
+    }
+
     public static Status getValidStatus(String prompt) {
         while (true) {
             System.out.print(prompt);

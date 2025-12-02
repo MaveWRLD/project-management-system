@@ -15,7 +15,35 @@ public abstract class Project {
     private static int count = 0;
     private static Project[] allProjects = new Project[5];
 
-    public abstract void getProjectDetails();
+
+    private IDGenerator taskIdGenerator = new IDGenerator(); // Each project has its own counter
+
+    public Project(String name, String type, String description, int budget, int teamSize) {
+        this.id = idGenerator.setID('P');
+        this.name = name;
+        this.type = type;
+        this.description = description;
+        this.budget = budget;
+        this.teamSize = teamSize;
+
+        if (count == allProjects.length) {
+            Project[] newArray = new Project[allProjects.length * 2];
+            System.arraycopy(allProjects, 0, newArray, 0, allProjects.length);
+            allProjects = newArray;
+        }
+        allProjects[count++] = this;
+    }
+
+    public static void displayProjects(){
+        System.out.println("ID  | NAME | BUDGET ");
+        for (Project project : allProjects) {
+            if (project != null){
+                System.out.println(project.id + " | " + project.name + " | " + project.budget);
+            }
+        }
+    }
+
+    public abstract String[] getProjectDetails();
 
     public static Project[] getAllProjects() {
         return allProjects;
@@ -31,25 +59,6 @@ public abstract class Project {
         return i;
     }
 
-    public Project(String name, String type, String description, int budget, int teamSize) {
-        this.id = idGenerator.setID('P');
-        this.name = name;
-        this.type = type;
-        this.description = description;
-        this.budget = budget;
-        this.teamSize = teamSize;
-        allProjects[count++] = this;
-    }
-
-    public static void displayProjects(){
-        System.out.println("ID  | NAME | BUDGET ");
-        for (Project project : allProjects) {
-            if (project != null){
-                System.out.println(project.id + " | " + project.name + " | " + project.budget);
-            }
-        }
-    }
-
     public String getId() {
         return id;
     }
@@ -58,19 +67,19 @@ public abstract class Project {
         return name;
     }
 
-    
+
     public String getDescription() {
         return description;
     }
-    
+
     public int getBudget() {
         return budget;
     }
-    
+
     public int getTeamSize() {
         return teamSize;
     }
-    
+
     public String getType() {
         return type;
     }
@@ -83,5 +92,9 @@ public abstract class Project {
         if (tasks != null)
             return tasks;
         return new Task[5];
+    }
+
+    public String generateTaskId() {
+        return taskIdGenerator.setID('T');
     }
 }

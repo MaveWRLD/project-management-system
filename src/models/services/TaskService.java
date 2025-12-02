@@ -17,7 +17,7 @@ public class TaskService {
         Task[] tasks = project.getTasks();
         Task[] assignedTaskSizeFull = assignTaskSizeIfNull(tasks);
         Task newTask = new Task();
-        newTask.setTaskID(idGenerator.setID('T'));
+        newTask.setTaskID(project.generateTaskId());
         newTask.setName(name);
         newTask.setStatus(status);
         for (int i = 0; i <assignedTaskSizeFull.length; i++){
@@ -102,7 +102,6 @@ public class TaskService {
         }
         return tasks;
     }
-
 }
 
 

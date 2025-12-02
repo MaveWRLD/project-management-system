@@ -1,10 +1,22 @@
 package models.services;
 
 import models.Project;
+import models.Task;
 import models.utils.Status;
 
 public class ProjectService {
-    private final Project[] projects = Project.getAllProjects();
+
+    private Project[] projects = Project.getAllProjects();
+
+    public void addProject(Project project) {
+        projects = assignProjectSizeIfFull(projects);
+        for (int i = 0; i < projects.length; i++){
+            if (projects[i] == null){
+                projects[i] = project;
+                break;
+            }
+        }
+    }
 
     public Project[] filterProject(String projectType){
         Project[] filteredProjects = new Project[projects.length];
@@ -50,5 +62,31 @@ public class ProjectService {
             }
         }
         return filteredProjects;
+    }
+
+    private static Project[] assignProjectSizeIfFull(Project[] projects) {
+        int elementsSize = 0;
+        for (Project oldProject : projects) {
+            if (oldProject != null) {
+                elementsSize++;
+            }
+        }
+
+        if (projects.length == elementsSize) {
+            Project[] newProjects = new Project[elementsSize * 2];
+            System.arraycopy(projects, 0, newProjects, 0, projects.length);
+            return newProjects;
+        }
+
+        return projects;
+    }
+
+
+    public Project[] getProjects() {
+        return projects;
+    }
+
+    public void setProjects(Project[] projects) {
+        this.projects = projects;
     }
 }
