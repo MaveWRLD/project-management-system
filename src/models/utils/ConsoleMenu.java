@@ -78,10 +78,10 @@ public class ConsoleMenu {
                     filteredProjects = Project.getAllProjects();
                     break;
                 case 3:
-                    filteredProjects = projectService.filterProject("Software");
+                    filteredProjects = projectService.filterProject("SOFTWARE");
                     break;
                 case 4:
-                    filteredProjects = projectService.filterProject("Hardware");
+                    filteredProjects = projectService.filterProject("HARDWARE");
                     break;
                 case 5:
                     int minBudget = ValidationUtils.getValidInt("Enter min budget: ", 0);

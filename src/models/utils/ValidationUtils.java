@@ -1,9 +1,5 @@
 package models.utils;
 
-
-
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Scanner;
 
 public class ValidationUtils {
@@ -56,9 +52,9 @@ public class ValidationUtils {
             System.out.print(prompt);
             String input = scanner.nextLine().trim().toUpperCase();
             if (input.equals("HARDWARE")) {
-                return input;
+                return input.toUpperCase();
             } else if (input.equals("SOFTWARE")) {
-                return input;
+                return input.toUpperCase();
             }
             System.out.println("Error: Invalid status. Please choose from (Pending, In Progress, Completed).");
         }
@@ -103,15 +99,6 @@ public class ValidationUtils {
             }
             System.out.println("Error: Invalid ID. Please enter a valid prefixed ID (e.g., " + prefix + "001).");
         }
-    }
-
-    private static String capitalize(String str) {
-        String[] words = str.split(" ");
-        StringBuilder sb = new StringBuilder();
-        for (String word : words) {
-            sb.append(word.substring(0, 1).toUpperCase()).append(word.substring(1)).append(" ");
-        }
-        return sb.toString().trim();
     }
 }
 
