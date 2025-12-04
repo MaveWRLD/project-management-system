@@ -34,11 +34,21 @@ public class TaskService {
         return project.getTasks()[0].isCompleted();
     }
 
+
     public Task[] getTasksForProject(String projectId) {
         Project project = projectService.filterProjectBYId(projectId);
-        return project.getTasks();
+
+        Task[] tasks = project.getTasks();
+
+        if (tasks == null || tasks.length == 0) {
+            System.out.println("No task found for the project: " + project.getName());
+            return new Task[0]; // return empty array
+        }
+
+        return tasks;
     }
-    
+
+
     public void displayTask(String projectId){
         System.out.println("ID  | NAME | Status ");
     }

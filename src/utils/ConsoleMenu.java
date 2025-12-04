@@ -258,21 +258,21 @@ public class ConsoleMenu {
         int left = (width - title.length()) / 2;
         int right = width - title.length() - left;
 
-        System.out.printf("%s%s%s%s%s%n", "\u2551", " ".repeat(left), title, " ".repeat(right), "\u2551");
+        System.out.printf("%s%s%s%s%s%s%n", "\u2551", " ".repeat(left), title, data, " ".repeat(right), "\u2551");
 
         System.out.printf("%s%s%s%n", "\u255A", "\u2550".repeat(width), "\u255D");
     }
 
-    public static void printHeader(String text) {
+    public static void printHeader(String title) {
         int padding = 2;
-        int width = text.length() + padding * 2;
+        int width = title.length() + padding * 2;
 
         System.out.printf("%s%s%s%n", "\u2554", "\u2550".repeat(width), "\u2557");
 
-        int left = (width - text.length()) / 2;
-        int right = width - text.length() - left;
+        int left = (width - title.length()) / 2;
+        int right = width - title.length() - left;
 
-        System.out.printf("%s%s%s%s%s%n", "\u2551", " ".repeat(left), text, " ".repeat(right), "\u2551");
+        System.out.printf("%s%s%s%s%s%n", "\u2551", " ".repeat(left), title, " ".repeat(right), "\u2551");
 
         System.out.printf("%s%s%s%n", "\u255A", "\u2550".repeat(width), "\u255D");
     }

@@ -33,7 +33,6 @@ public class ValidationUtils {
         }
     }
 
-
     public static int getValidInt(String prompt, double min) {
         while (true) {
             System.out.print(prompt);
