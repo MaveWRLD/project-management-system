@@ -1,7 +1,5 @@
 package models;
 
-import models.utils.Status;
-
 import java.text.NumberFormat;
 
 public class HardwareProject extends Project {

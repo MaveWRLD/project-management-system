@@ -1,4 +1,4 @@
-package models.utils;
+package utils;
 
 public enum Status{
     PENDING, IN_PROGRESS, COMPLETED;

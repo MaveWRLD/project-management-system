@@ -1,4 +1,4 @@
-package models.services;
+package services;
 
 import models.Project;
 import models.StatusReport;

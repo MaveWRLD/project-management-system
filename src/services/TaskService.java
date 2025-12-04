@@ -1,56 +1,36 @@
-package models.services;
+package services;
 
 import models.*;
-import models.utils.IDGenerator;
-import models.utils.Status;
+import utils.Status;
 
 
 public class TaskService {
-    private Project project;
 
     private ProjectService projectService = new ProjectService();
-    private IDGenerator idGenerator= new IDGenerator();
 
-
-    public Task addTask(String projectId, String name, Status status) {
+    public Task addTaskToProject(String projectId, String name, Status status) {
         Project project = projectService.filterProjectBYId(projectId);
-        Task[] tasks = project.getTasks();
-        Task[] assignedTaskSizeFull = assignTaskSizeIfNull(tasks);
+        Task[] assignedTaskSizeFull = assignTaskSizeIfNull(project.getTasks());
         Task newTask = new Task();
         newTask.setTaskID(project.generateTaskId());
         newTask.setName(name);
         newTask.setStatus(status);
-        for (int i = 0; i <assignedTaskSizeFull.length; i++){
-            if (assignedTaskSizeFull[i] == null){
-                assignedTaskSizeFull[i] = newTask;
-                break;
-            }
-        }
+        int nullIndex = getNullIndex(assignedTaskSizeFull);
+        assignedTaskSizeFull[nullIndex] = newTask;
         project.setTasks(assignedTaskSizeFull);
         return newTask;
     }
 
-    public boolean isCompleted(){
-        return project.getTasks()[0].isCompleted();
-    }
-
-
-    public Task[] getTasksForProject(String projectId) {
+    public Task[] geProjectTasks(String projectId) {
         Project project = projectService.filterProjectBYId(projectId);
 
         Task[] tasks = project.getTasks();
 
         if (tasks == null || tasks.length == 0) {
             System.out.println("No task found for the project: " + project.getName());
-            return new Task[0]; // return empty array
+            return new Task[0];
         }
-
         return tasks;
-    }
-
-
-    public void displayTask(String projectId){
-        System.out.println("ID  | NAME | Status ");
     }
 
     public boolean updateTaskStatus(String projectID, Status status, String taskID){
@@ -60,7 +40,6 @@ public class TaskService {
                 continue;
             }
             if (project.getTasks()[i].getTaskID().equals(taskID)){
-                System.out.println("hi");
                 project.getTasks()[i].setStatus(status);
             }
         }
@@ -78,7 +57,7 @@ public class TaskService {
             project.getTasks()[project.getTasks().length - 1] = null;
             return true;
         }
-        System.out.println("You are not allow to perform this action");
+        System.out.println("You are not allowed to perform this action");
         return false;
     }
 
@@ -92,10 +71,29 @@ public class TaskService {
         return -1;
     }
 
+    private static int getNullIndex(Task[] assignedTaskSizeFull) {
+        for (int i = 0; i < assignedTaskSizeFull.length; i++){
+            if (assignedTaskSizeFull[i] == null){
+                return i;
+            }
+        }
+        return -1;
+    }
+
     private static Task[] assignTaskSizeIfNull(Task[] tasks){
         if (tasks == null){
             tasks = new Task[5];
         }
+        int elementsSize = getElementsSize(tasks);
+        if (tasks.length == elementsSize){
+            Task[] newTasks = new Task[elementsSize * 2];
+            System.arraycopy(tasks, 0, newTasks, 0, newTasks.length);
+            return newTasks;
+        }
+        return tasks;
+    }
+
+    private static int getElementsSize(Task[] tasks) {
         int elementsSize = 0;
         for (Task oldTask : tasks) {
             if (oldTask == null) {
@@ -103,14 +101,7 @@ public class TaskService {
             }
             elementsSize++;
         }
-        if (tasks.length == elementsSize){
-            Task[] newTasks = new Task[elementsSize * 2];
-            for (int i = 0; i < newTasks.length; i++){
-                newTasks[i] = tasks[i];
-            }
-            return newTasks;
-        }
-        return tasks;
+        return elementsSize;
     }
 }
 

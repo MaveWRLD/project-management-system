@@ -1,6 +1,6 @@
 package models;
 
-import models.utils.IDGenerator;
+import utils.IDGenerator;
 
 public abstract class Project {
 

@@ -1,7 +1,7 @@
 package models;
 // Abstract base class
 
-import models.utils.IDGenerator;
+import utils.IDGenerator;
 
 public abstract class User {
     private String id;

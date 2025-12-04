@@ -1,19 +1,14 @@
-package models.utils;
+package utils;
 
 
 import models.*;
-import models.services.ProjectService;
-import models.services.ReportService;
-import models.services.TaskService;
-import models.services.UserService;
-
-import java.text.NumberFormat;
-import java.util.Scanner;
+import services.ProjectService;
+import services.ReportService;
+import services.TaskService;
+import services.UserService;
 
 public class ConsoleMenu {
-    //private static ValidationUtils = new ValidationUtils();
-    private static final Scanner scanner = new Scanner(System.in);
-    //private static final Project[] projects = Project.getAllProjects();
+
     private static ProjectService projectService = new ProjectService();
     private static TaskService taskService = new TaskService();
     private static UserService userService = new UserService();
@@ -124,7 +119,7 @@ public class ConsoleMenu {
             System.out.println("Team Size: " + project.getTeamSize());
             System.out.println("Budget: $" + project.getBudget());
 
-            Task[] tasks = taskService.getTasksForProject(project.getId());
+            Task[] tasks = taskService.geProjectTasks(project.getId());
             if (tasks != null && tasks.length > 0) {
                 System.out.printf("%-6s | %-20s | %-10s\n", "ID", "Task Name", "Status");
                 System.out.println("---------------------------------------");
@@ -186,7 +181,7 @@ public class ConsoleMenu {
         printHeader(("ADD NEW TASK"));
         String name = ValidationUtils.getValidString("Enter task name: ");
         Status status = ValidationUtils.getValidStatus("Enter initial status (Pending/In Progress/Completed): ");
-        Task newTask = taskService.addTask(projectId, name, status);
+        Task newTask = taskService.addTaskToProject(projectId, name, status);
         if (newTask != null) {
             System.out.println("Task \"" + name + "\" added successfully to Project " + projectId + "!");
         } else {
@@ -253,27 +248,27 @@ public class ConsoleMenu {
         int padding = 2;
         int width = title.length() + data.length() + padding * 2;
 
-        System.out.printf("%s%s%s%n", "\u2554", "\u2550".repeat(width), "\u2557");
+        System.out.printf("%s%s%s%n", "╔", "═".repeat(width), "╗");
 
         int left = (width - title.length()) / 2;
         int right = width - title.length() - left;
 
-        System.out.printf("%s%s%s%s%s%s%n", "\u2551", " ".repeat(left), title, data, " ".repeat(right), "\u2551");
+        System.out.printf("%s%s%s%s%s%s%n", "║", " ".repeat(left), title, data, " ".repeat(right), "║");
 
-        System.out.printf("%s%s%s%n", "\u255A", "\u2550".repeat(width), "\u255D");
+        System.out.printf("%s%s%s%n", "╚", "═".repeat(width), "╝");
     }
 
     public static void printHeader(String title) {
         int padding = 2;
         int width = title.length() + padding * 2;
 
-        System.out.printf("%s%s%s%n", "\u2554", "\u2550".repeat(width), "\u2557");
+        System.out.printf("%s%s%s%n", "╔", "═".repeat(width), "╗");
 
         int left = (width - title.length()) / 2;
         int right = width - title.length() - left;
 
-        System.out.printf("%s%s%s%s%s%n", "\u2551", " ".repeat(left), title, " ".repeat(right), "\u2551");
+        System.out.printf("%s%s%s%s%s%n", "║", " ".repeat(left), title, " ".repeat(right), "║");
 
-        System.out.printf("%s%s%s%n", "\u255A", "\u2550".repeat(width), "\u255D");
+        System.out.printf("%s%s%s%n", "╚", "═".repeat(width), "╝");
     }
 }

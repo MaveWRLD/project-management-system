@@ -1,4 +1,4 @@
-package models.services;
+package services;
 
 import models.AdminUser;
 import models.RegularUser;

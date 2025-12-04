@@ -1,9 +1,9 @@
 import models.*;
-import models.utils.ConsoleMenu;
-import models.utils.Status;
-import models.services.ProjectService;
-import models.services.ReportService;
-import models.services.TaskService;
+import utils.ConsoleMenu;
+import utils.Status;
+import services.ProjectService;
+import services.ReportService;
+import services.TaskService;
 
 public class Main {
     public static void main(String[] args) {
@@ -18,8 +18,8 @@ public class Main {
         SoftwareProject PythonProject = new SoftwareProject("Java Basics", "Difficult", 233, 4, "Java", "Web", "Git");
 
 
-        taskService.addTask("P001", "Testing", Status.COMPLETED);
-        taskService.addTask("P004", "Programming", Status.PENDING);
+        taskService.addTaskToProject("P001", "Testing", Status.COMPLETED);
+        taskService.addTaskToProject("P004", "Programming", Status.PENDING);
         ReportService reportService = new ReportService();
         ConsoleMenu.run();
     }

@@ -1,9 +1,9 @@
 package models;
 
 
-import models.interfaces.Completable;
-import models.utils.IDGenerator;
-import models.utils.Status;
+import interfaces.Completable;
+import utils.IDGenerator;
+import utils.Status;
 
 public class Task implements Completable {
     private String taskID;
