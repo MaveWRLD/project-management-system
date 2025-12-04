@@ -43,22 +43,20 @@ public class ConsoleMenu {
     private static void displayMainMenu() {
         printHeader("JAVA PROJECT MANAGEMENT SYSTEM");
         System.out.println("Current User: " + currentUser.getName() + " (" + currentUser.getRole() + ")");
-        System.out.println("1. Manage Projects");
-        System.out.println("2. Manage Tasks");
-        System.out.println("3. View Status Reports");
-        System.out.println("4. Switch User");
-        System.out.println("5. Exit");
+        String[] options = {"1. Manage Projects", "2. Manage Tasks", "3. View Status Reports", "4. Switch User", "5. Exit"};
+        printText(options);
     }
 
     private static void handleManageProjects() {
         while (true) {
             printHeader("PROJECT CATALOG");
-            System.out.println("Filter Options: ");
-            System.out.println("1. View All Projects " +"(" + Project.projectLenght() + ")");
-            System.out.println("2. Add Project");
-            System.out.println("3. Software Projects Only");
-            System.out.println("4. Hardware Projects Only");
-            System.out.println("5. Search by Budget Range");
+            String[] options = {"Filter Options: ",
+                    "1. View All Projects " +"(" + Project.projectLenght() + ")",
+                    "2. Add Project",
+                    "3. Software Projects Only", 
+                    "4. Hardware Projects Only",
+                    "5. Search by Budget Range"};
+            printText(options);
             int filterChoice = ValidationUtils.getValidInt("Enter Filter choice: ", 1, 4);
 
             Project[] filteredProjects = null;
@@ -114,10 +112,9 @@ public class ConsoleMenu {
     private static void displayProjectDetails(Project project) {
         while (true) {
             printHeader("PROJECT DETAILS: ", project.getId());
-            System.out.println("Project Name: " + project.getName());
-            System.out.println("Type: " + project.getType());
-            System.out.println("Team Size: " + project.getTeamSize());
-            System.out.println("Budget: $" + project.getBudget());
+            String[] detailsProject = {"Project Name: " + project.getName(), "Type: " + project.getType(), "Team Size: " + project.getTeamSize(),
+                    "Budget: $" + project.getBudget()};
+            printText(detailsProject);
 
             Task[] tasks = taskService.geProjectTasks(project.getId());
             if (tasks != null && tasks.length > 0) {
@@ -134,12 +131,8 @@ public class ConsoleMenu {
 
             double completion = statusReport.completionPercentage(project);
             System.out.println("Completion Rate: " + String.format("%.0f%%", completion));
-
-            System.out.println("Options:");
-            System.out.println("1. Add New Task");
-            System.out.println("2. Update Task Status");
-            System.out.println("3. Remove Task");
-            System.out.println("4. Back to Main Menu");
+            String[] options = {"Options:", "1. Add New Task", "2. Update Task Status", "3. Remove Task", "4. Back to Main Menu"};
+            printText(options);
             int choice = ValidationUtils.getValidInt("Enter your choice: ", 1, 4);
 
             switch (choice) {
@@ -248,20 +241,17 @@ public class ConsoleMenu {
         int padding = 2;
         int width = title.length() + data.length() + padding * 2;
 
-        System.out.printf("%s%s%s%n", "╔", "═".repeat(width), "╗");
-
-        int left = (width - title.length()) / 2;
-        int right = width - title.length() - left;
-
-        System.out.printf("%s%s%s%s%s%s%n", "║", " ".repeat(left), title, data, " ".repeat(right), "║");
-
-        System.out.printf("%s%s%s%n", "╚", "═".repeat(width), "╝");
+        headerBuilder(title, width);
     }
 
     public static void printHeader(String title) {
         int padding = 2;
         int width = title.length() + padding * 2;
 
+        headerBuilder(title, width);
+    }
+
+    private static void headerBuilder(String title, int width) {
         System.out.printf("%s%s%s%n", "╔", "═".repeat(width), "╗");
 
         int left = (width - title.length()) / 2;
@@ -270,5 +260,11 @@ public class ConsoleMenu {
         System.out.printf("%s%s%s%s%s%n", "║", " ".repeat(left), title, " ".repeat(right), "║");
 
         System.out.printf("%s%s%s%n", "╚", "═".repeat(width), "╝");
+    }
+
+    public static void printText(String[] options){
+        for (String option : options){
+            System.out.println(option);
+        }
     }
 }
