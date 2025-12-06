@@ -16,7 +16,7 @@ public abstract class Project {
     private static Project[] allProjects = new Project[5];
 
 
-    private IDGenerator taskIdGenerator = new IDGenerator(); // Each project has its own counter
+    private IDGenerator taskIdGenerator = new IDGenerator();
 
     public Project(String name, String type, String description, int budget, int teamSize) {
         this.id = idGenerator.setID('P');
@@ -47,16 +47,6 @@ public abstract class Project {
 
     public static Project[] getAllProjects() {
         return allProjects;
-    }
-
-    public static int projectLenght(){
-        int i = 0;
-        for (Project project : allProjects){
-            if (project != null){
-                i++;
-            }
-        }
-        return i;
     }
 
     public String getId() {

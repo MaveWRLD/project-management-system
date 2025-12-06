@@ -57,7 +57,6 @@ public class ReportService {
     public float completionAverage(Project[] projects) {
         float totalPercentageCount = 0;
         float sumOfPercentages = 0;
-        int i = 0;
         for (Project project : projects) {
             if (project == null) continue;
             for (Task task : project.getTasks())
@@ -67,9 +66,7 @@ public class ReportService {
                     totalPercentageCount++;
                 }
         }
-
         if (totalPercentageCount == 0) return 0;
-
         return sumOfPercentages / totalPercentageCount;
     }
 

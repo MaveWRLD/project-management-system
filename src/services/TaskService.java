@@ -8,24 +8,26 @@ public class TaskService {
 
     private ProjectService projectService = new ProjectService();
 
-    public Task addTaskToProject(String projectId, String name, Status status) {
+    public void addTaskToProject(String projectId, String name, Status status){
         Project project = projectService.filterProjectBYId(projectId);
-        Task[] assignedTaskSizeFull = assignTaskSizeIfNull(project.getTasks());
+        Task[] tasks = assignTaskSizeIfNull(project.getTasks());
+        int nullIndex = getNullIndex(tasks);
+        Task newTask = createTask(project, name, status);
+        tasks[nullIndex] = newTask;
+        project.setTasks(tasks);
+    }
+
+    public Task createTask(Project project, String name, Status status) {
         Task newTask = new Task();
         newTask.setTaskID(project.generateTaskId());
         newTask.setName(name);
         newTask.setStatus(status);
-        int nullIndex = getNullIndex(assignedTaskSizeFull);
-        assignedTaskSizeFull[nullIndex] = newTask;
-        project.setTasks(assignedTaskSizeFull);
         return newTask;
     }
 
     public Task[] geProjectTasks(String projectId) {
         Project project = projectService.filterProjectBYId(projectId);
-
         Task[] tasks = project.getTasks();
-
         if (tasks == null || tasks.length == 0) {
             System.out.println("No task found for the project: " + project.getName());
             return new Task[0];
@@ -33,36 +35,27 @@ public class TaskService {
         return tasks;
     }
 
-    public boolean updateTaskStatus(String projectID, Status status, String taskID){
+    public void updateTaskStatus(String projectID, Status status, String taskID){
         Project project = projectService.filterProjectBYId(projectID);
-        for (int i = 0; i < project.getTasks().length; i++){
-            if (project.getTasks()[i] == null){
-                continue;
-            }
-            if (project.getTasks()[i].getTaskID().equals(taskID)){
-                project.getTasks()[i].setStatus(status);
-            }
-        }
-        return true;
+        Task[] tasks = geProjectTasks(projectID);
+        int taskIndex = getTaskIndex(project, taskID);
+        tasks[taskIndex].setStatus(status);
     }
 
-    public boolean removeTask(User user, String projectID, String taskId){
+    public void removeTask(User user, String projectID, String taskId){
         if (user != null && user.getRole().equals("Admin")){
-            System.out.println("Testing User");
             Project project = projectService.filterProjectBYId(projectID);
-            int taskIndex = getTaskIndex(projectID, taskId);
-            for (int i = taskIndex; i < project.getTasks().length - 1; i++) {
+            int taskIndex = getTaskIndex(project, taskId);
+            for (int i = taskIndex; i < project.getTasks().length -1; i++) {
                 project.getTasks()[i] = project.getTasks()[i + 1];
             }
-            project.getTasks()[project.getTasks().length - 1] = null;
-            return true;
+            int lastIndex = project.getTasks().length - 1;
+            project.getTasks()[lastIndex] = null;
         }
         System.out.println("You are not allowed to perform this action");
-        return false;
     }
 
-    private int getTaskIndex(String projectID, String taskId){
-        Project project = projectService.filterProjectBYId(projectID);
+    private int getTaskIndex(Project project, String taskId){
         for (int i = 0; i <  project.getTasks().length; i++){
             if (project.getTasks()[i] != null && project.getTasks()[i].getTaskID().equals(taskId)){
                 return i;
@@ -71,9 +64,9 @@ public class TaskService {
         return -1;
     }
 
-    private static int getNullIndex(Task[] assignedTaskSizeFull) {
-        for (int i = 0; i < assignedTaskSizeFull.length; i++){
-            if (assignedTaskSizeFull[i] == null){
+    private static int getNullIndex(Task[] tasks) {
+        for (int i = 0; i < tasks.length; i++){
+            if (tasks[i] == null){
                 return i;
             }
         }

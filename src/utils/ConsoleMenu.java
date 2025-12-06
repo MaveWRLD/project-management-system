@@ -9,11 +9,11 @@ import services.UserService;
 
 public class ConsoleMenu {
 
-    private static ProjectService projectService = new ProjectService();
-    private static TaskService taskService = new TaskService();
-    private static UserService userService = new UserService();
+    private static final ProjectService projectService = new ProjectService();
+    private static final TaskService taskService = new TaskService();
+    private static final UserService userService = new UserService();
     private static User currentUser =  new AdminUser("Jacob Quaye", "kofimave@gmail.com" );
-    private static ReportService statusReport = new ReportService();
+    private static final ReportService statusReport = new ReportService();
 
 
     public static void run() {
@@ -51,9 +51,9 @@ public class ConsoleMenu {
         while (true) {
             printHeader("PROJECT CATALOG");
             String[] options = {"Filter Options: ",
-                    "1. View All Projects " +"(" + Project.projectLenght() + ")",
+                    "1. View All Projects " +"(" + Project.getAllProjects().length + ")",
                     "2. Add Project",
-                    "3. Software Projects Only", 
+                    "3. Software Projects Only",
                     "4. Hardware Projects Only",
                     "5. Search by Budget Range"};
             printText(options);
@@ -67,7 +67,7 @@ public class ConsoleMenu {
                 case 2:
                     String type = ValidationUtils.getValidType("Enter Project type (Hardware/Software): ");
                     Project newProject = createProject(type);
-                    projectService.addProject(newProject);;
+                    projectService.addProject(newProject);
                     filteredProjects = Project.getAllProjects();
                     break;
                 case 3:
@@ -151,13 +151,12 @@ public class ConsoleMenu {
         }
     }
 
-
-    private static Project createProject(String type) {
+    private static Project createProject(String projectType) {
         String name = ValidationUtils.getValidString("Enter project name: ");
         String description = ValidationUtils.getValidString("Enter project description: ");
         int budget = ValidationUtils.getValidInt("Enter project budget: ", 1000);
         int teamSize = ValidationUtils.getValidInt("Enter team size: ", 1);
-        if (type.equalsIgnoreCase("Hardware")) {
+        if (projectType.equalsIgnoreCase("Hardware")) {
             String component = ValidationUtils.getValidString("Enter component: ");
             int weight = ValidationUtils.getValidInt("Enter weight: ", 1.0f);
             return new HardwareProject(name, description, budget, teamSize, component, weight);
@@ -174,46 +173,28 @@ public class ConsoleMenu {
         printHeader(("ADD NEW TASK"));
         String name = ValidationUtils.getValidString("Enter task name: ");
         Status status = ValidationUtils.getValidStatus("Enter initial status (Pending/In Progress/Completed): ");
-        Task newTask = taskService.addTaskToProject(projectId, name, status);
-        if (newTask != null) {
-            System.out.println("Task \"" + name + "\" added successfully to Project " + projectId + "!");
-        } else {
-            System.out.println("Error adding task (e.g., duplicate or limit reached).");
-        }
+        taskService.addTaskToProject(projectId, name, status);
     }
 
     private static void updateTaskStatus(String projectID) {
         String taskId = ValidationUtils.getValidId("Enter Task ID: ", 'T');
         Status newStatus = ValidationUtils.getValidStatus("Enter new status: ");
-        boolean success = taskService.updateTaskStatus(projectID, newStatus, taskId);
-        if (success) {
-            System.out.println("Task \"" + taskId + "\" marked as " + newStatus + ".");
-        } else {
-            System.out.println("Task not found.");
-        }
+        taskService.updateTaskStatus(projectID, newStatus, taskId);
+        System.out.println("Task \"" + taskId + "\" marked as " + newStatus + ".");
     }
 
     private static void removeTask(String projectID) {
         String taskId = ValidationUtils.getValidId("Enter Task ID to remove: ", 'T');
-        boolean success = taskService.removeTask(currentUser, projectID, taskId);
-        if (success) {
-            System.out.println("Task removed successfully.");
-        } else {
-            System.out.println("Task not found.");
-        }
+        taskService.removeTask(currentUser, projectID, taskId);
+        System.out.println("Task removed successfully.");
     }
 
     private static void handleManageTasks() {
-        System.out.println("Manage Tasks: Select a project first via Manage Projects.");
         String projectId = ValidationUtils.getValidId("Enter Project ID to view details (or 0 to return): ", 'P');
         if (projectId.equals("0")) {
             return;
         }
         Project project = projectService.filterProjectBYId(projectId);
-        if (project == null) {
-            System.out.println("Project not found.");
-            return;
-        }
         displayProjectDetails(project);
     }
 
@@ -258,7 +239,6 @@ public class ConsoleMenu {
         int right = width - title.length() - left;
 
         System.out.printf("%s%s%s%s%s%n", "║", " ".repeat(left), title, " ".repeat(right), "║");
-
         System.out.printf("%s%s%s%n", "╚", "═".repeat(width), "╝");
     }
 

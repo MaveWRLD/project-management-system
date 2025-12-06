@@ -27,9 +27,7 @@ public class ProjectService {
         return filteredProjects;
     }
 
-    
     public Project[] filterProject(int minBudget, int maxBudget){
-        // Filter Project based on budget range
         Project[] filteredProjects = new Project[projects.length];
         int i = 0;
         for (Project project : projects){
@@ -85,13 +83,5 @@ public class ProjectService {
             }
         }
         return elementsSize;
-    }
-
-    public Project[] getProjects() {
-        return projects;
-    }
-
-    public void setProjects(Project[] projects) {
-        this.projects = projects;
     }
 }
