@@ -15,7 +15,6 @@ public class ConsoleMenu {
     private static User currentUser =  new AdminUser("Jacob Quaye", "kofimave@gmail.com" );
     private static final ReportService statusReport = new ReportService();
 
-
     public static void run() {
         while (true) {
             displayMainMenu();
@@ -55,33 +54,10 @@ public class ConsoleMenu {
                     "2. Add Project",
                     "3. Software Projects Only",
                     "4. Hardware Projects Only",
-                    "5. Search by Budget Range"};
+                    "5. Search by Budget Range",
+            };
             printText(options);
-            int filterChoice = ValidationUtils.getValidInt("Enter Filter choice: ", 1, 4);
-
-            Project[] filteredProjects = null;
-            switch (filterChoice) {
-                case 1:
-                    filteredProjects = Project.getAllProjects();
-                    break;
-                case 2:
-                    String type = ValidationUtils.getValidType("Enter Project type (Hardware/Software): ");
-                    Project newProject = createProject(type);
-                    projectService.addProject(newProject);
-                    filteredProjects = Project.getAllProjects();
-                    break;
-                case 3:
-                    filteredProjects = projectService.filterProject("SOFTWARE");
-                    break;
-                case 4:
-                    filteredProjects = projectService.filterProject("HARDWARE");
-                    break;
-                case 5:
-                    int minBudget = ValidationUtils.getValidInt("Enter min budget: ", 0);
-                    int maxBudget = ValidationUtils.getValidInt("Enter max budget: ", minBudget);
-                    filteredProjects = projectService.filterProject(minBudget, maxBudget);
-                    break;
-            }
+            Project[] filteredProjects = getFilteredProjects();
 
             if (filteredProjects == null || filteredProjects.length == 0) {
                 System.out.println("No projects found.");
@@ -94,20 +70,38 @@ public class ConsoleMenu {
                     }
                 }
             }
-
-            String projectId = ValidationUtils.getValidId("Enter Project ID to view details (or 0 to return): ", 'P');
-            if (projectId.equals("0")) {
-                return;
-            }
-            Project project = projectService.filterProjectBYId(projectId);
-            if (project == null) {
-                System.out.println("Project not found.");
-                continue;
-            }
-            displayProjectDetails(project);
+            if (handleManageTasks()) return;
         }
     }
 
+    public static Project[] getFilteredProjects(){
+        int filterChoice = ValidationUtils.getValidInt("Enter Filter choice: ", 1, 5);
+
+        Project[] filteredProjects = null;
+        switch (filterChoice) {
+            case 1:
+                filteredProjects = Project.getAllProjects();
+                break;
+            case 2:
+                String type = ValidationUtils.getValidType("Enter Project type (Hardware/Software): ");
+                Project newProject = createProject(type);
+                projectService.addProject(newProject);
+                filteredProjects = Project.getAllProjects();
+                break;
+            case 3:
+                filteredProjects = projectService.filterProject("SOFTWARE");
+                break;
+            case 4:
+                filteredProjects = projectService.filterProject("HARDWARE");
+                break;
+            case 5:
+                int minBudget = ValidationUtils.getValidInt("Enter min budget: ", 0);
+                int maxBudget = ValidationUtils.getValidInt("Enter max budget: ", minBudget);
+                filteredProjects = projectService.filterProject(minBudget, maxBudget);
+                break;
+        }
+        return filteredProjects;
+    }
 
     private static void displayProjectDetails(Project project) {
         while (true) {
@@ -116,7 +110,7 @@ public class ConsoleMenu {
                     "Budget: $" + project.getBudget()};
             printText(detailsProject);
 
-            Task[] tasks = taskService.geProjectTasks(project.getId());
+            Task[] tasks = taskService.getProjectTasks(project.getId());
             if (tasks != null && tasks.length > 0) {
                 System.out.printf("%-6s | %-20s | %-10s\n", "ID", "Task Name", "Status");
                 System.out.println("---------------------------------------");
@@ -128,27 +122,32 @@ public class ConsoleMenu {
             } else {
                 System.out.println("No tasks assigned.");
             }
-
             double completion = statusReport.completionPercentage(project);
             System.out.println("Completion Rate: " + String.format("%.0f%%", completion));
-            String[] options = {"Options:", "1. Add New Task", "2. Update Task Status", "3. Remove Task", "4. Back to Main Menu"};
-            printText(options);
-            int choice = ValidationUtils.getValidInt("Enter your choice: ", 1, 4);
 
-            switch (choice) {
-                case 1:
-                    addNewTask(project.getId());
-                    break;
-                case 2:
-                    updateTaskStatus(project.getId());
-                    break;
-                case 3:
-                    removeTask(project.getId());
-                    break;
-                case 4:
-                    return;
-            }
+            if (taskDetailsPrompt(project)) return;
         }
+    }
+
+    private static boolean taskDetailsPrompt(Project project) {
+        String[] options = {"Options:", "1. Add New Task", "2. Update Task Status", "3. Remove Task", "4. Back to Main Menu"};
+        printText(options);
+        int choice = ValidationUtils.getValidInt("Enter your choice: ", 1, 4);
+
+        switch (choice) {
+            case 1:
+                addNewTask(project.getId());
+                break;
+            case 2:
+                updateTaskStatus(project.getId());
+                break;
+            case 3:
+                removeTask(project.getId());
+                break;
+            case 4:
+                return true;
+        }
+        return false;
     }
 
     private static Project createProject(String projectType) {
@@ -189,13 +188,14 @@ public class ConsoleMenu {
         System.out.println("Task removed successfully.");
     }
 
-    private static void handleManageTasks() {
+    private static boolean handleManageTasks() {
         String projectId = ValidationUtils.getValidId("Enter Project ID to view details (or 0 to return): ", 'P');
         if (projectId.equals("0")) {
-            return;
+            return true;
         }
         Project project = projectService.filterProjectBYId(projectId);
         displayProjectDetails(project);
+        return false;
     }
 
     private static void handleViewStatusReports() {
@@ -221,7 +221,6 @@ public class ConsoleMenu {
     public static void printHeader(String title, String data) {
         int padding = 2;
         int width = title.length() + data.length() + padding * 2;
-
         headerBuilder(title, width);
     }
 
