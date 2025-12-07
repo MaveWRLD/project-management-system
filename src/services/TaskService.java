@@ -76,10 +76,9 @@ public class TaskService {
     private static int getElementsSize(Task[] tasks) {
         int elementsSize = 0;
         for (Task oldTask : tasks) {
-            if (oldTask == null) {
-                continue;
+            if (oldTask != null) {
+                elementsSize++;
             }
-            elementsSize++;
         }
         return elementsSize;
     }

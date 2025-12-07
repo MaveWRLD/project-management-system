@@ -10,13 +10,12 @@ public class ReportService {
         StatusReport[] reports = new StatusReport[100];
         int i = 0;
         for (Project project : projects){
-            if (project == null){
-                continue;
-            }
-            for (Task task : project.getTasks())
-                if (task != null){
-                    reports[i] = new StatusReport(project.getId(), project.getName(), totalTask(project), completedTasks(project), completionPercentage(project));
-                }
+            if (project != null){
+               for (Task task : project.getTasks())
+                    if (task != null){
+                        reports[i] = new StatusReport(project.getId(), project.getName(), totalTask(project), completedTasks(project), completionPercentage(project));
+                    }
+               }
             ++i;
         }
         return reports;
@@ -25,10 +24,9 @@ public class ReportService {
     public int totalTask(Project project){
         int totalTask = 0;
         for (Task task : project.getTasks()){
-            if (task == null){
-                continue;
+            if (task != null) {
+                ++totalTask;
             }
-            ++totalTask;
         }
         return  totalTask;
     }
@@ -36,10 +34,7 @@ public class ReportService {
     public int completedTasks(Project project){
         int completed = 0;
         for (Task task : project.getTasks()){
-            if (task == null){
-                continue;
-            }
-            if (task.isCompleted()){
+            if (task != null && task.isCompleted()){
                 ++completed;
             }
         }
@@ -58,7 +53,7 @@ public class ReportService {
         float totalPercentageCount = 0;
         float sumOfPercentages = 0;
         for (Project project : projects) {
-            if (project == null) continue;
+            if (project != null) continue;
             for (Task task : project.getTasks())
                 if (task != null){
                 float percent = completionPercentage(project);
@@ -69,5 +64,4 @@ public class ReportService {
         if (totalPercentageCount == 0) return 0;
         return sumOfPercentages / totalPercentageCount;
     }
-
 }

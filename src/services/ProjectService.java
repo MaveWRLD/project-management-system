@@ -16,10 +16,7 @@ public class ProjectService {
         Project[] filteredProjects = new Project[projects.length];
         int i = 0;
         for (Project project : projects){
-            if (project == null){
-                continue;
-            }
-            if (project.getType().equals(projectType)){
+            if (project != null && project.getType().equals(projectType)){
                filteredProjects[i] = project;
                i++;
             }
@@ -31,10 +28,7 @@ public class ProjectService {
         Project[] filteredProjects = new Project[projects.length];
         int i = 0;
         for (Project project : projects){
-            if (project == null){
-                continue;
-            }
-            if (project.getBudget() > minBudget && project.getBudget() < maxBudget){
+            if (project != null && project.getBudget() > minBudget && project.getBudget() < maxBudget){
                 filteredProjects[i] = project;
                 i++;
             }
@@ -45,10 +39,7 @@ public class ProjectService {
     public Project filterProjectBYId(String projectID){
         Project filteredProjects = null;
         for (Project project : projects){
-            if (project == null){
-                continue;
-            }
-            if (project.getId().equals(projectID)){
+            if (project != null && project.getId().equals(projectID)){
                 filteredProjects = project;
                 break;
             }
