@@ -8,7 +8,7 @@ public class SoftwareProject extends Project {
     private String versioning;
 
     public SoftwareProject(String name, String description, int budget, int teamSize, String technology, String domain, String versioning) {
-        super(name, "Software", description, budget, teamSize);
+        super(name, "SOFTWARE", description, budget, teamSize);
         this.technology = technology;
         this.domain = domain;
         this.versioning = versioning;

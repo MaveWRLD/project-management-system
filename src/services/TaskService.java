@@ -25,7 +25,7 @@ public class TaskService {
         return newTask;
     }
 
-    public Task[] geProjectTasks(String projectId) {
+    public Task[] getProjectTasks(String projectId) {
         Project project = projectService.filterProjectBYId(projectId);
         Task[] tasks = project.getTasks();
         if (tasks == null || tasks.length == 0) {
