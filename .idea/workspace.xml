@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1ff1f1f6-41ad-499a-b591-4d26bfd4925c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/project.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
+    <list default="true" id="1ff1f1f6-41ad-499a-b591-4d26bfd4925c" name="Changes" comment="fixup! refactor: move role based check for removing task to subclass for polymorphism">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Project.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/ProjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/ProjectService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/ReportService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/ReportService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/HardwareProject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/HardwareProject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/TaskService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/ConsoleMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/ConsoleMenu.java" afterDir="false" />
     </list>
@@ -21,6 +18,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitRewordedCommitMessages">
+    <option name="onto" value="2ec6f9b6f3315613e296e9feef7db8c5094c202a" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -40,9 +40,24 @@
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;refactor/module-2&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="services" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="project-management-system" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -58,6 +73,31 @@
       <option name="presentableId" value="Default" />
       <updated>1764847613623</updated>
     </task>
+    <task id="LOCAL-00001" summary="refactor: move role based check for removing task to subclass for polymorphism">
+      <option name="closed" value="true" />
+      <created>1765118351276</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1765118351276</updated>
+    </task>
+    <task id="LOCAL-00002" summary="refactor: change if &quot;==&quot; null checks into &quot;!=&quot; checks">
+      <option name="closed" value="true" />
+      <created>1765118625291</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1765118625291</updated>
+    </task>
+    <task id="LOCAL-00003" summary="refactor: correct naming">
+      <option name="closed" value="true" />
+      <created>1765118767200</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1765118767200</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -65,21 +105,24 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="false" />
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
     </option>
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/services/ProjectService.java</url>
-          <line>9</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Fix: Change the project structure" />
+    <MESSAGE value="refactor: change if &quot;==&quot; null checks into &quot;!=&quot; checks" />
+    <MESSAGE value="fixup! refactor: move role based check for removing task to subclass for polymorphism" />
+    <MESSAGE value="refactor: move role based check for removing task to subclass for polymorphism" />
+    <MESSAGE value="refactor: correct naming" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor: correct naming" />
   </component>
 </project>

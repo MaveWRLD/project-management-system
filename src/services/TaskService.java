@@ -37,25 +37,12 @@ public class TaskService {
 
     public void updateTaskStatus(String projectID, Status status, String taskID){
         Project project = projectService.filterProjectBYId(projectID);
-        Task[] tasks = geProjectTasks(projectID);
+        Task[] tasks = getProjectTasks(projectID);
         int taskIndex = getTaskIndex(project, taskID);
         tasks[taskIndex].setStatus(status);
     }
 
-    public void removeTask(User user, String projectID, String taskId){
-        if (user != null && user.getRole().equals("Admin")){
-            Project project = projectService.filterProjectBYId(projectID);
-            int taskIndex = getTaskIndex(project, taskId);
-            for (int i = taskIndex; i < project.getTasks().length -1; i++) {
-                project.getTasks()[i] = project.getTasks()[i + 1];
-            }
-            int lastIndex = project.getTasks().length - 1;
-            project.getTasks()[lastIndex] = null;
-        }
-        System.out.println("You are not allowed to perform this action");
-    }
-
-    private int getTaskIndex(Project project, String taskId){
+    public int getTaskIndex(Project project, String taskId){
         for (int i = 0; i <  project.getTasks().length; i++){
             if (project.getTasks()[i] != null && project.getTasks()[i].getTaskID().equals(taskId)){
                 return i;

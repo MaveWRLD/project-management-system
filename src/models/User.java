@@ -7,20 +7,22 @@ public abstract class User {
     private String id;
     private String name;
     private String email;
-    private String role;
+
 
     private IDGenerator idGenerator = new IDGenerator();
 
-    public User(String name, String email, String role) {
+    public User(String name, String email) {
         this.id = idGenerator.setID('U');
         this.name = name;
         this.email = email;
-        this.role = role;
     }
 
     public void login(){
-
     }
+
+    public void removeTask(String projectID, String taskId){
+        throw new UnsupportedOperationException("You are not allowed to perform this action");
+    };
 
     public String getName() {
         return name;
@@ -34,13 +36,10 @@ public abstract class User {
         return email;
     }
 
-    public String getRole() {
-        return role;
-    }
-
     public IDGenerator getIdGenerator() {
         return idGenerator;
     }
 
-    //public abstract roleBehavior();
+    public abstract String getRole();
+
 }

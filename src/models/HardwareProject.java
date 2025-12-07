@@ -8,7 +8,7 @@ public class HardwareProject extends Project {
 
 
     public HardwareProject(String name, String description, int budget, int teamSize, String component, float weight) {
-        super(name, "Hardware", description, budget, teamSize);
+        super(name, "HARDWARE", description, budget, teamSize);
         this.component = component;
         this.weight = weight;
     }
