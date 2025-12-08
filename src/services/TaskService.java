@@ -9,7 +9,7 @@ import utils.exceptions.TaskNotFoundException;
 
 public class TaskService {
 
-    private ProjectService projectService = new ProjectService();
+    private final ProjectService projectService = new ProjectService();
 
     public void addTaskToProject(String projectId, String name, Status status){
         try {
