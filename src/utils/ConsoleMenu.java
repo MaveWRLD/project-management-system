@@ -6,6 +6,10 @@ import services.ProjectService;
 import services.ReportService;
 import services.TaskService;
 import services.UserService;
+import utils.exceptions.EmptyProjectException;
+import utils.exceptions.ProjectNotCreatedException;
+import utils.exceptions.ProjectNotFoundException;
+import utils.exceptions.TaskNotFoundException;
 
 public class ConsoleMenu {
 
@@ -57,24 +61,23 @@ public class ConsoleMenu {
                     "5. Search by Budget Range",
             };
             printText(options);
-            Project[] filteredProjects = getFilteredProjects();
-
-            if (filteredProjects == null || filteredProjects.length == 0) {
-                System.out.println("No projects found.");
-            } else {
+            try {
+                Project[] filteredProjects = getFilteredProjects();
                 System.out.printf("%-6s | %-20s | %-10s | %-8s | %-10s\n", "ID", "Project Name", "Type", "Team Size", "Budget");
                 System.out.println("------------------------------------------------------------");
                 for (Project project : filteredProjects) {
-                    if (project != null) {
-                        System.out.printf("%-6s | %-20s | %-10s | %-8d | $%-9d\n", project.getId(), project.getName(), project.getType(), project.getTeamSize(), project.getBudget());
-                    }
+                if (project != null) {
+                    System.out.printf("%-6s | %-20s | %-10s | %-8d | $%-9d\n", project.getId(), project.getName(), project.getType(), project.getTeamSize(), project.getBudget());
                 }
             }
             if (handleManageTasks()) return;
+            } catch (ProjectNotCreatedException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 
-    public static Project[] getFilteredProjects(){
+    public static Project[] getFilteredProjects() throws ProjectNotCreatedException {
         int filterChoice = ValidationUtils.getValidInt("Enter Filter choice: ", 1, 5);
 
         Project[] filteredProjects = null;
@@ -112,6 +115,9 @@ public class ConsoleMenu {
 
             Task[] tasks = taskService.getProjectTasks(project.getId());
             if (tasks != null && tasks.length > 0) {
+            try {
+                Task[] tasks = taskService.getProjectTasks(project.getId());
+
                 System.out.printf("%-6s | %-20s | %-10s\n", "ID", "Task Name", "Status");
                 System.out.println("---------------------------------------");
                 for (Task task : tasks) {
@@ -119,11 +125,12 @@ public class ConsoleMenu {
                         System.out.printf("%-6s | %-20s | %-10s\n", task.getTaskID(), task.getName(), task.getStatus());
                     }
                 }
-            } else {
-                System.out.println("No tasks assigned.");
+
+                double completion = statusReport.completionPercentage(project.getId());
+                System.out.println("Completion Rate: " + String.format("%.0f%%", completion));
+            } catch (EmptyProjectException e) {
+                System.out.println(e.getMessage());
             }
-            double completion = statusReport.completionPercentage(project);
-            System.out.println("Completion Rate: " + String.format("%.0f%%", completion));
 
             if (taskDetailsPrompt(project)) return;
         }
@@ -178,14 +185,22 @@ public class ConsoleMenu {
     private static void updateTaskStatus(String projectID) {
         String taskId = ValidationUtils.getValidId("Enter Task ID: ", 'T');
         Status newStatus = ValidationUtils.getValidStatus("Enter new status: ");
-        taskService.updateTaskStatus(projectID, newStatus, taskId);
-        System.out.println("Task \"" + taskId + "\" marked as " + newStatus + ".");
+        try{
+            taskService.updateTaskStatus(projectID, newStatus, taskId);
+            System.out.println("Task \"" + taskId + "\" marked as " + newStatus + ".");
+        } catch (TaskNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private static void removeTask(String projectID) {
         String taskId = ValidationUtils.getValidId("Enter Task ID to remove: ", 'T');
-        taskService.removeTask(currentUser, projectID, taskId);
-        System.out.println("Task removed successfully.");
+        try {
+            currentUser.removeTask(projectID, taskId);
+            System.out.println("Task removed successfully.");
+        } catch (UnsupportedOperationException | TaskNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private static boolean handleManageTasks() {
@@ -193,8 +208,13 @@ public class ConsoleMenu {
         if (projectId.equals("0")) {
             return true;
         }
-        Project project = projectService.filterProjectBYId(projectId);
-        displayProjectDetails(project);
+        Project project;
+        try {
+            project = projectService.filterProjectBYId(projectId);
+            displayProjectDetails(project);
+        } catch (ProjectNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
         return false;
     }
 

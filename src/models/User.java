@@ -2,6 +2,7 @@ package models;
 // Abstract base class
 
 import utils.IDGenerator;
+import utils.exceptions.TaskNotFoundException;
 
 public abstract class User {
     private String id;
@@ -20,7 +21,7 @@ public abstract class User {
     public void login(){
     }
 
-    public void removeTask(String projectID, String taskId){
+    public void removeTask(String projectID, String taskId) throws TaskNotFoundException {
         throw new UnsupportedOperationException("You are not allowed to perform this action");
     };
 

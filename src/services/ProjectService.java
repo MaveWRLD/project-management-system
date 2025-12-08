@@ -1,10 +1,20 @@
 package services;
 
 import models.Project;
+import utils.exceptions.ProjectNotCreatedException;
+import utils.exceptions.ProjectNotFoundException;
 
 public class ProjectService {
 
     private Project[] projects = Project.getAllProjects();
+
+
+    public Project[] allProjects() throws ProjectNotCreatedException {
+        if (getElementsSize(projects) == 0){
+            throw new ProjectNotCreatedException("No Projects created");
+        }
+        return projects;
+    }
 
     public void addProject(Project project) {
         projects = resizeProjectsSizeIfFull(projects);
@@ -36,15 +46,13 @@ public class ProjectService {
         return filteredProjects;
     }
 
-    public Project filterProjectBYId(String projectID){
-        Project filteredProjects = null;
+    public Project filterProjectBYId(String projectID) throws ProjectNotFoundException {
         for (Project project : projects){
             if (project != null && project.getId().equals(projectID)){
-                filteredProjects = project;
-                break;
+                return project;
             }
         }
-        return filteredProjects;
+        throw new ProjectNotFoundException(projectID);
     }
 
     private static int getFirstNullIndex(Project[] projects) {
@@ -56,7 +64,7 @@ public class ProjectService {
         return -1;
     }
 
-    private static Project[] resizeProjectsSizeIfFull(Project[] projects) {
+    private Project[] resizeProjectsSizeIfFull(Project[] projects) {
         int elementsSize = getElementsSize(projects);
         if (projects.length == elementsSize) {
             Project[] newProjects = new Project[elementsSize * 2];
@@ -66,7 +74,7 @@ public class ProjectService {
         return projects;
     }
 
-    private static int getElementsSize(Project[] projects) {
+    public int getElementsSize(Project[] projects) {
         int elementsSize = 0;
         for (Project oldProject : projects) {
             if (oldProject != null) {

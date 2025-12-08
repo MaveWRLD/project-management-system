@@ -1,6 +1,7 @@
 package models;
 
 import utils.IDGenerator;
+import utils.exceptions.EmptyProjectException;
 
 public abstract class Project {
 
