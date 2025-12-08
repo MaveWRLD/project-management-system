@@ -54,7 +54,7 @@ public class ConsoleMenu {
         while (true) {
             printHeader("PROJECT CATALOG");
             String[] options = {"Filter Options: ",
-                    "1. View All Projects " +"(" + Project.getAllProjects().length + ")",
+                    "1. View All Projects " +"(" + projectService.getElementsSize(Project.getAllProjects()) + ")",
                     "2. Add Project",
                     "3. Software Projects Only",
                     "4. Hardware Projects Only",
@@ -83,13 +83,13 @@ public class ConsoleMenu {
         Project[] filteredProjects = null;
         switch (filterChoice) {
             case 1:
-                filteredProjects = Project.getAllProjects();
+                filteredProjects = projectService.allProjects();
                 break;
             case 2:
                 String type = ValidationUtils.getValidType("Enter Project type (Hardware/Software): ");
                 Project newProject = createProject(type);
                 projectService.addProject(newProject);
-                filteredProjects = Project.getAllProjects();
+                filteredProjects = projectService.allProjects();
                 break;
             case 3:
                 filteredProjects = projectService.filterProject("SOFTWARE");
@@ -113,8 +113,6 @@ public class ConsoleMenu {
                     "Budget: $" + project.getBudget()};
             printText(detailsProject);
 
-            Task[] tasks = taskService.getProjectTasks(project.getId());
-            if (tasks != null && tasks.length > 0) {
             try {
                 Task[] tasks = taskService.getProjectTasks(project.getId());
 

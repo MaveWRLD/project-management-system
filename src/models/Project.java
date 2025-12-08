@@ -1,7 +1,6 @@
 package models;
 
 import utils.IDGenerator;
-import utils.exceptions.EmptyProjectException;
 
 public abstract class Project {
 
@@ -80,9 +79,7 @@ public abstract class Project {
     }
 
     public Task[] getTasks() {
-        if (tasks != null)
             return tasks;
-        return new Task[5];
     }
 
     public String generateTaskId() {

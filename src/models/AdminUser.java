@@ -20,7 +20,8 @@ public class AdminUser extends User{
         try {
             Project project = projectService.filterProjectBYId(projectID);
             int taskIndex = taskService.getTaskIndex(project, taskId);
-            for (int i = taskIndex; i < project.getTasks().length -1; i++) {
+            Task[] tasks = taskService.getProjectTasks(projectID);
+            for (int i = taskIndex; i < tasks.length -1; i++) {
                 project.getTasks()[i] = project.getTasks()[i + 1];
             }
             int lastIndex = project.getTasks().length - 1;

@@ -6,6 +6,7 @@ import models.Task;
 import utils.exceptions.EmptyProjectException;
 
 public class ReportService {
+    TaskService taskService = new TaskService();
 
     public StatusReport[] generateReport(Project[] projects){
         StatusReport[] reports = new StatusReport[100];
@@ -66,16 +67,6 @@ public class ReportService {
     public float completionAverage(Project[] projects) {
         float totalPercentageCount = 0;
         float sumOfPercentages = 0;
-        for (Project project : projects) {
-            if (project != null) continue;
-            for (Task task : project.getTasks())
-                if (task != null){
-                float percent = completionPercentage(project);
-                    sumOfPercentages += percent;
-                    totalPercentageCount++;
-                }
-        }
-        if (totalPercentageCount == 0) return 0;
         try {
             for (Project project : projects) {
                 if (project != null){
