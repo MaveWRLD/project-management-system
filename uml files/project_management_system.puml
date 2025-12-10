@@ -1,0 +1,238 @@
+@startuml
+title Project Management System - Full UML (Models + Services + Utils + ConsoleMenu)
+
+' =======================
+' MODELS
+' =======================
+package "models" {
+
+  abstract class Project {
+    - id: String
+    - name: String
+    - description: String
+    - budget: int
+    - type: String
+    - teamSize: int
+    - tasks: Task[]
+    --
+    + Project(name, type, description, budget, teamSize)
+    + getProjectDetails(): String[]
+    + getTasks(): Task[]
+    + addTask(task: Task): void
+  }
+
+  class SoftwareProject extends Project {
+    - technology: String
+    - domain: String
+    - versioning: String
+    --
+    + getProjectDetails(): String[]
+  }
+
+  class HardwareProject extends Project {
+    - component: String
+    - weight: float
+    --
+    + getProjectDetails(): String[]
+  }
+
+  class Task {
+    - taskID: String
+    - name: String
+    - status: utils.Status
+    --
+    + isCompleted(): boolean
+  }
+
+  abstract class User {
+    - id: String
+    - name: String
+    - email: String
+    --
+    + login(): void
+    + removeTask(projectID: String, taskId: String): void
+    + getRole(): String
+  }
+
+  class AdminUser extends User {
+    ~ projectService: services.ProjectService
+    ~ taskService: services.TaskService
+    --
+    + removeTask(projectID: String, taskId: String): void
+    + getRole(): String
+  }
+
+  class RegularUser extends User {
+    + getRole(): String
+  }
+
+  class StatusReport {
+    - projectID: String
+    - projectName: String
+    - totalTasks: int
+    - completedTasks: int
+    - completionPercentage: float
+    --
+    + StatusReport(id, name, total, completed, percentage)
+  }
+}
+
+' =======================
+' INTERFACES
+' =======================
+package "interfaces" {
+  interface Completable {
+    + isCompleted(): boolean
+  }
+}
+
+' =======================
+' SERVICES
+' =======================
+package "services" {
+
+  class ProjectService {
+    - projects: models.Project[]
+    --
+    + allProjects(): Project[] <<throws utils.exceptions.ProjectNotCreatedException>>
+    + addProject(project: Project): void
+    + filterProject(type: String): Project[]
+    + filterProject(min: int, max: int): Project[]
+    + filterProjectById(id: String): Project <<throws utils.exceptions.ProjectNotFoundException>>
+  }
+
+  class TaskService {
+    - projectService: ProjectService
+    --
+    + addTaskToProject(projectId, name, status): void
+    + updateTaskStatus(projectId, taskId, status): void <<throws utils.exceptions.TaskNotFoundException>>
+    + getProjectTasks(projectId): Task[] <<throws utils.exceptions.EmptyProjectException>>
+    + getTaskIndex(project: models.Project, taskId: String): int <<throws utils.exceptions.TaskNotFoundException>>
+  }
+
+  class ReportService {
+    - taskService: TaskService
+    --
+    + generateReport(projects: Project[]): StatusReport[]
+    + completionPercentage(projectId: String): float <<throws utils.exceptions.EmptyProjectException>>
+  }
+
+  class UserService {
+    {static} adminUser: models.User
+    {static} regularUser: models.User
+    --
+    + switchUser(currentUser: models.User): models.User
+  }
+}
+
+' =======================
+' UTILS
+' =======================
+package "utils" {
+
+  enum Status {
+    PENDING
+    IN_PROGRESS
+    COMPLETED
+  }
+
+  class ValidationUtils {
+    {static} + getValidInt(prompt: String, min: int, max: int): int
+    {static} + getValidInt(prompt: String, min: double): int
+    {static} + getValidString(prompt: String): String
+    {static} + getValidType(prompt: String): String
+    {static} + getValidStatus(prompt: String): Status
+    {static} + getValidId(prompt: String, prefix: char): String
+    {static} - isValidId(id: String, prefix: char): boolean
+  }
+
+  class ConsoleMenu {
+    {static} - projectService: services.ProjectService
+    {static} - taskService: services.TaskService
+    {static} - userService: services.UserService
+    {static} - currentUser: models.User
+    {static} - statusReport: services.ReportService
+    --
+    + run(): void
+    - displayMainMenu(): void
+    - handleManageProjects(): void
+    - getFilteredProjects(): models.Project[]
+    - displayProjectDetails(project: models.Project): void
+    - taskDetailsPrompt(project: models.Project): boolean
+    - createProject(projectType: String): models.Project
+    - addNewTask(projectId: String): void
+    - updateTaskStatus(projectId: String): void
+    - removeTask(projectId: String): void
+    - handleManageTasks(): boolean
+    - handleViewStatusReports(): void
+    - printHeader(title: String, data: String): void
+    - printHeader(title: String): void
+    - headerBuilder(title: String, width: int): void
+    - printText(options: String[]): void
+  }
+
+  package "exceptions" {
+    class InvalidInputException
+    class TaskNotFoundException
+    class ProjectNotFoundException
+    class EmptyProjectException
+    class ProjectNotCreatedException
+  }
+}
+
+' =======================
+' RELATIONSHIPS
+' =======================
+
+' --- Inheritance / Interface ---
+models.SoftwareProject --|> models.Project
+models.HardwareProject --|> models.Project
+models.AdminUser --|> models.User
+models.RegularUser --|> models.User
+models.Task ..|> interfaces.Completable
+
+' --- Composition / Aggregation ---
+models.Project o-- models.Task : contains
+
+services.TaskService *-- services.ProjectService
+services.ReportService *-- services.TaskService
+models.AdminUser *-- services.ProjectService
+models.AdminUser *-- services.TaskService
+services.UserService *-- models.AdminUser
+services.UserService *-- models.RegularUser
+
+' --- Dependencies / Uses ---
+ConsoleMenu ..> services.ProjectService
+ConsoleMenu ..> services.TaskService
+ConsoleMenu ..> services.ReportService
+ConsoleMenu ..> services.UserService
+ConsoleMenu ..> models.Project
+ConsoleMenu ..> models.Task
+ConsoleMenu ..> models.User
+ConsoleMenu ..> utils.ValidationUtils
+ConsoleMenu ..> utils.Status
+ConsoleMenu ..> utils.exceptions.ProjectNotCreatedException
+ConsoleMenu ..> utils.exceptions.ProjectNotFoundException
+ConsoleMenu ..> utils.exceptions.TaskNotFoundException
+ConsoleMenu ..> utils.exceptions.EmptyProjectException
+
+utils.ValidationUtils ..> utils.Status
+utils.ValidationUtils ..> utils.exceptions.InvalidInputException
+
+' --- Exception relationships ---
+services.ProjectService ..> utils.exceptions.ProjectNotFoundException : throws
+services.ProjectService ..> utils.exceptions.ProjectNotCreatedException : throws
+
+services.TaskService ..> utils.exceptions.TaskNotFoundException : throws
+services.TaskService ..> utils.exceptions.EmptyProjectException : throws
+services.TaskService ..> utils.exceptions.ProjectNotFoundException : catches
+
+services.ReportService ..> utils.exceptions.EmptyProjectException : throws
+
+models.AdminUser ..> utils.exceptions.TaskNotFoundException : throws
+models.AdminUser ..> utils.exceptions.ProjectNotFoundException : catches
+models.AdminUser ..> utils.exceptions.EmptyProjectException : catches
+
+models.User ..> utils.exceptions.TaskNotFoundException : declares
+
+@enduml
