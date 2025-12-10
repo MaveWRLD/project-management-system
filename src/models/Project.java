@@ -12,10 +12,14 @@ public abstract class Project {
     private int teamSize;
     private Task[] tasks;
 
+    private static int projectCounter = 1;
+
+    private int taskCounter = 1;
+
 
     public Project(String name, String type, String description, int budget, int teamSize) {
-        IDGenerator idGenerator = new IDGenerator();
-        this.id = idGenerator.setID('P');
+
+        this.id = generateProjectId();
         this.name = name;
         this.type = type;
         this.description = description;
@@ -23,14 +27,14 @@ public abstract class Project {
         this.teamSize = teamSize;
     }
 
-    public static void displayProjects(){
-        System.out.println("ID  | NAME | BUDGET ");
-        for (Project project : allProjects) {
-            if (project != null){
-                System.out.println(project.id + " | " + project.name + " | " + project.budget);
-            }
-        }
-    }
+//    public static void displayProjects(){
+//        System.out.println("ID  | NAME | BUDGET ");
+//        for (Project project : allProjects) {
+//            if (project != null){
+//                System.out.println(project.id + " | " + project.name + " | " + project.budget);
+//            }
+//        }
+//    }
     @Override
     public String toString(){
         return getName();
@@ -46,7 +50,6 @@ public abstract class Project {
     public String getName() {
         return name;
     }
-
 
     public String getDescription() {
         return description;
@@ -72,8 +75,11 @@ public abstract class Project {
             return tasks;
     }
 
+    public String generateProjectId() {
+        return "P" + String.format("%03d", projectCounter++);
+    }
+
     public String generateTaskId() {
-        IDGenerator taskIdGenerator = new IDGenerator();
-        return taskIdGenerator.setID('T');
+        return "T" + String.format("%03d", taskCounter++);
     }
 }

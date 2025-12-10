@@ -1,6 +1,7 @@
 package services;
 
 import models.*;
+import utils.IDGenerator;
 import utils.ResizeUtils;
 import utils.Status;
 import utils.exceptions.EmptyProjectException;
@@ -39,7 +40,7 @@ public class TaskService {
     }
 
     public Task[] getProjectTasks(String projectId) throws EmptyProjectException {
-        Project project = null;
+        Project project;
         Task[] tasks = null;
         try {
             project = projectService.filterProjectBYId(projectId);

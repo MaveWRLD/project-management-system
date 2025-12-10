@@ -13,16 +13,23 @@ import utils.exceptions.TaskNotFoundException;
 
 public class ConsoleMenu {
 
-    private static final ProjectService projectService = new ProjectService();
-    private static final TaskService taskService = new TaskService(projectService);
-    private static final ReportService statusReport = new ReportService(taskService);
+    private ProjectService projectService;
+    private TaskService taskService;
+    private ReportService statusReport;
+    private UserService userService;
 
-    private static final UserService userService = new UserService(projectService, taskService);
+    private User currentUser;
 
-    private static User currentUser = userService.getAdminUser();
+    public ConsoleMenu(ProjectService projectService, TaskService taskService, ReportService statusReport, UserService userService, User currentUser) {
+        this.projectService = projectService;
+        this.taskService = taskService;
+        this.statusReport = statusReport;
+        this.userService = userService;
+        this.currentUser = currentUser;
+    }
 
 
-    public static void run() {
+    public void run() {
         while (true) {
             displayMainMenu();
             int choice = ValidationUtils.getValidInt("Enter your choice: ", 1, 5);
@@ -46,18 +53,24 @@ public class ConsoleMenu {
         }
     }
 
-    private static void displayMainMenu() {
+    private void displayMainMenu() {
         printHeader("JAVA PROJECT MANAGEMENT SYSTEM");
         System.out.println("Current User: " + currentUser.getName() + " (" + currentUser.getRole() + ")");
         String[] options = {"1. Manage Projects", "2. Manage Tasks", "3. View Status Reports", "4. Switch User", "5. Exit"};
         printText(options);
     }
 
-    private static void handleManageProjects() {
+    private void handleManageProjects() {
+        Project[] projects = new Project[0];
+        try {
+            projects = projectService.allProjects();
+        } catch (ProjectsNotCreatedException e) {
+            System.out.println(e.getMessage());
+        }
         while (true) {
             printHeader("PROJECT CATALOG");
             String[] options = {"Filter Options: ",
-                    "1. View All Projects " +"(" + projectService.getElementsSize(Project.getAllProjects()) + ")",
+                    "1. View All Projects " +"(" + ResizeUtils.countElements(projects) + ")",
                     "2. Add Project",
                     "3. Software Projects Only",
                     "4. Hardware Projects Only",
@@ -72,7 +85,7 @@ public class ConsoleMenu {
                 if (project != null) {
                     System.out.printf("%-6s | %-20s | %-10s | %-8d | $%-9d\n", project.getId(), project.getName(), project.getType(), project.getTeamSize(), project.getBudget());
                 }
-            }
+                }
             if (handleManageTasks()) return;
             } catch (ProjectsNotCreatedException e) {
                 System.out.println(e.getMessage());
@@ -80,7 +93,7 @@ public class ConsoleMenu {
         }
     }
 
-    public static Project[] getFilteredProjects() throws ProjectsNotCreatedException {
+    public Project[] getFilteredProjects() throws ProjectsNotCreatedException {
         int filterChoice = ValidationUtils.getValidInt("Enter Filter choice: ", 1, 5);
 
         Project[] filteredProjects = null;
@@ -109,7 +122,7 @@ public class ConsoleMenu {
         return filteredProjects;
     }
 
-    private static void displayProjectDetails(Project project) {
+    private void displayProjectDetails(Project project) {
         while (true) {
             printHeader("PROJECT DETAILS: ", project.getId());
             String[] detailsProject = {"Project Name: " + project.getName(), "Type: " + project.getType(), "Team Size: " + project.getTeamSize(),
@@ -137,7 +150,7 @@ public class ConsoleMenu {
         }
     }
 
-    private static boolean taskDetailsPrompt(Project project) {
+    private boolean taskDetailsPrompt(Project project) {
         String[] options = {"Options:", "1. Add New Task", "2. Update Task Status", "3. Remove Task", "4. Back to Main Menu"};
         printText(options);
         int choice = ValidationUtils.getValidInt("Enter your choice: ", 1, 4);
@@ -176,14 +189,14 @@ public class ConsoleMenu {
     }
 
 
-    private static void addNewTask(String projectId) {
+    private void addNewTask(String projectId) {
         printHeader(("ADD NEW TASK"));
         String name = ValidationUtils.getValidString("Enter task name: ");
         Status status = ValidationUtils.getValidStatus("Enter initial status (Pending/In Progress/Completed): ");
         taskService.addTaskToProject(projectId, name, status);
     }
 
-    private static void updateTaskStatus(String projectID) {
+    private void updateTaskStatus(String projectID) {
         String taskId = ValidationUtils.getValidId("Enter Task ID: ", 'T');
         Status newStatus = ValidationUtils.getValidStatus("Enter new status: ");
         try{
@@ -194,7 +207,7 @@ public class ConsoleMenu {
         }
     }
 
-    private static void removeTask(String projectID) {
+    private void removeTask(String projectID) {
         String taskId = ValidationUtils.getValidId("Enter Task ID to remove: ", 'T');
         try {
             currentUser.removeTask(projectID, taskId);
@@ -204,7 +217,7 @@ public class ConsoleMenu {
         }
     }
 
-    private static boolean handleManageTasks() {
+    private boolean handleManageTasks() {
         String projectId = ValidationUtils.getValidId("Enter Project ID to view details (or 0 to return): ", 'P');
         if (projectId.equals("0")) {
             return true;
@@ -219,7 +232,7 @@ public class ConsoleMenu {
         return false;
     }
 
-    private static void handleViewStatusReports() {
+    private void handleViewStatusReports() {
         Project[] projects = null;
         try {
             projects = projectService.allProjects();

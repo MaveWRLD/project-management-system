@@ -7,10 +7,10 @@ public abstract class User {
     private String id;
     private String name;
     private String email;
+    private static int userCounter;
 
     public User(String name, String email) {
-        IDGenerator idGenerator = new IDGenerator();
-        this.id = idGenerator.setID('U');
+        this.id = generateTaskId();
         this.name = name;
         this.email = email;
     }
@@ -18,6 +18,10 @@ public abstract class User {
     public void removeTask(String projectID, String taskId) throws TaskNotFoundException {
         throw new UnsupportedOperationException("You are not allowed to perform this action");
     };
+
+    public String generateTaskId() {
+        return "T" + String.format("%03d", userCounter++);
+    }
 
     public String getName() {
         return name;
