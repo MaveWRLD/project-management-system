@@ -21,7 +21,7 @@ public class UserService {
 
     public User switchUser(User currentUser){
         if (currentUser instanceof AdminUser)
-           return regularUser;
+            return regularUser;
         return adminUser;
     }
 

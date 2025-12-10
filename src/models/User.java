@@ -1,5 +1,4 @@
 package models;
-// Abstract base class
 
 import utils.IDGenerator;
 import utils.exceptions.TaskNotFoundException;
@@ -9,16 +8,11 @@ public abstract class User {
     private String name;
     private String email;
 
-
-    private IDGenerator idGenerator = new IDGenerator();
-
     public User(String name, String email) {
+        IDGenerator idGenerator = new IDGenerator();
         this.id = idGenerator.setID('U');
         this.name = name;
         this.email = email;
-    }
-
-    public void login(){
     }
 
     public void removeTask(String projectID, String taskId) throws TaskNotFoundException {
@@ -29,18 +23,9 @@ public abstract class User {
         return name;
     }
 
-    public String getId() {
-        return id;
-    }
+    public abstract String getRole();
 
     public String getEmail() {
         return email;
     }
-
-    public IDGenerator getIdGenerator() {
-        return idGenerator;
-    }
-
-    public abstract String getRole();
-
 }

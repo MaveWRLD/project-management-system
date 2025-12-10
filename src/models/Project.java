@@ -13,9 +13,8 @@ public abstract class Project {
     private Task[] tasks;
 
 
-    private IDGenerator taskIdGenerator = new IDGenerator();
-
     public Project(String name, String type, String description, int budget, int teamSize) {
+        IDGenerator idGenerator = new IDGenerator();
         this.id = idGenerator.setID('P');
         this.name = name;
         this.type = type;
@@ -31,6 +30,10 @@ public abstract class Project {
                 System.out.println(project.id + " | " + project.name + " | " + project.budget);
             }
         }
+    }
+    @Override
+    public String toString(){
+        return getName();
     }
 
     public abstract String[] getProjectDetails();
@@ -70,6 +73,7 @@ public abstract class Project {
     }
 
     public String generateTaskId() {
+        IDGenerator taskIdGenerator = new IDGenerator();
         return taskIdGenerator.setID('T');
     }
 }
