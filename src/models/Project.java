@@ -27,14 +27,6 @@ public abstract class Project {
         this.teamSize = teamSize;
     }
 
-//    public static void displayProjects(){
-//        System.out.println("ID  | NAME | BUDGET ");
-//        for (Project project : allProjects) {
-//            if (project != null){
-//                System.out.println(project.id + " | " + project.name + " | " + project.budget);
-//            }
-//        }
-//    }
     @Override
     public String toString(){
         return getName();
