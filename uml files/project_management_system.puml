@@ -1,5 +1,5 @@
 @startuml
-title Project Management System - Full UML (Models + Services + Utils + ConsoleMenu)
+title Project Management System UML
 
 ' =======================
 ' MODELS
@@ -77,57 +77,52 @@ package "models" {
   }
 }
 
-' =======================
-' INTERFACES
-' =======================
 package "interfaces" {
   interface Completable {
     + isCompleted(): boolean
   }
 }
 
-' =======================
-' SERVICES
-' =======================
 package "services" {
 
   class ProjectService {
     - projects: models.Project[]
     --
-    + allProjects(): Project[] <<throws utils.exceptions.ProjectNotCreatedException>>
+    + allProjects(): Project[]
     + addProject(project: Project): void
     + filterProject(type: String): Project[]
     + filterProject(min: int, max: int): Project[]
-    + filterProjectById(id: String): Project <<throws utils.exceptions.ProjectNotFoundException>>
+    + filterProjectBYId(id: String): Project
   }
 
   class TaskService {
     - projectService: ProjectService
     --
     + addTaskToProject(projectId, name, status): void
-    + updateTaskStatus(projectId, taskId, status): void <<throws utils.exceptions.TaskNotFoundException>>
-    + getProjectTasks(projectId): Task[] <<throws utils.exceptions.EmptyProjectException>>
-    + getTaskIndex(project: models.Project, taskId: String): int <<throws utils.exceptions.TaskNotFoundException>>
+    + updateTaskStatus(projectId, status, taskId): void
+    + getProjectTasks(projectId): Task[]
+    + getTaskIndex(project: models.Project, taskId: String): int
   }
 
   class ReportService {
     - taskService: TaskService
     --
     + generateReport(projects: Project[]): StatusReport[]
-    + completionPercentage(projectId: String): float <<throws utils.exceptions.EmptyProjectException>>
+    + completionPercentage(projectId: String): float
   }
 
   class UserService {
-    {static} adminUser: models.User
-    {static} regularUser: models.User
-    --
-    + switchUser(currentUser: models.User): models.User
+   - projectService: ProjectService
+   - taskService: TaskService
+
+   - adminUser: models.User
+   - regularUser: models.User
+
+   + switchUser(currentUser: models.User): models.User
+   + getAdminUser(): models.User
   }
 }
 
-' =======================
-' UTILS
-' =======================
 package "utils" {
 
   enum Status {
@@ -146,31 +141,6 @@ package "utils" {
     {static} - isValidId(id: String, prefix: char): boolean
   }
 
-  class ConsoleMenu {
-    {static} - projectService: services.ProjectService
-    {static} - taskService: services.TaskService
-    {static} - userService: services.UserService
-    {static} - currentUser: models.User
-    {static} - statusReport: services.ReportService
-    --
-    + run(): void
-    - displayMainMenu(): void
-    - handleManageProjects(): void
-    - getFilteredProjects(): models.Project[]
-    - displayProjectDetails(project: models.Project): void
-    - taskDetailsPrompt(project: models.Project): boolean
-    - createProject(projectType: String): models.Project
-    - addNewTask(projectId: String): void
-    - updateTaskStatus(projectId: String): void
-    - removeTask(projectId: String): void
-    - handleManageTasks(): boolean
-    - handleViewStatusReports(): void
-    - printHeader(title: String, data: String): void
-    - printHeader(title: String): void
-    - headerBuilder(title: String, width: int): void
-    - printText(options: String[]): void
-  }
-
   package "exceptions" {
     class InvalidInputException
     class TaskNotFoundException
@@ -180,18 +150,51 @@ package "utils" {
   }
 }
 
-' =======================
-' RELATIONSHIPS
-' =======================
 
-' --- Inheritance / Interface ---
+package "tests" {
+
+  class ProjectServiceTest {
+    + setUp(): void
+    + testCreateProject_success(): void
+    + testGetProjectById_notFound(): void
+    + testFilterByBudgetRange(): void
+  }
+
+  class ReportServiceTest {
+    + setUp(): void
+    + testGenerateReport(): void
+  }
+
+  class TaskServiceTest {
+    + setUp(): void
+    + testAddTask_success(): void
+    + testUpdateTaskStatus_success(): void
+    + testUpdateTaskStatus_emptyProject(): void
+    + testUpdateTaskStatus_taskNotFound(): void
+  }
+
+  class UserServiceTest {
+    + setup(): void
+    + testAdminUserInitialization(): void
+    + testSwitchUser_fromAdminToRegular(): void
+    + testSwitchUser_fromRegularToAdmin(): void
+  }
+
+  class ValidationUtilsTest {
+    + setUp(): void
+    + testGetValidInt_success(): void
+    + testGetValidString_empty(): void
+    + testGetValidType_invalid(): void
+    + testGetValidId_invalid(): void
+  }
+}
+
 models.SoftwareProject --|> models.Project
 models.HardwareProject --|> models.Project
 models.AdminUser --|> models.User
 models.RegularUser --|> models.User
 models.Task ..|> interfaces.Completable
 
-' --- Composition / Aggregation ---
 models.Project o-- models.Task : contains
 
 services.TaskService *-- services.ProjectService
@@ -201,38 +204,33 @@ models.AdminUser *-- services.TaskService
 services.UserService *-- models.AdminUser
 services.UserService *-- models.RegularUser
 
-' --- Dependencies / Uses ---
-ConsoleMenu ..> services.ProjectService
-ConsoleMenu ..> services.TaskService
-ConsoleMenu ..> services.ReportService
-ConsoleMenu ..> services.UserService
-ConsoleMenu ..> models.Project
-ConsoleMenu ..> models.Task
-ConsoleMenu ..> models.User
-ConsoleMenu ..> utils.ValidationUtils
-ConsoleMenu ..> utils.Status
-ConsoleMenu ..> utils.exceptions.ProjectNotCreatedException
-ConsoleMenu ..> utils.exceptions.ProjectNotFoundException
-ConsoleMenu ..> utils.exceptions.TaskNotFoundException
-ConsoleMenu ..> utils.exceptions.EmptyProjectException
-
 utils.ValidationUtils ..> utils.Status
-utils.ValidationUtils ..> utils.exceptions.InvalidInputException
 
-' --- Exception relationships ---
-services.ProjectService ..> utils.exceptions.ProjectNotFoundException : throws
-services.ProjectService ..> utils.exceptions.ProjectNotCreatedException : throws
+tests.ProjectServiceTest ..> services.ProjectService
+tests.ProjectServiceTest ..> models.Project
+tests.ProjectServiceTest ..> models.SoftwareProject
+tests.ProjectServiceTest ..> utils.exceptions.ProjectNotFoundException
 
-services.TaskService ..> utils.exceptions.TaskNotFoundException : throws
-services.TaskService ..> utils.exceptions.EmptyProjectException : throws
-services.TaskService ..> utils.exceptions.ProjectNotFoundException : catches
+tests.ReportServiceTest ..> services.ReportService
+tests.ReportServiceTest ..> services.TaskService
+tests.ReportServiceTest ..> services.ProjectService
+tests.ReportServiceTest ..> models.Project
+tests.ReportServiceTest ..> models.SoftwareProject
+tests.ReportServiceTest ..> utils.Status
 
-services.ReportService ..> utils.exceptions.EmptyProjectException : throws
+tests.TaskServiceTest ..> services.TaskService
+tests.TaskServiceTest ..> services.ProjectService
+tests.TaskServiceTest ..> models.Task
+tests.TaskServiceTest ..> utils.exceptions.EmptyProjectException
+tests.TaskServiceTest ..> utils.exceptions.TaskNotFoundException
 
-models.AdminUser ..> utils.exceptions.TaskNotFoundException : throws
-models.AdminUser ..> utils.exceptions.ProjectNotFoundException : catches
-models.AdminUser ..> utils.exceptions.EmptyProjectException : catches
+tests.UserServiceTest ..> services.UserService
+tests.UserServiceTest ..> services.ProjectService
+tests.UserServiceTest ..> services.TaskService
+tests.UserServiceTest ..> models.AdminUser
+tests.UserServiceTest ..> models.RegularUser
 
-models.User ..> utils.exceptions.TaskNotFoundException : declares
+tests.ValidationUtilsTest ..> utils.ValidationUtils
+tests.ValidationUtilsTest ..> utils.exceptions.InvalidInputException
 
 @enduml
