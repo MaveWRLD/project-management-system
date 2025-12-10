@@ -1,7 +1,8 @@
 package services;
 
 import models.Project;
-import utils.exceptions.ProjectNotCreatedException;
+import utils.ResizeUtils;
+import utils.exceptions.ProjectsNotCreatedException;
 import utils.exceptions.ProjectNotFoundException;
 
 import java.util.Arrays;
@@ -10,10 +11,9 @@ public class ProjectService {
 
     private Project[] projects = new Project[10];
 
-
-    public Project[] allProjects() throws ProjectNotCreatedException {
-        if (getElementsSize(projects) == 0){
-            throw new ProjectNotCreatedException("No Projects created");
+    public Project[] allProjects() throws ProjectsNotCreatedException {
+        if (ResizeUtils.countElements(projects) == 0){
+            throw new ProjectsNotCreatedException("No Projects created");
         }
         return projects;
     }

@@ -7,7 +7,7 @@ import services.ReportService;
 import services.TaskService;
 import services.UserService;
 import utils.exceptions.EmptyProjectException;
-import utils.exceptions.ProjectNotCreatedException;
+import utils.exceptions.ProjectsNotCreatedException;
 import utils.exceptions.ProjectNotFoundException;
 import utils.exceptions.TaskNotFoundException;
 
@@ -74,13 +74,13 @@ public class ConsoleMenu {
                 }
             }
             if (handleManageTasks()) return;
-            } catch (ProjectNotCreatedException e) {
+            } catch (ProjectsNotCreatedException e) {
                 System.out.println(e.getMessage());
             }
         }
     }
 
-    public static Project[] getFilteredProjects() throws ProjectNotCreatedException {
+    public static Project[] getFilteredProjects() throws ProjectsNotCreatedException {
         int filterChoice = ValidationUtils.getValidInt("Enter Filter choice: ", 1, 5);
 
         Project[] filteredProjects = null;
