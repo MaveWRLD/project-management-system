@@ -1,6 +1,7 @@
 package services;
 
 import models.*;
+import utils.ResizeUtils;
 import utils.Status;
 import utils.exceptions.EmptyProjectException;
 import utils.exceptions.ProjectNotFoundException;
@@ -89,24 +90,6 @@ public class TaskService {
         if (tasks == null){
             tasks = new Task[5];
         }
-        int elementsSize = getElementsSize(tasks);
-        if (tasks.length == elementsSize){
-            Task[] newTasks = new Task[elementsSize * 2];
-            System.arraycopy(tasks, 0, newTasks, 0, newTasks.length);
-            return newTasks;
-        }
-        return tasks;
-    }
-
-    private static int getElementsSize(Task[] tasks) {
-        int elementsSize = 0;
-        for (Task oldTask : tasks) {
-            if (oldTask != null) {
-                elementsSize++;
-            }
-        }
-        return elementsSize;
+        return ResizeUtils.resizeProjectsSizeIfFull(tasks);
     }
 }
-
-

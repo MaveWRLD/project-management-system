@@ -19,7 +19,7 @@ public class ProjectService {
     }
 
     public void addProject(Project project) {
-        projects = resizeProjectsSizeIfFull(projects);
+        projects = ResizeUtils.resizeProjectsSizeIfFull(projects);
         int nullIndex = getFirstNullIndex(projects);
         projects[nullIndex] = project;
     }
@@ -64,25 +64,5 @@ public class ProjectService {
             }
         }
         return -1;
-    }
-
-    private Project[] resizeProjectsSizeIfFull(Project[] projects) {
-        int elementsSize = getElementsSize(projects);
-        if (projects.length == elementsSize) {
-            Project[] newProjects = new Project[elementsSize * 2];
-            System.arraycopy(projects, 0, newProjects, 0, projects.length);
-            return newProjects;
-        }
-        return projects;
-    }
-
-    public int getElementsSize(Project[] projects) {
-        int elementsSize = 0;
-        for (Project oldProject : projects) {
-            if (oldProject != null) {
-                elementsSize++;
-            }
-        }
-        return elementsSize;
     }
 }
