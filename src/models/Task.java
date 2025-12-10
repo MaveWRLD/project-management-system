@@ -2,15 +2,12 @@ package models;
 
 
 import interfaces.Completable;
-import utils.IDGenerator;
 import utils.Status;
 
 public class Task implements Completable {
     private String taskID;
     private String name;
     private Status status;
-    private static IDGenerator idGenerator = new IDGenerator();
-
 
     public String getTaskID() {
         return taskID;

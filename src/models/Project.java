@@ -11,9 +11,6 @@ public abstract class Project {
     private String type;
     private int teamSize;
     private Task[] tasks;
-    private static IDGenerator idGenerator = new IDGenerator();
-    private static int count = 0;
-    private static Project[] allProjects = new Project[5];
 
 
     private IDGenerator taskIdGenerator = new IDGenerator();
@@ -25,13 +22,6 @@ public abstract class Project {
         this.description = description;
         this.budget = budget;
         this.teamSize = teamSize;
-
-        if (count == allProjects.length) {
-            Project[] newArray = new Project[allProjects.length * 2];
-            System.arraycopy(allProjects, 0, newArray, 0, allProjects.length);
-            allProjects = newArray;
-        }
-        allProjects[count++] = this;
     }
 
     public static void displayProjects(){
@@ -45,9 +35,6 @@ public abstract class Project {
 
     public abstract String[] getProjectDetails();
 
-    public static Project[] getAllProjects() {
-        return allProjects;
-    }
 
     public String getId() {
         return id;

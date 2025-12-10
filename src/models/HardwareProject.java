@@ -41,5 +41,4 @@ public class HardwareProject extends Project {
     public void setWeight(float weight) {
         this.weight = weight;
     }
-
 }

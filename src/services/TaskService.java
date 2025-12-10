@@ -9,7 +9,12 @@ import utils.exceptions.TaskNotFoundException;
 
 public class TaskService {
 
-    private final ProjectService projectService = new ProjectService();
+    private ProjectService projectService;
+
+    public TaskService(ProjectService projectService) {
+        this.projectService = projectService;
+    }
+
 
     public void addTaskToProject(String projectId, String name, Status status){
         try {
@@ -39,7 +44,7 @@ public class TaskService {
             project = projectService.filterProjectBYId(projectId);
             tasks = project.getTasks();
             if (tasks == null || tasks.length == 0) {
-                throw new EmptyProjectException(project.getName() + " with " + project.getId() + " has no associated tasks");
+                throw new EmptyProjectException(project.getName() + " with ID " + project.getId() + " has no associated tasks");
         }
         } catch (ProjectNotFoundException e) {
             System.out.println(e.getMessage());
@@ -47,29 +52,28 @@ public class TaskService {
         return tasks;
     }
 
-    public void updateTaskStatus(String projectID, Status status, String taskID) throws TaskNotFoundException{
-        try {
+    public void updateTaskStatus(String projectID, Status status, String taskID)
+            throws TaskNotFoundException, EmptyProjectException, ProjectNotFoundException {
+
         Project project = projectService.filterProjectBYId(projectID);
         Task[] tasks = getProjectTasks(projectID);
         int taskIndex = getTaskIndex(project, taskID);
         tasks[taskIndex].setStatus(status);
-        } catch (ProjectNotFoundException | EmptyProjectException e){
-            System.out.println(e.getMessage());
-        }
     }
+
 
     public int getTaskIndex(Project project, String taskId) throws TaskNotFoundException {
         try {
             Task[] tasks = getProjectTasks(project.getId());
-            for (int i = 0; i < project.getTasks().length; i++) {
-                if (project.getTasks()[i] != null && project.getTasks()[i].getTaskID().equals(taskId)) {
+            for (int i = 0; i < tasks.length; i++) {
+                if (tasks[i] != null && tasks[i].getTaskID().equals(taskId)) {
                     return i;
                 }
             }
         } catch ( EmptyProjectException e){
             System.out.println(e.getMessage());
         }
-        throw new TaskNotFoundException( "Project with id " + project.getId() + " has no associated task with id " + taskId);
+        throw new TaskNotFoundException(project.getId(), taskId);
     }
 
     private static int getNullIndex(Task[] tasks) {

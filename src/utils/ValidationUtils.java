@@ -78,7 +78,6 @@ public class ValidationUtils {
             System.out.print(prompt);
             String input = scanner.nextLine().trim().toUpperCase();
             try {
-
                 if (
                         Status.valueOf(input).equals(Status.PENDING) ||
                         Status.valueOf(input).equals(Status.IN_PROGRESS) ||

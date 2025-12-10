@@ -8,12 +8,14 @@ import utils.exceptions.TaskNotFoundException;
 
 public class AdminUser extends User{
 
-    public AdminUser(String name, String email) {
-        super(name, email);
-    }
+    private ProjectService projectService;
+    private TaskService taskService;
 
-    TaskService taskService = new TaskService();
-    ProjectService projectService = new ProjectService();
+    public AdminUser(String name, String email, ProjectService projectService, TaskService taskService) {
+        super(name, email);
+        this.projectService = projectService;
+        this.taskService = taskService;
+    }
 
     @Override
     public void removeTask(String projectID, String taskId) throws TaskNotFoundException {

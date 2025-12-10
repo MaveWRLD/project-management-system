@@ -4,9 +4,11 @@ import models.Project;
 import utils.exceptions.ProjectNotCreatedException;
 import utils.exceptions.ProjectNotFoundException;
 
+import java.util.Arrays;
+
 public class ProjectService {
 
-    private Project[] projects = Project.getAllProjects();
+    private Project[] projects = new Project[10];
 
 
     public Project[] allProjects() throws ProjectNotCreatedException {
@@ -37,13 +39,13 @@ public class ProjectService {
     public Project[] filterProject(int minBudget, int maxBudget){
         Project[] filteredProjects = new Project[projects.length];
         int i = 0;
-        for (Project project : projects){
-            if (project != null && project.getBudget() > minBudget && project.getBudget() < maxBudget){
-                filteredProjects[i] = project;
-                i++;
+            for (Project project : projects){
+                if (project != null && project.getBudget() > minBudget && project.getBudget() < maxBudget){
+                    filteredProjects[i] = project;
+                    i++;
+                }
             }
-        }
-        return filteredProjects;
+        return Arrays.copyOf(filteredProjects, i);
     }
 
     public Project filterProjectBYId(String projectID) throws ProjectNotFoundException {

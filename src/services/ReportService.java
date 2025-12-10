@@ -6,7 +6,11 @@ import models.Task;
 import utils.exceptions.EmptyProjectException;
 
 public class ReportService {
-    TaskService taskService = new TaskService();
+    private final TaskService taskService;
+
+    public ReportService(TaskService taskService) {
+        this.taskService = taskService;
+    }
 
     public StatusReport[] generateReport(Project[] projects){
         StatusReport[] reports = new StatusReport[100];

@@ -5,16 +5,16 @@ public class StatusReport {
     private String projectName;
     private int totalTask;
     private int completedTasks;
-    private float completionPecentage;
+    private float completionPercentage;
     private float completionAverage;
 
     public StatusReport(String projectID, String projectName, int totalTask, int completedTasks,
-            float completionPecentage) {
+            float completionPercentage) {
         this.projectID = projectID;
         this.projectName = projectName;
         this.totalTask = totalTask;
         this.completedTasks = completedTasks;
-        this.completionPecentage = completionPecentage;
+        this.completionPercentage = completionPercentage;
     }
     
 
@@ -26,8 +26,8 @@ public class StatusReport {
         return completedTasks;
     }
 
-    public float getCompletionPecentage() {
-        return completionPecentage;
+    public float getCompletionPercentage() {
+        return completionPercentage;
     }
 
     public float getCompletionAverage() {

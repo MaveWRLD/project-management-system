@@ -5,13 +5,19 @@ import models.RegularUser;
 import models.User;
 
 public class UserService {
+    private ProjectService projectService;
+    private TaskService taskService;
 
+    private User adminUser;
+    private User regularUser;
 
-    private static User adminUser = new AdminUser("Jacob Quaye", "kofimave@gmail.com" );
-    private static User regularUser = new RegularUser("John Doe", "johndoe@gmail.com" );;
+    public UserService(ProjectService projectService, TaskService taskService) {
+        this.projectService = projectService;
+        this.taskService = taskService;
 
-
-   // private static User currentUser = adminUser;
+        this.adminUser = new AdminUser("Jacob Quaye", "kofimave@gmail.com", projectService, taskService);
+        this.regularUser = new RegularUser("John Doe", "johndoe@gmail.com");
+    }
 
     public User switchUser(User currentUser){
         if (currentUser instanceof AdminUser)
@@ -19,6 +25,7 @@ public class UserService {
         return adminUser;
     }
 
-
-
+    public User getAdminUser() {
+        return adminUser;
+    }
 }

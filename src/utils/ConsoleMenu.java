@@ -14,10 +14,13 @@ import utils.exceptions.TaskNotFoundException;
 public class ConsoleMenu {
 
     private static final ProjectService projectService = new ProjectService();
-    private static final TaskService taskService = new TaskService();
-    private static final UserService userService = new UserService();
-    private static User currentUser =  new AdminUser("Jacob Quaye", "kofimave@gmail.com" );
-    private static final ReportService statusReport = new ReportService();
+    private static final TaskService taskService = new TaskService(projectService);
+    private static final ReportService statusReport = new ReportService(taskService);
+
+    private static final UserService userService = new UserService(projectService, taskService);
+
+    private static User currentUser = userService.getAdminUser();
+
 
     public static void run() {
         while (true) {
@@ -186,7 +189,7 @@ public class ConsoleMenu {
         try{
             taskService.updateTaskStatus(projectID, newStatus, taskId);
             System.out.println("Task \"" + taskId + "\" marked as " + newStatus + ".");
-        } catch (TaskNotFoundException e) {
+        } catch (TaskNotFoundException | EmptyProjectException | ProjectNotFoundException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -217,7 +220,12 @@ public class ConsoleMenu {
     }
 
     private static void handleViewStatusReports() {
-        Project[] projects = Project.getAllProjects();
+        Project[] projects = null;
+        try {
+            projects = projectService.allProjects();
+        } catch (ProjectsNotCreatedException e) {
+            System.out.println(e.getMessage());
+        }
         StatusReport[] reports = statusReport.generateReport(projects);
         printHeader("PROJECT STATUS REPORT");
         System.out.printf("%-10s | %-20s | %-6s | %-9s | %-10s\n", "Project ID", "Project Name", "Tasks", "Completed", "Progress(%)");
@@ -229,7 +237,7 @@ public class ConsoleMenu {
                         report.getProjectName(),
                         report.getTotalTask(),
                         report.getCompletedTasks(),
-                        report.getCompletionPecentage());
+                        report.getCompletionPercentage());
             }
         }
         double avgCompletion = statusReport.completionAverage(projects);
