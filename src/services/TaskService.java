@@ -1,7 +1,6 @@
 package services;
 
 import models.*;
-import utils.IDGenerator;
 import utils.ResizeUtils;
 import utils.Status;
 import utils.exceptions.EmptyProjectException;
@@ -32,6 +31,7 @@ public class TaskService {
     }
 
     public Task createTask(Project project, String name, Status status) {
+
         Task newTask = new Task();
         newTask.setTaskID(project.generateTaskId());
         newTask.setName(name);
