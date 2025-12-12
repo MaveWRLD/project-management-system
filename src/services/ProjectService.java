@@ -51,6 +51,9 @@ public class ProjectService {
     public Project filterProjectBYId(String projectID) throws ProjectNotFoundException {
         for (Project project : projects){
             if (project != null && project.getId().equals(projectID)){
+                System.out.println(project.getId());
+                System.out.println(projectID.equals(project.getId()));
+
                 return project;
             }
         }

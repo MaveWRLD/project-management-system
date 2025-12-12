@@ -28,7 +28,7 @@ public class ValidationUtils {
     public String getValidString(String prompt) {
         while (true) {
             System.out.print(prompt);
-            String input = scanner.nextLine().trim();
+            String input = scanner.nextLine().trim().toUpperCase();
             try {
                     if (!input.isEmpty()) {
                         return input;

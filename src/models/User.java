@@ -1,6 +1,6 @@
 package models;
 
-import utils.IdGenareator;
+import utils.IdGenerator;
 import utils.exceptions.TaskNotFoundException;
 
 public abstract class User {
@@ -8,11 +8,11 @@ public abstract class User {
     private String name;
     private String email;
 
-    private final IdGenareator idGenerator = new IdGenareator();
+    private final IdGenerator idGenerator = new IdGenerator();
     private static int userCounter = 1;
 
     public User(String name, String email) {
-        this.id = idGenerator.generateProjectId('U', userCounter++);
+        this.id = idGenerator.idGenerator('U', userCounter++);
         this.name = name;
         this.email = email;
     }

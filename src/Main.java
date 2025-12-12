@@ -6,6 +6,7 @@ import services.ProjectService;
 import services.ReportService;
 import services.TaskService;
 import utils.ValidationUtils;
+import utils.exceptions.ProjectNotFoundException;
 import utils.exceptions.ProjectsNotCreatedException;
 
 import java.util.Arrays;
@@ -27,6 +28,7 @@ public class Main {
         projectService.addProject(keyboardProject);
         projectService.addProject(javaProject);
         projectService.addProject(pythonProject);
+
 
         taskService.addTaskToProject("P001", "Testing", Status.COMPLETED);
         taskService.addTaskToProject("P004", "Programming", Status.PENDING);
