@@ -14,7 +14,6 @@ public class SoftwareProject extends Project {
         this.versioning = versioning;
     }
 
-
     @Override
     public String[] getProjectDetails() {
         String budget =  NumberFormat.getCurrencyInstance().format(getBudget());

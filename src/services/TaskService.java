@@ -1,7 +1,7 @@
 package services;
 
 import models.*;
-import utils.ResizeUtils;
+import utils.ResizeObjectSizeUtils;
 import utils.Status;
 import utils.exceptions.EmptyProjectException;
 import utils.exceptions.ProjectNotFoundException;
@@ -20,7 +20,8 @@ public class TaskService {
     public void addTaskToProject(String projectId, String name, Status status){
         try {
         Project project = projectService.filterProjectBYId(projectId);
-        Task[] tasks = assignTaskSizeIfNull(project.getTasks());
+        Task[] tasks = project.getTasks();
+        tasks = ResizeObjectSizeUtils.resizeObjectsSizeIfFull(tasks);
         int nullIndex = getNullIndex(tasks);
         Task newTask = createTask(project, name, status);
         tasks[nullIndex] = newTask;
@@ -39,43 +40,43 @@ public class TaskService {
         return newTask;
     }
 
-    public Task[] getProjectTasks(String projectId) throws EmptyProjectException {
-        Project project;
-        Task[] tasks = null;
-        try {
-            project = projectService.filterProjectBYId(projectId);
-            tasks = project.getTasks();
-            if (tasks == null || tasks.length == 0) {
-                throw new EmptyProjectException(project.getName() + " with ID " + project.getId() + " has no associated tasks");
-        }
-        } catch (ProjectNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-        return tasks;
-    }
 
     public void updateTaskStatus(String projectID, Status status, String taskID)
             throws TaskNotFoundException, EmptyProjectException, ProjectNotFoundException {
 
         Project project = projectService.filterProjectBYId(projectID);
-        Task[] tasks = getProjectTasks(projectID);
-        int taskIndex = getTaskIndex(project, taskID);
-        tasks[taskIndex].setStatus(status);
+        Task[] tasks = getProjectTasks(project);
+        Task task = getTask(tasks, taskID);
+        task.setStatus(status);
     }
 
-
-    public int getTaskIndex(Project project, String taskId) throws TaskNotFoundException {
-        try {
-            Task[] tasks = getProjectTasks(project.getId());
-            for (int i = 0; i < tasks.length; i++) {
-                if (tasks[i] != null && tasks[i].getTaskID().equals(taskId)) {
-                    return i;
-                }
+    public Task[] getProjectTasks(Project project) throws EmptyProjectException {
+        Task[] tasks = project.getTasks();
+        int noElement = 0;
+        int foundElements = 0;
+        for (Task task : tasks) {
+            if (task != null) {
+                foundElements++;
             }
-        } catch ( EmptyProjectException e){
-            System.out.println(e.getMessage());
         }
-        throw new TaskNotFoundException(project.getId(), taskId);
+        if (foundElements == noElement){
+            throw new EmptyProjectException(project.getId() + " with id " + "has no tasks associated with it");
+        }
+        return tasks;
+    }
+
+    public int getTaskIndex(Task[] tasks, String taskId) throws TaskNotFoundException {
+        for (int i = 0; i < tasks.length; i++) {
+            if (tasks[i] != null && tasks[i].getTaskID().equals(taskId)) {
+                return i;
+            }
+        }
+        throw new TaskNotFoundException(taskId);
+    }
+
+    public Task getTask(Task[] tasks, String taskId) throws TaskNotFoundException {
+       int taskIndex = getTaskIndex(tasks, taskId);
+       return tasks[taskIndex];
     }
 
     private static int getNullIndex(Task[] tasks) {
@@ -85,12 +86,5 @@ public class TaskService {
             }
         }
         return -1;
-    }
-
-    private static Task[] assignTaskSizeIfNull(Task[] tasks){
-        if (tasks == null){
-            tasks = new Task[5];
-        }
-        return ResizeUtils.resizeProjectsSizeIfFull(tasks);
     }
 }

@@ -2,6 +2,7 @@ package test.java.services;
 
 import models.AdminUser;
 import models.RegularUser;
+import models.SoftwareProject;
 import models.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,8 +10,10 @@ import org.mockito.Mockito;
 import services.ProjectService;
 import services.TaskService;
 import services.UserService;
+import utils.Status;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 class UserServiceTest {
 
@@ -20,8 +23,8 @@ class UserServiceTest {
 
     @BeforeEach
     void setup() {
-        projectService = Mockito.mock(ProjectService.class);
-        taskService = Mockito.mock(TaskService.class);
+        projectService = new ProjectService();
+        taskService = new TaskService(projectService);
 
         userService = new UserService(projectService, taskService);
     }
@@ -62,6 +65,16 @@ class UserServiceTest {
                 .isInstanceOf(AdminUser.class);
 
         assertThat(nextUser.getName()).isEqualTo("Jacob Quaye");
+    }
+
+    @Test
+    void testAdminRemoveTask() {
+        User admin = userService.getAdminUser();
+        SoftwareProject javaProject = new SoftwareProject("Data Science", "Difficult", 233, 4,  "Python", "Mobile", "Git");
+        projectService.addProject(javaProject);
+        taskService.addTaskToProject("P001", "Test Admin Remove task", Status.COMPLETED);
+
+        assertThatCode(() -> admin.removeTask("P001", "T001")).doesNotThrowAnyException();
     }
 }
 

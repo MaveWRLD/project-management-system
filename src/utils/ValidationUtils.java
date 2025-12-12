@@ -5,9 +5,9 @@ import utils.exceptions.InvalidInputException;
 import java.util.Scanner;
 
 public class ValidationUtils {
-    private static final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
-    public static int getValidInt(String prompt, int min, int max) {
+    public int getValidInt(String prompt, int min, int max) {
         while (true) {
             System.out.print(prompt);
             String input = scanner.nextLine().trim();
@@ -25,7 +25,7 @@ public class ValidationUtils {
         }
     }
 
-    public static String getValidString(String prompt) {
+    public String getValidString(String prompt) {
         while (true) {
             System.out.print(prompt);
             String input = scanner.nextLine().trim();
@@ -40,7 +40,7 @@ public class ValidationUtils {
         }
     }
 
-    public static int getValidInt(String prompt, double min) {
+    public int getValidInt(String prompt, double min) {
         while (true) {
             System.out.print(prompt);
             String input = scanner.nextLine().trim();
@@ -56,7 +56,7 @@ public class ValidationUtils {
         }
     }
 
-    public static String getValidType(String prompt) {
+    public String getValidType(String prompt) {
         while (true) {
             System.out.print(prompt);
             String input = scanner.nextLine().trim().toUpperCase();
@@ -73,7 +73,7 @@ public class ValidationUtils {
         }
     }
 
-    public static Status getValidStatus(String prompt) {
+    public Status getValidStatus(String prompt) {
         while (true) {
             System.out.print(prompt);
             String input = scanner.nextLine().trim().toUpperCase();
@@ -90,7 +90,7 @@ public class ValidationUtils {
         }
     }
 
-    public static String getValidId(String prompt, char prefix)  {
+    public String getValidId(String prompt, char prefix)  {
         while (true) {
             System.out.print(prompt);
             String id = scanner.nextLine().trim().toUpperCase();
@@ -105,7 +105,7 @@ public class ValidationUtils {
         }
     }
 
-    public static boolean isValidId(String id, char prefix) {
+    public boolean isValidId(String id, char prefix) {
         if (id.equals("0")) {
             return true;
         }

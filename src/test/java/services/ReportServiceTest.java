@@ -22,7 +22,7 @@ class ReportServiceTest {
     void setUp() {
         projectService = new ProjectService();
         taskService = new TaskService(projectService);
-        reportService = new ReportService(taskService);
+        reportService = new ReportService(taskService, projectService);
 
         project = new SoftwareProject("P1", "AI Project", 5000, 3, "Java", "ML", "Git");
         projectService.addProject(project);
@@ -30,10 +30,19 @@ class ReportServiceTest {
     }
 
     @Test
-    void testGenerateReport() throws Exception {
+    void testCalculateCompletionPercentage_100() throws Exception {
         float percentage = reportService.completionPercentage(project.getId());
 
         assertThat(percentage).isEqualTo(100f);
+    }
+
+    @Test
+    void testCalculateCompletionPercentage_50() throws Exception {
+        taskService.addTaskToProject(project.getId(), "Recalculate Pending", Status.PENDING);
+
+        float percentage = reportService.completionPercentage(project.getId());
+
+        assertThat(percentage).isEqualTo(50f);
     }
 }
 

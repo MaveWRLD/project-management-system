@@ -5,15 +5,17 @@ import utils.Status;
 import services.ProjectService;
 import services.ReportService;
 import services.TaskService;
+import utils.ValidationUtils;
 import utils.exceptions.ProjectsNotCreatedException;
 
 import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
+        ValidationUtils inputValidation = new ValidationUtils();
         ProjectService projectService = new ProjectService();
         TaskService taskService = new TaskService(projectService);
-        ReportService statusReport = new ReportService(taskService);
+        ReportService statusReport = new ReportService(taskService, projectService);
         HardwareProject systemUnitProject = new HardwareProject("System unit Repair", "Difficult", 233, 4, "Screen", 1.4f);
         HardwareProject monitorProject = new HardwareProject("Monitor", "Difficult", 233, 4, "Board", 1.6f);
         HardwareProject keyboardProject = new HardwareProject("Keyboard", "Difficult", 233, 4, "Chip", 0.4f);
@@ -33,7 +35,7 @@ public class Main {
 
         User currentUser = userService.getAdminUser();
 
-        ConsoleMenu consoleMenu = new ConsoleMenu(projectService, taskService, statusReport, userService, currentUser);
+        ConsoleMenu consoleMenu = new ConsoleMenu(projectService, taskService, statusReport, userService, currentUser, inputValidation);
 
         consoleMenu.run();
     }

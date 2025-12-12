@@ -6,7 +6,6 @@ public class StatusReport {
     private int totalTask;
     private int completedTasks;
     private float completionPercentage;
-    private float completionAverage;
 
     public StatusReport(String projectID, String projectName, int totalTask, int completedTasks,
             float completionPercentage) {
@@ -30,28 +29,11 @@ public class StatusReport {
         return completionPercentage;
     }
 
-    public float getCompletionAverage() {
-        return completionAverage;
-    }
-
-
     public String getProjectID() {
         return projectID;
     }
 
-
-    public void setProjectID(String projectID) {
-        this.projectID = projectID;
-    }
-
-
     public String getProjectName() {
         return projectName;
     }
-
-
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
-    }
-    
 }

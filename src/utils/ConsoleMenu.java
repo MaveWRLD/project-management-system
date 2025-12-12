@@ -17,22 +17,24 @@ public class ConsoleMenu {
     private TaskService taskService;
     private ReportService statusReport;
     private UserService userService;
+    private ValidationUtils inputValidation;
 
     private User currentUser;
 
-    public ConsoleMenu(ProjectService projectService, TaskService taskService, ReportService statusReport, UserService userService, User currentUser) {
+    public ConsoleMenu(ProjectService projectService, TaskService taskService, ReportService statusReport, UserService userService, User currentUser, ValidationUtils inputValidation) {
         this.projectService = projectService;
         this.taskService = taskService;
         this.statusReport = statusReport;
         this.userService = userService;
         this.currentUser = currentUser;
+        this.inputValidation = inputValidation;
     }
 
 
     public void run() {
         while (true) {
             displayMainMenu();
-            int choice = ValidationUtils.getValidInt("Enter your choice: ", 1, 5);
+            int choice = inputValidation.getValidInt("Enter your choice: ", 1, 5);
             switch (choice) {
                 case 1:
                     handleManageProjects();
@@ -70,7 +72,7 @@ public class ConsoleMenu {
         while (true) {
             printHeader("PROJECT CATALOG");
             String[] options = {"Filter Options: ",
-                    "1. View All Projects " +"(" + ResizeUtils.countElements(projects) + ")",
+                    "1. View All Projects " +"(" + ResizeObjectSizeUtils.countElements(projects) + ")",
                     "2. Add Project",
                     "3. Software Projects Only",
                     "4. Hardware Projects Only",
@@ -84,6 +86,8 @@ public class ConsoleMenu {
                 for (Project project : filteredProjects) {
                 if (project != null) {
                     System.out.printf("%-6s | %-20s | %-10s | %-8d | $%-9d\n", project.getId(), project.getName(), project.getType(), project.getTeamSize(), project.getBudget());
+                    System.out.printf("%-6s | %-20s%n", "", "Description: " + project.getDescription());
+                    System.out.println("------------------------------------------------------------");
                 }
                 }
             if (handleManageTasks()) return;
@@ -94,7 +98,7 @@ public class ConsoleMenu {
     }
 
     public Project[] getFilteredProjects() throws ProjectsNotCreatedException {
-        int filterChoice = ValidationUtils.getValidInt("Enter Filter choice: ", 1, 5);
+        int filterChoice = inputValidation.getValidInt("Enter Filter choice: ", 1, 5);
 
         Project[] filteredProjects = null;
         switch (filterChoice) {
@@ -102,7 +106,7 @@ public class ConsoleMenu {
                 filteredProjects = projectService.allProjects();
                 break;
             case 2:
-                String type = ValidationUtils.getValidType("Enter Project type (Hardware/Software): ");
+                String type = inputValidation.getValidType("Enter Project type (Hardware/Software): ");
                 Project newProject = createProject(type);
                 projectService.addProject(newProject);
                 filteredProjects = projectService.allProjects();
@@ -114,8 +118,8 @@ public class ConsoleMenu {
                 filteredProjects = projectService.filterProject("HARDWARE");
                 break;
             case 5:
-                int minBudget = ValidationUtils.getValidInt("Enter min budget: ", 0);
-                int maxBudget = ValidationUtils.getValidInt("Enter max budget: ", minBudget);
+                int minBudget = inputValidation.getValidInt("Enter min budget: ", 0);
+                int maxBudget = inputValidation.getValidInt("Enter max budget: ", minBudget);
                 filteredProjects = projectService.filterProject(minBudget, maxBudget);
                 break;
         }
@@ -130,8 +134,7 @@ public class ConsoleMenu {
             printText(detailsProject);
 
             try {
-                Task[] tasks = taskService.getProjectTasks(project.getId());
-
+                Task[] tasks = taskService.getProjectTasks(project);
                 System.out.printf("%-6s | %-20s | %-10s\n", "ID", "Task Name", "Status");
                 System.out.println("---------------------------------------");
                 for (Task task : tasks) {
@@ -139,11 +142,12 @@ public class ConsoleMenu {
                         System.out.printf("%-6s | %-20s | %-10s\n", task.getTaskID(), task.getName(), task.getStatus());
                     }
                 }
-
                 double completion = statusReport.completionPercentage(project.getId());
                 System.out.println("Completion Rate: " + String.format("%.0f%%", completion));
             } catch (EmptyProjectException e) {
                 System.out.println(e.getMessage());
+            } catch (ProjectNotFoundException e) {
+                throw new RuntimeException(e);
             }
 
             if (taskDetailsPrompt(project)) return;
@@ -153,7 +157,7 @@ public class ConsoleMenu {
     private boolean taskDetailsPrompt(Project project) {
         String[] options = {"Options:", "1. Add New Task", "2. Update Task Status", "3. Remove Task", "4. Back to Main Menu"};
         printText(options);
-        int choice = ValidationUtils.getValidInt("Enter your choice: ", 1, 4);
+        int choice = inputValidation.getValidInt("Enter your choice: ", 1, 4);
 
         switch (choice) {
             case 1:
@@ -171,19 +175,19 @@ public class ConsoleMenu {
         return false;
     }
 
-    private static Project createProject(String projectType) {
-        String name = ValidationUtils.getValidString("Enter project name: ");
-        String description = ValidationUtils.getValidString("Enter project description: ");
-        int budget = ValidationUtils.getValidInt("Enter project budget: ", 1000);
-        int teamSize = ValidationUtils.getValidInt("Enter team size: ", 1);
+    private Project createProject(String projectType) {
+        String name = inputValidation.getValidString("Enter project name: ");
+        String description = inputValidation.getValidString("Enter project description: ");
+        int budget = inputValidation.getValidInt("Enter project budget: ", 1000);
+        int teamSize = inputValidation.getValidInt("Enter team size: ", 1);
         if (projectType.equalsIgnoreCase("Hardware")) {
-            String component = ValidationUtils.getValidString("Enter component: ");
-            int weight = ValidationUtils.getValidInt("Enter weight: ", 1.0f);
+            String component = inputValidation.getValidString("Enter component: ");
+            int weight = inputValidation.getValidInt("Enter weight: ", 1.0f);
             return new HardwareProject(name, description, budget, teamSize, component, weight);
         } else {
-            String technology = ValidationUtils.getValidString("Enter technology: ");
-            String domain = ValidationUtils.getValidString("Enter domain: ");
-            String versioning = ValidationUtils.getValidString("Enter version control tool: ");
+            String technology = inputValidation.getValidString("Enter technology: ");
+            String domain = inputValidation.getValidString("Enter domain: ");
+            String versioning = inputValidation.getValidString("Enter version control tool: ");
             return new SoftwareProject(name, description, budget, teamSize, technology, domain, versioning);
         }
     }
@@ -191,14 +195,14 @@ public class ConsoleMenu {
 
     private void addNewTask(String projectId) {
         printHeader(("ADD NEW TASK"));
-        String name = ValidationUtils.getValidString("Enter task name: ");
-        Status status = ValidationUtils.getValidStatus("Enter initial status (Pending/In Progress/Completed): ");
+        String name = inputValidation.getValidString("Enter task name: ");
+        Status status = inputValidation.getValidStatus("Enter initial status (Pending/In Progress/Completed): ");
         taskService.addTaskToProject(projectId, name, status);
     }
 
     private void updateTaskStatus(String projectID) {
-        String taskId = ValidationUtils.getValidId("Enter Task ID: ", 'T');
-        Status newStatus = ValidationUtils.getValidStatus("Enter new status: ");
+        String taskId = inputValidation.getValidId("Enter Task ID: ", 'T');
+        Status newStatus = inputValidation.getValidStatus("Enter new status: ");
         try{
             taskService.updateTaskStatus(projectID, newStatus, taskId);
             System.out.println("Task \"" + taskId + "\" marked as " + newStatus + ".");
@@ -208,7 +212,7 @@ public class ConsoleMenu {
     }
 
     private void removeTask(String projectID) {
-        String taskId = ValidationUtils.getValidId("Enter Task ID to remove: ", 'T');
+        String taskId = inputValidation.getValidId("Enter Task ID to remove: ", 'T');
         try {
             currentUser.removeTask(projectID, taskId);
             System.out.println("Task removed successfully.");
@@ -218,7 +222,7 @@ public class ConsoleMenu {
     }
 
     private boolean handleManageTasks() {
-        String projectId = ValidationUtils.getValidId("Enter Project ID to view details (or 0 to return): ", 'P');
+        String projectId = inputValidation.getValidId("Enter Project ID to view details (or 0 to return): ", 'P');
         if (projectId.equals("0")) {
             return true;
         }
@@ -239,7 +243,12 @@ public class ConsoleMenu {
         } catch (ProjectsNotCreatedException e) {
             System.out.println(e.getMessage());
         }
-        StatusReport[] reports = statusReport.generateReport(projects);
+        StatusReport[] reports = null;
+        try {
+            reports = statusReport.generateReport(projects);
+        } catch (ProjectNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
         printHeader("PROJECT STATUS REPORT");
         System.out.printf("%-10s | %-20s | %-6s | %-9s | %-10s\n", "Project ID", "Project Name", "Tasks", "Completed", "Progress(%)");
         System.out.println("---------------------------------------------------------------");
@@ -253,7 +262,12 @@ public class ConsoleMenu {
                         report.getCompletionPercentage());
             }
         }
-        double avgCompletion = statusReport.completionAverage(projects);
+        double avgCompletion = 0;
+        try {
+            avgCompletion = statusReport.completionAverage(projects);
+        } catch (ProjectNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println("Average Completion: " + String.format("%.2f%%", avgCompletion));
     }
 

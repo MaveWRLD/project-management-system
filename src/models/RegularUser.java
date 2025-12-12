@@ -10,5 +10,4 @@ public class RegularUser extends User {
     public String getRole() {
         return "Regular User";
     }
-
 }

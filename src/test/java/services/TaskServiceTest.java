@@ -38,11 +38,12 @@ class TaskServiceTest {
     }
 
     @Test
-    void testAddTask_success() {
+    void testAddTask_success() throws EmptyProjectException {
 
         taskService.addTaskToProject(project.getId(),"Setup Repo", Status.PENDING);
+        Task[] tasks = taskService.getProjectTasks(project);
 
-        assertThat(project.getTasks())
+        assertThat(tasks)
                 .filteredOn(Objects::nonNull)
                 .extracting(Task::getName)
                 .contains("Setup Repo");
@@ -79,9 +80,7 @@ class TaskServiceTest {
                 taskService.updateTaskStatus(project.getId(), Status.PENDING, "X99")
         );
 
-        assertThat(thrown)
-                .isInstanceOf(TaskNotFoundException.class)
-                .hasMessageContaining(project.getId());
+        assertThat(thrown).isInstanceOf(TaskNotFoundException.class);
     }
 }
 

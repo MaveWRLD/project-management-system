@@ -2,9 +2,9 @@ package utils;
 
 import java.util.Arrays;
 
-public class ResizeUtils {
+public class ResizeObjectSizeUtils {
 
-    public static <T> T[] resizeProjectsSizeIfFull(T[] array) {
+    public static <T> T[] resizeObjectsSizeIfFull(T[] array) {
         int size = countElements(array);
         if (array.length == size) {
             return Arrays.copyOf(array, size * 2);
@@ -12,10 +12,10 @@ public class ResizeUtils {
         return array;
     }
 
-    public static <T> int countElements(T[] array) {
+    public static <T> int countElements(T[] items) {
         int elementsSize = 0;
-        for (Object obj : array) {
-            if (obj != null) {
+        for (T item: items) {
+            if (item != null) {
                 elementsSize++;
             }
         }

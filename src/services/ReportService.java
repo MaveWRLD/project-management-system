@@ -4,15 +4,18 @@ import models.Project;
 import models.StatusReport;
 import models.Task;
 import utils.exceptions.EmptyProjectException;
+import utils.exceptions.ProjectNotFoundException;
 
 public class ReportService {
     private final TaskService taskService;
+    private ProjectService projectService;
 
-    public ReportService(TaskService taskService) {
+    public ReportService(TaskService taskService, ProjectService projectService) {
         this.taskService = taskService;
+        this.projectService = projectService;
     }
 
-    public StatusReport[] generateReport(Project[] projects){
+    public StatusReport[] generateReport(Project[] projects) throws ProjectNotFoundException {
         StatusReport[] reports = new StatusReport[100];
         try {
 
@@ -33,9 +36,10 @@ public class ReportService {
         return reports;
     }
 
-    public int totalTask(String projectId) throws EmptyProjectException {
+    public int totalTask(String projectId) throws EmptyProjectException, ProjectNotFoundException {
         int totalTask = 0;
-        Task[] tasks = taskService.getProjectTasks(projectId);
+        Project project = projectService.filterProjectBYId(projectId);
+        Task[] tasks = taskService.getProjectTasks(project);
         for (Task task : tasks){
             if (task != null) {
                 ++totalTask;
@@ -47,19 +51,20 @@ public class ReportService {
     public int completedTasks(String projectId)  {
         int completed = 0;
         try {
-            Task[] tasks= taskService.getProjectTasks(projectId);
+            Project project = projectService.filterProjectBYId(projectId);
+            Task[] tasks= taskService.getProjectTasks(project);
             for (Task task : tasks){
                 if (task != null && task.isCompleted()){
                     ++completed;
                 }
             }
-        } catch (EmptyProjectException e) {
+        } catch (EmptyProjectException | ProjectNotFoundException e) {
             System.out.println(e.getMessage());
         }
         return completed;
     }
 
-    public float completionPercentage(String projectId) throws EmptyProjectException {
+    public float completionPercentage(String projectId) throws EmptyProjectException, ProjectNotFoundException {
         float completed = completedTasks(projectId);
         float totalTasks = totalTask(projectId);
         if (completed == 0 || totalTasks == 0)
@@ -68,7 +73,7 @@ public class ReportService {
     }
 
 
-    public float completionAverage(Project[] projects) {
+    public float completionAverage(Project[] projects) throws ProjectNotFoundException {
         float totalPercentageCount = 0;
         float sumOfPercentages = 0;
         try {

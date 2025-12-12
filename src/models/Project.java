@@ -1,6 +1,6 @@
 package models;
 
-import utils.ID;
+import utils.IdGenareator;
 
 public abstract class Project {
 
@@ -10,9 +10,9 @@ public abstract class Project {
     private int budget;
     private String type;
     private int teamSize;
-    private Task[] tasks;
+    private Task[] tasks = new Task[10];
 
-    private final ID Id = new ID();
+    private final IdGenareator idGenareator = new IdGenareator();
 
     private static int projectCounter = 1;
 
@@ -21,7 +21,7 @@ public abstract class Project {
 
     public Project(String name, String type, String description, int budget, int teamSize) {
 
-        this.id = Id.generateProjectId('P', projectCounter++);
+        this.id = idGenareator.generateProjectId('P', projectCounter++);
         this.name = name;
         this.type = type;
         this.description = description;
@@ -70,6 +70,6 @@ public abstract class Project {
     }
 
     public String generateTaskId() {
-        return Id.generateProjectId('T', taskCounter++);
+        return idGenareator.generateProjectId('T', taskCounter++);
     }
 }

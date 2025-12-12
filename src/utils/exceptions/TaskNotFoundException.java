@@ -1,7 +1,7 @@
 package utils.exceptions;
 
 public class TaskNotFoundException extends Exception{
-    public TaskNotFoundException(String projectId, String taskId) {
-        super("Project with id " + projectId + " has no associated task with id " + taskId);
+    public TaskNotFoundException(String taskId) {
+        super(" Task with " + taskId + " does not exist");
     }
 }

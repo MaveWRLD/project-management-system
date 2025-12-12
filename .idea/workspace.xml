@@ -4,24 +4,40 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1ff1f1f6-41ad-499a-b591-4d26bfd4925c" name="Changes" comment="doc: add the project_management_system docs">
+    <list default="true" id="1ff1f1f6-41ad-499a-b591-4d26bfd4925c" name="Changes" comment="fix: fixed id generator unique id generation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project-management-system.iml" beforeDir="false" afterPath="$PROJECT_DIR$/project-management-system.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/AdminUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/AdminUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/HardwareProject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/HardwareProject.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Project.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/RegularUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/RegularUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/SoftwareProject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/SoftwareProject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/StatusReport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/StatusReport.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/ProjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/ProjectService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/ReportService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/ReportService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/TaskService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/services/ReportServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/services/ReportServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/services/TaskServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/services/TaskServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/services/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/services/UserServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/ConsoleMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/ConsoleMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/ResizeUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/ResizeObjectSizeUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/ValidationUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/ValidationUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/exceptions/TaskNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/exceptions/TaskNotFoundException.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="REBUILD_ON_DEPENDENCY_CHANGE" value="false" />
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JUnit5 Test Class" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -37,6 +53,11 @@
   <component name="GitRewordedCommitMessages">
     <option name="onto" value="2ec6f9b6f3315613e296e9feef7db8c5094c202a" />
   </component>
+  <component name="JavaAutoRunManager">
+    <enabled-run-configurations>
+      <run-configuration type="JUnit" name="TaskServiceTest.testUpdateTaskStatus_success" />
+    </enabled-run-configurations>
+  </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 4
@@ -51,20 +72,21 @@
     "Application.Main.executor": "Run",
     "Downloaded.Files.Path.Enabled": "false",
     "JUnit.ProjectServiceTest.executor": "Run",
-    "JUnit.ProjectServiceTest.testCreateProject_success.executor": "Run",
+    "JUnit.ProjectServiceTest.testCreateProject_success.executor": "Coverage",
     "JUnit.ProjectServiceTest.testFilterByBudgetRange.executor": "Run",
     "JUnit.ProjectServiceTest.testGetProjectById_notFound.executor": "Run",
     "JUnit.ProjectServiceTests.addProject.executor": "Run",
     "JUnit.ProjectServiceTests.addProjectResize.executor": "Run",
     "JUnit.ProjectServiceTests.executor": "Run",
-    "JUnit.ReportServiceTest.executor": "Run",
+    "JUnit.ReportServiceTest.executor": "Coverage",
     "JUnit.ReportServiceTest.testGenerateReport.executor": "Run",
-    "JUnit.TaskServiceTest.executor": "Run",
-    "JUnit.TaskServiceTest.testAddTask_success.executor": "Run",
+    "JUnit.TaskServiceTest.executor": "Coverage",
+    "JUnit.TaskServiceTest.testAddTask_success.executor": "Coverage",
     "JUnit.TaskServiceTest.testUpdateTaskStatus_emptyProject.executor": "Run",
-    "JUnit.TaskServiceTest.testUpdateTaskStatus_success.executor": "Run",
+    "JUnit.TaskServiceTest.testUpdateTaskStatus_success.executor": "Debug",
     "JUnit.TaskServiceTest.testUpdateTaskStatus_taskNotFound.executor": "Run",
-    "JUnit.UserServiceTest.executor": "Run",
+    "JUnit.UserServiceTest.executor": "Coverage",
+    "JUnit.UserServiceTest.testAdminRemoveTask.executor": "Run",
     "JUnit.ValidationUtilsTest.executor": "Run",
     "JUnit.ValidationUtilsTest.testGetValidId_valid.executor": "Run",
     "JUnit.ValidationUtilsTest.testGetValidId_zeroSpecialCase.executor": "Run",
@@ -80,6 +102,7 @@
     "JUnit.ValidationUtilsTest.testGetValidType_software.executor": "Run",
     "JUnit.ValidationUtilsTest.testIsValidId_correctAndIncorrect.executor": "Run",
     "JUnit.ValidationUtilsTest.testValidStatus.executor": "Run",
+    "JUnit.test.java.services in project-management-system.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "Repository.Attach.Annotations": "false",
     "Repository.Attach.JavaDocs": "false",
@@ -97,7 +120,7 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "configurable.group.language"
+    "settings.editor.selected.configurable": "reference.projectsettings.compiler.excludes"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -111,14 +134,7 @@
       <recent name="test.java.services" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
-    <configuration name="Main" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="Main" />
-      <module name="project-management-system" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.ProjectServiceTest">
     <configuration name="ProjectServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="project-management-system" />
       <extension name="coverage">
@@ -179,28 +195,27 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ValidationUtilsTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="test.java.services in project-management-system" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="project-management-system" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="test.java.utils.*" />
+          <option name="PATTERN" value="test.java.services.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="test.java.utils" />
-      <option name="MAIN_CLASS_NAME" value="test.java.utils.ValidationUtilsTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="PACKAGE_NAME" value="test.java.services" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.TaskServiceTest" />
-        <item itemvalue="JUnit.ReportServiceTest" />
         <item itemvalue="JUnit.ProjectServiceTest" />
+        <item itemvalue="JUnit.test.java.services in project-management-system" />
         <item itemvalue="JUnit.UserServiceTest" />
-        <item itemvalue="JUnit.ValidationUtilsTest" />
+        <item itemvalue="JUnit.ReportServiceTest" />
+        <item itemvalue="JUnit.TaskServiceTest" />
       </list>
     </recent_temporary>
   </component>
@@ -251,7 +266,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765273626833</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="fix: fixed id generator unique id generation">
+      <option name="closed" value="true" />
+      <created>1765439795551</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1765439795551</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -278,23 +301,33 @@
     <MESSAGE value="refactor: move role based check for removing task to subclass for polymorphism" />
     <MESSAGE value="refactor: correct naming" />
     <MESSAGE value="doc: add the project_management_system docs" />
-    <option name="LAST_COMMIT_MESSAGE" value="doc: add the project_management_system docs" />
+    <MESSAGE value="fix: fixed id generator unique id generation" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: fixed id generator unique id generation" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
     <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/project_management_system$ReportServiceTest.ic" NAME="ReportServiceTest Coverage Results" MODIFIED="1765356878820" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+    <SUITE FILE_PATH="coverage/project_management_system$ReportServiceTest.ic" NAME="ReportServiceTest Coverage Results" MODIFIED="1765549658261" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>test.java.services.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/project_management_system$TaskServiceTest.ic" NAME="TaskServiceTest Coverage Results" MODIFIED="1765354120960" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+    <SUITE FILE_PATH="coverage/project_management_system$TaskServiceTest.ic" NAME="TaskServiceTest Coverage Results" MODIFIED="1765549647834" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>test.java.services.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/project_management_system$ProjectServiceTest.ic" NAME="ProjectServiceTest Coverage Results" MODIFIED="1765354719990" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+    <SUITE FILE_PATH="coverage/project_management_system$TaskServiceTest_testAddTask_success.ic" NAME="TaskServiceTest.testAddTask_success Coverage Results" MODIFIED="1765549573797" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>test.java.services.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/project_management_system$UserServiceTest.ic" NAME="UserServiceTest Coverage Results" MODIFIED="1765356862851" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+    <SUITE FILE_PATH="coverage/project_management_system$ProjectServiceTest.ic" NAME="ProjectServiceTest Coverage Results" MODIFIED="1765548246727" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>test.java.services.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/project_management_system$UserServiceTest.ic" NAME="UserServiceTest Coverage Results" MODIFIED="1765549686665" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>test.java.services.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/project_management_system$TaskServiceTest_testUpdateTaskStatus_success.ic" NAME="TaskServiceTest.testUpdateTaskStatus_success Coverage Results" MODIFIED="1765549368188" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>test.java.services.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/project_management_system$ProjectServiceTest_testCreateProject_success.ic" NAME="ProjectServiceTest.testCreateProject_success Coverage Results" MODIFIED="1765548262814" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>test.java.services.*</FILTER>
     </SUITE>
   </component>

@@ -1,7 +1,7 @@
 package services;
 
 import models.Project;
-import utils.ResizeUtils;
+import utils.ResizeObjectSizeUtils;
 import utils.exceptions.ProjectsNotCreatedException;
 import utils.exceptions.ProjectNotFoundException;
 
@@ -12,14 +12,14 @@ public class ProjectService {
     private Project[] projects = new Project[10];
 
     public Project[] allProjects() throws ProjectsNotCreatedException {
-        if (ResizeUtils.countElements(projects) == 0){
+        if (ResizeObjectSizeUtils.countElements(projects) == 0){
             throw new ProjectsNotCreatedException("No Projects created");
         }
         return projects;
     }
 
     public void addProject(Project project) {
-        projects = ResizeUtils.resizeProjectsSizeIfFull(projects);
+        projects = ResizeObjectSizeUtils.resizeObjectsSizeIfFull(projects);
         int nullIndex = getFirstNullIndex(projects);
         projects[nullIndex] = project;
     }
@@ -33,7 +33,7 @@ public class ProjectService {
                i++;
             }
         }
-        return filteredProjects;
+        return Arrays.copyOf(filteredProjects, i);
     }
 
     public Project[] filterProject(int minBudget, int maxBudget){

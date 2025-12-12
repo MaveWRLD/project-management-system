@@ -30,15 +30,8 @@ public class HardwareProject extends Project {
         return component;
     }
 
-    public void setComponent(String component) {
-        this.component = component;
-    }
-
     public float getWeight() {
         return weight;
     }
 
-    public void setWeight(float weight) {
-        this.weight = weight;
-    }
 }
