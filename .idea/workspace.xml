@@ -14,9 +14,9 @@
       <change beforePath="$PROJECT_DIR$/src/test/java/services/ReportServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/services/ReportServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/services/TaskServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/services/TaskServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/services/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/services/UserServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/ConsoleMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/ConsoleMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/IdGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/IdGenerator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/ResizeObjectSizeUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/ResizeObjectSizeUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/Status.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Status.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/ValidationUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/ValidationUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/exceptions/EmptyProjectException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/exceptions/EmptyProjectException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/exceptions/InvalidInputException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/exceptions/InvalidInputException.java" afterDir="false" />

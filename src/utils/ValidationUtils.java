@@ -2,6 +2,7 @@ package utils;
 
 import utils.exceptions.InvalidInputException;
 
+import java.util.EnumSet;
 import java.util.Scanner;
 
 /**
@@ -18,7 +19,7 @@ public class ValidationUtils {
      * @param max    the max
      * @return the valid int
      */
-    public int getValidInt(String prompt, int min, int max) throws InvalidInputException{
+    public int getValidInt(String prompt, int min, int max) {
         while (true) {
             System.out.print(prompt);
             String input = scanner.nextLine().trim();
@@ -28,6 +29,8 @@ public class ValidationUtils {
                     return value;
                 }
                 throw new InvalidInputException("Error: Input must be between " + min + " and " + max + ".");
+            } catch (InvalidInputException e) {
+                System.out.println(e.getMessage());
             } catch (NumberFormatException e) {
                 System.out.println("Error: Invalid input. Please enter a valid number.");
             }
@@ -110,16 +113,19 @@ public class ValidationUtils {
     public Status getValidStatus(String prompt) {
         while (true) {
             System.out.print(prompt);
-            String input = scanner.nextLine().trim().toUpperCase();
+            String input = scanner.nextLine();
+
+            String normalized = input.trim().toUpperCase().replace(' ', '_');
+
             try {
-                if (
-                        Status.valueOf(input).equals(Status.PENDING) ||
-                        Status.valueOf(input).equals(Status.IN_PROGRESS) ||
-                        Status.valueOf(input).equals(Status.COMPLETED)
-                ) {return Status.valueOf(input);}
-                throw new InvalidInputException("Error: Invalid status. Please choose from (Pending, In Progress, Completed).");
-            } catch (InvalidInputException e) {
-                System.out.println(e.getMessage());
+                Status status = Status.valueOf(normalized);
+                if (EnumSet.of(Status.PENDING, Status.IN_PROGRESS, Status.COMPLETED).contains(status)) {
+                    return status;
+                } else {
+                    System.out.println("Error: Invalid status. Please choose from (Pending, In Progress, Completed).");
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println("Error: Invalid status. Please choose from (Pending, In Progress, Completed).");
             }
         }
     }
