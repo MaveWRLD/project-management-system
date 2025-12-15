@@ -15,12 +15,16 @@ import utils.Status;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+
 class UserServiceTest {
 
     private ProjectService projectService;
     private TaskService taskService;
     private UserService userService;
 
+    /**
+     * Sets up test.
+     */
     @BeforeEach
     void setup() {
         projectService = new ProjectService();
@@ -29,6 +33,9 @@ class UserServiceTest {
         userService = new UserService(projectService, taskService);
     }
 
+    /**
+     * Test admin user initialization.
+     */
     @Test
     void testAdminUserInitialization() {
         User admin = userService.getAdminUser();
@@ -41,6 +48,9 @@ class UserServiceTest {
         assertThat(admin.getEmail()).isEqualTo("kofimave@gmail.com");
     }
 
+    /**
+     * Test switch user from admin to regular user.
+     */
     @Test
     void testSwitchUser_fromAdminToRegular() {
         User admin = userService.getAdminUser();
@@ -54,6 +64,9 @@ class UserServiceTest {
         assertThat(nextUser.getName()).isEqualTo("John Doe");
     }
 
+    /**
+     * Test switch user from regular to admin.
+     */
     @Test
     void testSwitchUser_fromRegularToAdmin() {
         User regular = new RegularUser("John Doe", "johndoe@gmail.com");
@@ -67,6 +80,9 @@ class UserServiceTest {
         assertThat(nextUser.getName()).isEqualTo("Jacob Quaye");
     }
 
+    /**
+     * Test admin remove task.
+     */
     @Test
     void testAdminRemoveTask() {
         User admin = userService.getAdminUser();

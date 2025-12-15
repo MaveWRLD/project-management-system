@@ -11,6 +11,9 @@ import utils.Status;
 
 import static org.assertj.core.api.Assertions.*;
 
+/**
+ * The type Report service test.
+ */
 class ReportServiceTest {
 
     private TaskService taskService;
@@ -18,6 +21,9 @@ class ReportServiceTest {
     private ReportService reportService;
     private Project project;
 
+    /**
+     * Sets up.
+     */
     @BeforeEach
     void setUp() {
         projectService = new ProjectService();
@@ -29,6 +35,11 @@ class ReportServiceTest {
         taskService.addTaskToProject(project.getId(), "Status Report", Status.COMPLETED);
     }
 
+    /**
+     * Test calculate completion percentage 100.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void testCalculateCompletionPercentage_100() throws Exception {
         float percentage = reportService.completionPercentage(project.getId());
@@ -36,6 +47,11 @@ class ReportServiceTest {
         assertThat(percentage).isEqualTo(100f);
     }
 
+    /**
+     * Test calculate completion percentage 50.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void testCalculateCompletionPercentage_50() throws Exception {
         taskService.addTaskToProject(project.getId(), "Recalculate Pending", Status.PENDING);

@@ -9,15 +9,26 @@ import utils.exceptions.ProjectNotFoundException;
 
 import static org.assertj.core.api.Assertions.*;
 
+/**
+ * The type Project service test.
+ */
 class ProjectServiceTest {
 
     private ProjectService projectService;
 
+    /**
+     * Sets up.
+     */
     @BeforeEach
     void setUp() {
         projectService = new ProjectService();
     }
 
+    /**
+     * Test create project success.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void testCreateProject_success() throws Exception {
         Project createdProject = new SoftwareProject("SoftwareProject1", "Test", 5000, 5, "Java", "Web", "Git");
@@ -31,6 +42,9 @@ class ProjectServiceTest {
                 .isEqualTo("SoftwareProject1");
     }
 
+    /**
+     * Test get project by id not found.
+     */
     @Test
     void testGetProjectById_notFound() {
         Throwable thrown = catchThrowable(() -> projectService.filterProjectBYId("X99"));
@@ -40,6 +54,11 @@ class ProjectServiceTest {
                 .hasMessageContaining("Project with ID X99 was not found");
     }
 
+    /**
+     * Test filter by budget range.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void testFilterByBudgetRange() throws Exception {
         projectService.addProject(new SoftwareProject("Range Project", "A", 2000, 4, "Java", "Backend", "Git"));

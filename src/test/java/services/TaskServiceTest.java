@@ -21,6 +21,9 @@ class TaskServiceTest {
     private ProjectService projectService;
     private Project project;
 
+    /**
+     * Sets up the test.
+     */
     @BeforeEach
     void setUp() {
         project = new SoftwareProject(
@@ -37,6 +40,11 @@ class TaskServiceTest {
         taskService = new TaskService(projectService);
     }
 
+    /**
+     * Test add task success.
+     *
+     * @throws EmptyProjectException the empty project exception
+     */
     @Test
     void testAddTask_success() throws EmptyProjectException {
 
@@ -49,6 +57,11 @@ class TaskServiceTest {
                 .contains("Setup Repo");
     }
 
+    /**
+     * Test update task status success.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void testUpdateTaskStatus_success() throws Exception {
         taskService.addTaskToProject(project.getId(), "Design", Status.PENDING);
@@ -61,6 +74,9 @@ class TaskServiceTest {
                 .containsExactly(Status.COMPLETED);
     }
 
+    /**
+     * Test update task status empty project.
+     */
     @Test
     void testUpdateTaskStatus_emptyProject() {
         Throwable thrown = catchThrowable(() ->
@@ -72,6 +88,9 @@ class TaskServiceTest {
                 .hasMessageContaining(project.getId());
     }
 
+    /**
+     * Test update task status task not found.
+     */
     @Test
     void testUpdateTaskStatus_taskNotFound() {
         taskService.addTaskToProject(project.getId(), "JUnit", Status.PENDING);

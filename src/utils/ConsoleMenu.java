@@ -82,12 +82,12 @@ public class ConsoleMenu {
             try {
                 Project[] filteredProjects = getFilteredProjects();
                 System.out.printf("%-6s | %-20s | %-10s | %-8s | %-10s\n", "ID", "Project Name", "Type", "Team Size", "Budget");
-                System.out.println("------------------------------------------------------------");
+                System.out.println("-----------------------------------------------------------------");
                 for (Project project : filteredProjects) {
                 if (project != null) {
                     System.out.printf("%-6s | %-20s | %-10s | %-8d | $%-9d\n", project.getId(), project.getName(), project.getType(), project.getTeamSize(), project.getBudget());
-                    System.out.printf("%-6s | %-20s%n", "", "Description: " + project.getDescription());
-                    System.out.println("------------------------------------------------------------");
+                    System.out.printf("%-6s | %-20s", "", "Description: " + project.getDescription());
+                    System.out.println("\n-----------------------------------------------------------------");
                 }
                 }
             if (handleManageTasks()) return;
@@ -106,7 +106,7 @@ public class ConsoleMenu {
                 filteredProjects = projectService.allProjects();
                 break;
             case 2:
-                String type = inputValidation.getValidType("Enter Project type (Hardware/Software): ");
+                String type = inputValidation.getValidProjectType("Enter Project type (Hardware/Software): ");
                 Project newProject = createProject(type);
                 projectService.addProject(newProject);
                 filteredProjects = projectService.allProjects();

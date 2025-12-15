@@ -4,10 +4,21 @@ import utils.exceptions.InvalidInputException;
 
 import java.util.Scanner;
 
+/**
+ * The type Validation utils.
+ */
 public class ValidationUtils {
     private final Scanner scanner = new Scanner(System.in);
 
-    public int getValidInt(String prompt, int min, int max) {
+    /**
+     * Gets valid int.
+     *
+     * @param prompt the prompt
+     * @param min    the min
+     * @param max    the max
+     * @return the valid int
+     */
+    public int getValidInt(String prompt, int min, int max) throws InvalidInputException{
         while (true) {
             System.out.print(prompt);
             String input = scanner.nextLine().trim();
@@ -17,14 +28,18 @@ public class ValidationUtils {
                     return value;
                 }
                 throw new InvalidInputException("Error: Input must be between " + min + " and " + max + ".");
-            } catch (InvalidInputException e) {
-                System.out.println(e.getMessage());
             } catch (NumberFormatException e) {
                 System.out.println("Error: Invalid input. Please enter a valid number.");
             }
         }
     }
 
+    /**
+     * Gets valid string.
+     *
+     * @param prompt the prompt
+     * @return the valid string
+     */
     public String getValidString(String prompt) {
         while (true) {
             System.out.print(prompt);
@@ -40,6 +55,13 @@ public class ValidationUtils {
         }
     }
 
+    /**
+     * Gets valid int.
+     *
+     * @param prompt the prompt
+     * @param min    the min
+     * @return the valid int
+     */
     public int getValidInt(String prompt, double min) {
         while (true) {
             System.out.print(prompt);
@@ -56,7 +78,13 @@ public class ValidationUtils {
         }
     }
 
-    public String getValidType(String prompt) {
+    /**
+     * Gets valid project type.
+     *
+     * @param prompt the prompt
+     * @return the valid type
+     */
+    public String getValidProjectType(String prompt) {
         while (true) {
             System.out.print(prompt);
             String input = scanner.nextLine().trim().toUpperCase();
@@ -73,6 +101,12 @@ public class ValidationUtils {
         }
     }
 
+    /**
+     * Gets valid status.
+     *
+     * @param prompt the prompt
+     * @return the valid status
+     */
     public Status getValidStatus(String prompt) {
         while (true) {
             System.out.print(prompt);
@@ -90,6 +124,13 @@ public class ValidationUtils {
         }
     }
 
+    /**
+     * Gets valid id.
+     *
+     * @param prompt the prompt
+     * @param prefix the prefix
+     * @return the valid id
+     */
     public String getValidId(String prompt, char prefix)  {
         while (true) {
             System.out.print(prompt);
@@ -105,6 +146,13 @@ public class ValidationUtils {
         }
     }
 
+    /**
+     * Is valid id boolean.
+     *
+     * @param id     the id
+     * @param prefix the prefix
+     * @return the boolean
+     */
     public boolean isValidId(String id, char prefix) {
         if (id.equals("0")) {
             return true;
