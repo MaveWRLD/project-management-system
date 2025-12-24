@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import services.ProjectService;
 import utils.exceptions.ProjectNotFoundException;
 
+import java.util.Collection;
+
 import static org.assertj.core.api.Assertions.*;
 
 /**
@@ -64,7 +66,7 @@ class ProjectServiceTest {
         projectService.addProject(new SoftwareProject("Range Project", "A", 2000, 4, "Java", "Backend", "Git"));
         projectService.addProject(new SoftwareProject("By Budget", "B", 8000, 6, "React", "Frontend", "Git"));
 
-        Project[] filtered = projectService.filterProject(1000, 5000);
+        Collection<Project> filtered = projectService.filterProject(1000, 5000);
 
         assertThat(filtered)
                 .hasSize(1)

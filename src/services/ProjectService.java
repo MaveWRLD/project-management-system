@@ -5,11 +5,14 @@ import utils.ResizeObjectSizeUtils;
 import utils.exceptions.ProjectsNotCreatedException;
 import utils.exceptions.ProjectNotFoundException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+
 
 public class ProjectService {
 
-    private Project[] projects = new Project[10];
+    private Collection<Project> projects = new ArrayList<>();
 
 
     /**
@@ -24,8 +27,8 @@ public class ProjectService {
      * @see Project
      * @see ProjectsNotCreatedException
      */
-    public Project[] allProjects() throws ProjectsNotCreatedException {
-        if (ResizeObjectSizeUtils.countElements(projects) == 0) {
+    public Collection<Project> allProjects() throws ProjectsNotCreatedException {
+        if (projects.isEmpty()) {
             throw new ProjectsNotCreatedException("No Projects created");
         }
         return projects;
@@ -45,12 +48,8 @@ public class ProjectService {
      * @see ResizeObjectSizeUtils#resizeObjectsSizeIfFull(Object[])
      */
     public void addProject(Project project) {
-        projects = ResizeObjectSizeUtils.resizeObjectsSizeIfFull(projects);
-        int nullIndex = getFirstNullIndex(projects);
-        projects[nullIndex] = project;
-
+        projects.add(project);
     }
-
 
     /**
      * Filters projects by a specified type.
@@ -59,17 +58,14 @@ public class ProjectService {
      * only those {@link Project} instances whose type matches the given {@code projectType}.</p>
      *
      */
-    public Project[] filterProject(String projectType) {
-        Project[] filteredProjects = new Project[projects.length];
-        int i = 0;
+    public Collection<Project> filterProject(String projectType) {
+       Collection<Project> filteredProjects = new ArrayList<>();
         for (Project project : projects) {
             if (project != null && project.getType().equals(projectType)) {
-                filteredProjects[i] = project;
-                i++;
+                filteredProjects.add(project);
             }
         }
-        return Arrays.copyOf(filteredProjects, i);
-
+        return filteredProjects;
     }
 
 
@@ -83,16 +79,14 @@ public class ProjectService {
      * If no projects match, an empty array is returned (never {@code null}).
      *
      */
-    public Project[] filterProject(int minBudget, int maxBudget) {
-        Project[] filteredProjects = new Project[projects.length];
-        int i = 0;
+    public Collection<Project> filterProject(int minBudget, int maxBudget) {
+        Collection<Project> filteredProjects = new ArrayList<>();
         for (Project project : projects) {
             if (project != null && project.getBudget() > minBudget && project.getBudget() < maxBudget) {
-                filteredProjects[i] = project;
-                i++;
+                filteredProjects.add(project);
             }
         }
-        return Arrays.copyOf(filteredProjects, i);
+        return filteredProjects;
     }
 
     /**

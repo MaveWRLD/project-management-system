@@ -8,21 +8,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/ProjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/ProjectService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/ReportService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/ReportService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/TaskService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/services/ProjectServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/services/ProjectServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/services/ReportServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/services/ReportServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/services/TaskServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/services/TaskServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/services/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/services/UserServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/IdGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/IdGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/ResizeObjectSizeUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/ResizeObjectSizeUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/Status.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Status.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/ValidationUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/ValidationUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/exceptions/EmptyProjectException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/exceptions/EmptyProjectException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/exceptions/InvalidInputException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/exceptions/InvalidInputException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/ConsoleMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/ConsoleMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/exceptions/ProjectNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/exceptions/ProjectNotFoundException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/exceptions/ProjectsNotCreatedException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/exceptions/ProjectsNotCreatedException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/exceptions/TaskNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/exceptions/TaskNotFoundException.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,12 +86,12 @@
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "create.test.in.the.same.root": "true",
     "deletionFromPopupRequiresConfirmation": "false",
-    "git-widget-placeholder": "refactor/module-2",
+    "git-widget-placeholder": "feature/module-3",
     "kotlin-language-version-configured": "true",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "configurable.group.language"
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -117,7 +105,7 @@
       <recent name="test.java.services" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="JUnit.ProjectServiceTest">
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="project-management-system" />
@@ -140,7 +128,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ReportServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ProjectServiceTest.testCreateProject_success" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="project-management-system" />
       <extension name="coverage">
         <pattern>
@@ -149,13 +137,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="test.java.services" />
-      <option name="MAIN_CLASS_NAME" value="test.java.services.ReportServiceTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="MAIN_CLASS_NAME" value="test.java.services.ProjectServiceTest" />
+      <option name="METHOD_NAME" value="testCreateProject_success" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TaskServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ProjectServiceTest.testFilterByBudgetRange" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="project-management-system" />
       <extension name="coverage">
         <pattern>
@@ -164,8 +153,25 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="test.java.services" />
-      <option name="MAIN_CLASS_NAME" value="test.java.services.TaskServiceTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="MAIN_CLASS_NAME" value="test.java.services.ProjectServiceTest" />
+      <option name="METHOD_NAME" value="testFilterByBudgetRange" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProjectServiceTest.testGetProjectById_notFound" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="project-management-system" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.java.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test.java.services" />
+      <option name="MAIN_CLASS_NAME" value="test.java.services.ProjectServiceTest" />
+      <option name="METHOD_NAME" value="testGetProjectById_notFound" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -185,28 +191,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ValidationUtilsTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="project-management-system" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="test.java.utils.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="test.java.utils" />
-      <option name="MAIN_CLASS_NAME" value="test.java.utils.ValidationUtilsTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.UserServiceTest" />
-        <item itemvalue="JUnit.TaskServiceTest" />
-        <item itemvalue="JUnit.ReportServiceTest" />
         <item itemvalue="JUnit.ProjectServiceTest" />
-        <item itemvalue="JUnit.ValidationUtilsTest" />
+        <item itemvalue="JUnit.ProjectServiceTest.testFilterByBudgetRange" />
+        <item itemvalue="JUnit.ProjectServiceTest.testGetProjectById_notFound" />
+        <item itemvalue="JUnit.ProjectServiceTest.testCreateProject_success" />
+        <item itemvalue="JUnit.UserServiceTest" />
       </list>
     </recent_temporary>
   </component>

@@ -6,6 +6,8 @@ import models.Task;
 import utils.exceptions.EmptyProjectException;
 import utils.exceptions.ProjectNotFoundException;
 
+import java.util.Collection;
+
 public class ReportService {
     private final TaskService taskService;
     private ProjectService projectService;
@@ -39,7 +41,7 @@ public class ReportService {
      * @see EmptyProjectException
      * @see ProjectNotFoundException
      */
-    public StatusReport[] generateReport(Project[] projects) throws ProjectNotFoundException {
+    public StatusReport[] generateReport(Collection<Project> projects) throws ProjectNotFoundException {
         StatusReport[] reports = new StatusReport[100];
         try {
             int i = 0;
@@ -163,7 +165,7 @@ public class ReportService {
      * @see EmptyProjectException
      * @see ProjectNotFoundException
      */
-    public float completionAverage(Project[] projects) throws ProjectNotFoundException {
+    public float completionAverage(Collection<Project> projects) throws ProjectNotFoundException {
         float totalPercentageCount = 0;
         float sumOfPercentages = 0;
         try {

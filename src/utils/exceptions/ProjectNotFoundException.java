@@ -8,7 +8,7 @@ package utils.exceptions;
  * reference failed because the project does not exist in the system. It extends {@link Exception}
  * and provides a constructor that includes the missing project's ID in the error message for clarity.</p>
  */
-public class ProjectNotFoundException extends Exception {
+public class ProjectNotFoundException extends RuntimeException {
 
     /**
      * Constructs a new {@code ProjectNotFoundException} with a detail message that includes

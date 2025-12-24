@@ -11,6 +11,9 @@ import utils.exceptions.ProjectsNotCreatedException;
 import utils.exceptions.ProjectNotFoundException;
 import utils.exceptions.TaskNotFoundException;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 public class ConsoleMenu {
 
     private ProjectService projectService;
@@ -63,7 +66,7 @@ public class ConsoleMenu {
     }
 
     private void handleManageProjects() {
-        Project[] projects = new Project[0];
+        Collection<Project> projects = new ArrayList<>();
         try {
             projects = projectService.allProjects();
         } catch (ProjectsNotCreatedException e) {
@@ -72,7 +75,7 @@ public class ConsoleMenu {
         while (true) {
             printHeader("PROJECT CATALOG");
             String[] options = {"Filter Options: ",
-                    "1. View All Projects " +"(" + ResizeObjectSizeUtils.countElements(projects) + ")",
+                    "1. View All Projects " +"(" + projects.size() + ")",
                     "2. Add Project",
                     "3. Software Projects Only",
                     "4. Hardware Projects Only",
@@ -80,7 +83,7 @@ public class ConsoleMenu {
             };
             printText(options);
             try {
-                Project[] filteredProjects = getFilteredProjects();
+                Collection<Project> filteredProjects = getFilteredProjects();
                 System.out.printf("%-6s | %-20s | %-10s | %-8s | %-10s\n", "ID", "Project Name", "Type", "Team Size", "Budget");
                 System.out.println("-----------------------------------------------------------------");
                 for (Project project : filteredProjects) {
@@ -97,10 +100,10 @@ public class ConsoleMenu {
         }
     }
 
-    public Project[] getFilteredProjects() throws ProjectsNotCreatedException {
+    public Collection<Project> getFilteredProjects() throws ProjectsNotCreatedException {
         int filterChoice = inputValidation.getValidInt("Enter Filter choice: ", 1, 5);
 
-        Project[] filteredProjects = null;
+        Collection<Project> filteredProjects = new ArrayList<>();
         switch (filterChoice) {
             case 1:
                 filteredProjects = projectService.allProjects();
@@ -237,7 +240,7 @@ public class ConsoleMenu {
     }
 
     private void handleViewStatusReports() {
-        Project[] projects = null;
+        Collection<Project> projects = new ArrayList<>();
         try {
             projects = projectService.allProjects();
         } catch (ProjectsNotCreatedException e) {
