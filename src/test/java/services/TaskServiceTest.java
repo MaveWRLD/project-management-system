@@ -11,6 +11,7 @@ import utils.Status;
 import utils.exceptions.EmptyProjectException;
 import utils.exceptions.TaskNotFoundException;
 
+import java.util.Collection;
 import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.*;
@@ -18,7 +19,6 @@ import static org.assertj.core.api.Assertions.*;
 class TaskServiceTest {
 
     private TaskService taskService;
-    private ProjectService projectService;
     private Project project;
 
     /**
@@ -35,7 +35,7 @@ class TaskServiceTest {
                 "Clean Coding",
                 "Git"
         );
-        projectService = new ProjectService();
+        ProjectService projectService = new ProjectService();
         projectService.addProject(project);
         taskService = new TaskService(projectService);
     }
@@ -49,7 +49,7 @@ class TaskServiceTest {
     void testAddTask_success() throws EmptyProjectException {
 
         taskService.addTaskToProject(project.getId(),"Setup Repo", Status.PENDING);
-        Task[] tasks = taskService.getProjectTasks(project);
+        Collection<Task> tasks = taskService.getProjectTasks(project);
 
         assertThat(tasks)
                 .filteredOn(Objects::nonNull)

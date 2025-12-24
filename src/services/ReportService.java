@@ -83,16 +83,8 @@ public class ReportService {
      * @see ProjectNotFoundException
      */
     public int totalTask(String projectId) throws EmptyProjectException, ProjectNotFoundException {
-        int totalTask = 0;
         Project project = projectService.filterProjectBYId(projectId);
-        Task[] tasks = taskService.getProjectTasks(project);
-        for (Task task : tasks) {
-            if (task != null) {
-                ++totalTask;
-            }
-        }
-        return totalTask;
-
+        return taskService.getProjectTasks(project).size();
     }
 
 
@@ -112,7 +104,7 @@ public class ReportService {
         int completed = 0;
         try {
             Project project = projectService.filterProjectBYId(projectId);
-            Task[] tasks = taskService.getProjectTasks(project);
+            Collection<Task> tasks = taskService.getProjectTasks(project);
             for (Task task : tasks) {
                 if (task != null && task.isCompleted()) {
                     ++completed;

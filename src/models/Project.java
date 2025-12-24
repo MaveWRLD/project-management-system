@@ -3,6 +3,9 @@ package models;
 
 import utils.IdGenerator;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 public abstract class Project {
 
     private String id;
@@ -11,7 +14,7 @@ public abstract class Project {
     private int budget;
     private String type;
     private int teamSize;
-    private Task[] tasks = new Task[10];
+    private Collection<Task> tasks = new ArrayList<>();
 
     private final IdGenerator idGenerator = new IdGenerator();
 
@@ -62,11 +65,7 @@ public abstract class Project {
         return type;
     }
 
-    public void setTasks(Task[] tasks) {
-        this.tasks = tasks;
-    }
-
-    public Task[] getTasks() {
+    public Collection<Task> getTasks() {
             return tasks;
     }
 

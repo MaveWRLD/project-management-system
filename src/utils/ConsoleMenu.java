@@ -137,7 +137,7 @@ public class ConsoleMenu {
             printText(detailsProject);
 
             try {
-                Task[] tasks = taskService.getProjectTasks(project);
+                Collection<Task> tasks = taskService.getProjectTasks(project);
                 System.out.printf("%-6s | %-20s | %-10s\n", "ID", "Task Name", "Status");
                 System.out.println("---------------------------------------");
                 for (Task task : tasks) {

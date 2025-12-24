@@ -6,6 +6,9 @@ import utils.exceptions.EmptyProjectException;
 import utils.exceptions.ProjectNotFoundException;
 import utils.exceptions.TaskNotFoundException;
 
+import java.util.Collection;
+import java.util.List;
+
 public class AdminUser extends User{
 
     private ProjectService projectService;
@@ -21,13 +24,9 @@ public class AdminUser extends User{
     public void removeTask(String projectID, String taskId) {
         try {
             Project project = projectService.filterProjectBYId(projectID);
-            Task[] tasks = taskService.getProjectTasks(project);
-            int taskIndex = taskService.getTaskIndex(tasks, taskId);
-            for (int i = taskIndex; i < tasks.length -1; i++) {
-                tasks[i] = tasks[i + 1];
-            }
-            int lastIndex = tasks.length - 1;
-            tasks[lastIndex] = null;
+            Collection<Task> tasks = taskService.getProjectTasks(project);
+            Task task = taskService.getTask(tasks, taskId);
+            tasks.remove(task);
         } catch (ProjectNotFoundException | EmptyProjectException | TaskNotFoundException e){
             System.out.println(e.getMessage());
         }
