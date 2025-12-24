@@ -1,18 +1,18 @@
 package services;
 
 import models.Project;
+import models.ProjectRepository;
 import utils.ResizeObjectSizeUtils;
 import utils.exceptions.ProjectsNotCreatedException;
 import utils.exceptions.ProjectNotFoundException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 
 
 public class ProjectService {
 
-    private Collection<Project> projects = new ArrayList<>();
+    private final ProjectRepository projectRepository = new ProjectRepository();
 
 
     /**
@@ -28,10 +28,7 @@ public class ProjectService {
      * @see ProjectsNotCreatedException
      */
     public Collection<Project> allProjects() throws ProjectsNotCreatedException {
-        if (projects.isEmpty()) {
-            throw new ProjectsNotCreatedException("No Projects created");
-        }
-        return projects;
+        return projectRepository.getProjects();
     }
 
 
@@ -48,7 +45,7 @@ public class ProjectService {
      * @see ResizeObjectSizeUtils#resizeObjectsSizeIfFull(Object[])
      */
     public void addProject(Project project) {
-        projects.add(project);
+        projectRepository.getProjects().add(project);
     }
 
     /**
@@ -60,7 +57,7 @@ public class ProjectService {
      */
     public Collection<Project> filterProject(String projectType) {
        Collection<Project> filteredProjects = new ArrayList<>();
-        for (Project project : projects) {
+        for (Project project : projectRepository.getProjects()) {
             if (project != null && project.getType().equals(projectType)) {
                 filteredProjects.add(project);
             }
@@ -81,7 +78,7 @@ public class ProjectService {
      */
     public Collection<Project> filterProject(int minBudget, int maxBudget) {
         Collection<Project> filteredProjects = new ArrayList<>();
-        for (Project project : projects) {
+        for (Project project : projectRepository.getProjects()) {
             if (project != null && project.getBudget() > minBudget && project.getBudget() < maxBudget) {
                 filteredProjects.add(project);
             }
@@ -100,7 +97,7 @@ public class ProjectService {
      * @see ProjectNotFoundException
      */
     public Project filterProjectBYId(String projectID) throws ProjectNotFoundException {
-        for (Project project : projects) {
+        for (Project project : projectRepository.getProjects()) {
             if (project != null && project.getId().equals(projectID)) {
                 return project;
             }
