@@ -2,12 +2,11 @@ package models;
 
 import services.ProjectService;
 import services.TaskService;
-import utils.exceptions.EmptyProjectException;
 import utils.exceptions.ProjectNotFoundException;
 import utils.exceptions.TaskNotFoundException;
 
 import java.util.Collection;
-import java.util.List;
+
 
 public class AdminUser extends User{
 
@@ -27,7 +26,7 @@ public class AdminUser extends User{
             Collection<Task> tasks = taskService.getProjectTasks(project);
             Task task = taskService.getTask(tasks, taskId);
             tasks.remove(task);
-        } catch (ProjectNotFoundException | EmptyProjectException | TaskNotFoundException e){
+        } catch (ProjectNotFoundException | TaskNotFoundException e){
             System.out.println(e.getMessage());
         }
     }

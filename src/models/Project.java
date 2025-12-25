@@ -3,8 +3,6 @@ package models;
 
 import utils.IdGenerator;
 
-import java.util.ArrayList;
-import java.util.Collection;
 
 public abstract class Project {
 
@@ -14,7 +12,6 @@ public abstract class Project {
     private int budget;
     private String type;
     private int teamSize;
-    private Collection<Task> tasks = new ArrayList<>();
 
     private final IdGenerator idGenerator = new IdGenerator();
 
@@ -63,10 +60,6 @@ public abstract class Project {
 
     public String getType() {
         return type;
-    }
-
-    public Collection<Task> getTasks() {
-            return tasks;
     }
 
     public String generateTaskId() {

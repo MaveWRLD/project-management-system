@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1ff1f1f6-41ad-499a-b591-4d26bfd4925c" name="Changes" comment="doc: add the project_management_system docs">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/ProjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/ProjectService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/ReportService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/ReportService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/services/ProjectServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/services/ProjectServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/ConsoleMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/ConsoleMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/exceptions/ProjectNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/exceptions/ProjectNotFoundException.java" afterDir="false" />
+    <list default="true" id="1ff1f1f6-41ad-499a-b591-4d26bfd4925c" name="Changes" comment="Refactor: remove unused imports">
+      <change beforePath="$PROJECT_DIR$/src/models/AdminUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/AdminUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/ProjectRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/ProjectRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/TaskService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/services/TaskServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/services/TaskServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,21 +42,22 @@
   "keyToString": {
     "Application.Main.executor": "Run",
     "Downloaded.Files.Path.Enabled": "false",
-    "JUnit.ProjectServiceTest.executor": "Coverage",
+    "JUnit.ProjectServiceTest.executor": "Run",
     "JUnit.ProjectServiceTest.testCreateProject_success.executor": "Run",
     "JUnit.ProjectServiceTest.testFilterByBudgetRange.executor": "Run",
     "JUnit.ProjectServiceTest.testGetProjectById_notFound.executor": "Run",
     "JUnit.ProjectServiceTests.addProject.executor": "Run",
     "JUnit.ProjectServiceTests.addProjectResize.executor": "Run",
     "JUnit.ProjectServiceTests.executor": "Run",
-    "JUnit.ReportServiceTest.executor": "Coverage",
+    "JUnit.ReportServiceTest.executor": "Run",
     "JUnit.ReportServiceTest.testGenerateReport.executor": "Run",
-    "JUnit.TaskServiceTest.executor": "Coverage",
+    "JUnit.TaskServiceTest.executor": "Run",
     "JUnit.TaskServiceTest.testAddTask_success.executor": "Run",
     "JUnit.TaskServiceTest.testUpdateTaskStatus_emptyProject.executor": "Run",
     "JUnit.TaskServiceTest.testUpdateTaskStatus_success.executor": "Run",
     "JUnit.TaskServiceTest.testUpdateTaskStatus_taskNotFound.executor": "Run",
     "JUnit.UserServiceTest.executor": "Run",
+    "JUnit.UserServiceTest.testAdminRemoveTask.executor": "Run",
     "JUnit.ValidationUtilsTest.executor": "Run",
     "JUnit.ValidationUtilsTest.testGetValidId_valid.executor": "Run",
     "JUnit.ValidationUtilsTest.testGetValidId_zeroSpecialCase.executor": "Run",
@@ -105,7 +104,7 @@
       <recent name="test.java.services" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ProjectServiceTest">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="project-management-system" />
@@ -113,7 +112,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProjectServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ReportServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="project-management-system" />
       <extension name="coverage">
         <pattern>
@@ -122,13 +121,13 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="test.java.services" />
-      <option name="MAIN_CLASS_NAME" value="test.java.services.ProjectServiceTest" />
+      <option name="MAIN_CLASS_NAME" value="test.java.services.ReportServiceTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProjectServiceTest.testCreateProject_success" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TaskServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="project-management-system" />
       <extension name="coverage">
         <pattern>
@@ -137,14 +136,13 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="test.java.services" />
-      <option name="MAIN_CLASS_NAME" value="test.java.services.ProjectServiceTest" />
-      <option name="METHOD_NAME" value="testCreateProject_success" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="MAIN_CLASS_NAME" value="test.java.services.TaskServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProjectServiceTest.testFilterByBudgetRange" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TaskServiceTest.testUpdateTaskStatus_success" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="project-management-system" />
       <extension name="coverage">
         <pattern>
@@ -153,14 +151,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="test.java.services" />
-      <option name="MAIN_CLASS_NAME" value="test.java.services.ProjectServiceTest" />
-      <option name="METHOD_NAME" value="testFilterByBudgetRange" />
+      <option name="MAIN_CLASS_NAME" value="test.java.services.TaskServiceTest" />
+      <option name="METHOD_NAME" value="testUpdateTaskStatus_success" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProjectServiceTest.testGetProjectById_notFound" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TaskServiceTest.testUpdateTaskStatus_taskNotFound" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="project-management-system" />
       <extension name="coverage">
         <pattern>
@@ -169,14 +167,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="test.java.services" />
-      <option name="MAIN_CLASS_NAME" value="test.java.services.ProjectServiceTest" />
-      <option name="METHOD_NAME" value="testGetProjectById_notFound" />
+      <option name="MAIN_CLASS_NAME" value="test.java.services.TaskServiceTest" />
+      <option name="METHOD_NAME" value="testUpdateTaskStatus_taskNotFound" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UserServiceTest.testAdminRemoveTask" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="project-management-system" />
       <extension name="coverage">
         <pattern>
@@ -186,18 +184,19 @@
       </extension>
       <option name="PACKAGE_NAME" value="test.java.services" />
       <option name="MAIN_CLASS_NAME" value="test.java.services.UserServiceTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="METHOD_NAME" value="testAdminRemoveTask" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ProjectServiceTest" />
-        <item itemvalue="JUnit.ProjectServiceTest.testFilterByBudgetRange" />
-        <item itemvalue="JUnit.ProjectServiceTest.testGetProjectById_notFound" />
-        <item itemvalue="JUnit.ProjectServiceTest.testCreateProject_success" />
-        <item itemvalue="JUnit.UserServiceTest" />
+        <item itemvalue="JUnit.ReportServiceTest" />
+        <item itemvalue="JUnit.UserServiceTest.testAdminRemoveTask" />
+        <item itemvalue="JUnit.TaskServiceTest" />
+        <item itemvalue="JUnit.TaskServiceTest.testUpdateTaskStatus_success" />
+        <item itemvalue="JUnit.TaskServiceTest.testUpdateTaskStatus_taskNotFound" />
       </list>
     </recent_temporary>
   </component>
@@ -248,7 +247,63 @@
       <option name="project" value="LOCAL" />
       <updated>1765273626833</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Refactor: create a project repository class to save all projects">
+      <option name="closed" value="true" />
+      <created>1766598710988</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1766598710988</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Refactor: change Tasks from using a primitive array to using Collection API">
+      <option name="closed" value="true" />
+      <created>1766604894526</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1766604894526</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Refactor: use Lambda expression to implement the completable functional interface">
+      <option name="closed" value="true" />
+      <created>1766661705167</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1766661705167</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Refactor: delete unused ResizeObjectSizeUtils.java after using Collection API">
+      <option name="closed" value="true" />
+      <created>1766662047324</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1766662047324</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Refactor: remove tasks association to a project in the projects models and used a map to associate multiple tasks to relating project">
+      <option name="closed" value="true" />
+      <created>1766672599579</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1766672599579</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Refactor: remove tasks association to a project in the projects models and used a map to associate multiple tasks to relating project">
+      <option name="closed" value="true" />
+      <created>1766672632594</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1766672632594</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Refactor: remove unused imports">
+      <option name="closed" value="true" />
+      <created>1766672687397</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1766672687397</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -275,7 +330,13 @@
     <MESSAGE value="refactor: move role based check for removing task to subclass for polymorphism" />
     <MESSAGE value="refactor: correct naming" />
     <MESSAGE value="doc: add the project_management_system docs" />
-    <option name="LAST_COMMIT_MESSAGE" value="doc: add the project_management_system docs" />
+    <MESSAGE value="Refactor: create a project repository class to save all projects" />
+    <MESSAGE value="Refactor: change Tasks from using a primitive array to using Collection API" />
+    <MESSAGE value="Refactor: use Lambda expression to implement the completable functional interface" />
+    <MESSAGE value="Refactor: delete unused ResizeObjectSizeUtils.java after using Collection API" />
+    <MESSAGE value="Refactor: remove tasks association to a project in the projects models and used a map to associate multiple tasks to relating project" />
+    <MESSAGE value="Refactor: remove unused imports" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor: remove unused imports" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

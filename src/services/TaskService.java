@@ -12,7 +12,7 @@ import java.util.Collection;
 
 public class TaskService {
 
-    private ProjectService projectService = new ProjectService();
+    private ProjectService projectService;
 
     /**
      * Instantiates a new Task service.

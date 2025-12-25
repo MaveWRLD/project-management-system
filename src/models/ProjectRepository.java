@@ -1,14 +1,12 @@
 package models;
 
-import utils.exceptions.ProjectsNotCreatedException;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ProjectRepository {
-    private Collection<Project> projects = new ArrayList<Project>();
+    private Collection<Project> projects = new ArrayList<>();
     private Map<Project, Collection<Task>> projectTaskMap = new HashMap<>();
 
     public ProjectRepository() {

@@ -43,10 +43,9 @@ class TaskServiceTest {
     /**
      * Test add task success.
      *
-     * @throws EmptyProjectException the empty project exception
      */
     @Test
-    void testAddTask_success() throws EmptyProjectException {
+    void testAddTask_success() {
 
         taskService.addTaskToProject(project.getId(),"Setup Repo", Status.PENDING);
         Collection<Task> tasks = taskService.getProjectTasks(project);
