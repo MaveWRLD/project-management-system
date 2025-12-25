@@ -1,7 +1,6 @@
 package services;
 
 import models.*;
-import utils.ResizeObjectSizeUtils;
 import utils.Status;
 import utils.exceptions.EmptyProjectException;
 import utils.exceptions.ProjectNotFoundException;
@@ -28,9 +27,6 @@ public class TaskService {
      *
      * <p>This method locates the {@link Project} by its unique identifier, ensures the project's
      * task array has sufficient capacity (resizing it if full via
-     * {@link ResizeObjectSizeUtils#resizeObjectsSizeIfFull(Object[])}), creates a new task using
-     * the provided name and {@link Status}, inserts it at the first available ({@code null}) index,
-     * and updates the project with the modified task array.</p>
      */
     public void addTaskToProject(String projectId, String name, Status status) {
         try {
@@ -58,7 +54,6 @@ public class TaskService {
         return newTask;
 
     }
-
 
 
     /**

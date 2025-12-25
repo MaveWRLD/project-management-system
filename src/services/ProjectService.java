@@ -2,7 +2,6 @@ package services;
 
 import models.Project;
 import models.ProjectRepository;
-import utils.ResizeObjectSizeUtils;
 import utils.exceptions.ProjectsNotCreatedException;
 import utils.exceptions.ProjectNotFoundException;
 
@@ -35,14 +34,8 @@ public class ProjectService {
     /**
      * Adds a new project to the collection of projects.
      *
-     * <p>This method ensures that the internal projects array has enough capacity to store
-     * the new {@link Project}. If the array is full, it is resized automatically using
-     * {@link ResizeObjectSizeUtils#resizeObjectsSizeIfFull(Object[])}. The project is then
-     * inserted at the first available (null) position in the array.</p>
-     *
      * @param project the {@link Project} instance to add;
      * @see Project
-     * @see ResizeObjectSizeUtils#resizeObjectsSizeIfFull(Object[])
      */
     public void addProject(Project project) {
         projectRepository.getProjects().add(project);
@@ -103,22 +96,5 @@ public class ProjectService {
             }
         }
         throw new ProjectNotFoundException(projectID);
-    }
-
-    /**
-     * Finds the index of the first null element in the given projects array.
-     *
-     * <p>This method iterates through the provided {@link Project} array and returns the index
-     * of the first position that contains {@code null}. If no {@code null} elements are found,
-     * it returns {@code -1}.</p>
-     *
-     */
-    private static int getFirstNullIndex(Project[] projects) {
-        for (int i = 0; i < projects.length; i++) {
-            if (projects[i] == null) {
-                return i;
-            }
-        }
-        return -1;
     }
 }
