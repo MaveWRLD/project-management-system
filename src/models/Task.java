@@ -4,7 +4,7 @@ package models;
 import interfaces.Completable;
 import utils.Status;
 
-public class Task implements Completable {
+public class Task  {
     private String taskID;
     private String name;
     private Status status;
@@ -31,11 +31,6 @@ public class Task implements Completable {
 
     public void setTaskID(String taskID) {
         this.taskID = taskID;
-    }
-    
-    @Override
-    public boolean isCompleted() {
-        return status == Status.COMPLETED;
     }
 }
 

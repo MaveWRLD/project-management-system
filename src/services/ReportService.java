@@ -1,8 +1,10 @@
 package services;
 
+import interfaces.Completable;
 import models.Project;
 import models.StatusReport;
 import models.Task;
+import utils.Status;
 import utils.exceptions.EmptyProjectException;
 import utils.exceptions.ProjectNotFoundException;
 
@@ -87,6 +89,9 @@ public class ReportService {
         return taskService.getProjectTasks(project).size();
     }
 
+    public boolean isCompleted(Completable completable) {
+        return completable.isCompleted();
+    }
 
     /**
      * Calculates the number of completed tasks for a specific project.
@@ -106,7 +111,7 @@ public class ReportService {
             Project project = projectService.filterProjectBYId(projectId);
             Collection<Task> tasks = taskService.getProjectTasks(project);
             for (Task task : tasks) {
-                if (task != null && task.isCompleted()) {
+                if (isCompleted(() -> task.getStatus().equals(Status.COMPLETED))) {
                     ++completed;
                 }
             }
@@ -114,7 +119,6 @@ public class ReportService {
             System.out.println(e.getMessage());
         }
         return completed;
-
     }
 
 
@@ -141,7 +145,6 @@ public class ReportService {
         return (completed / totalTasks) * 100f;
 
     }
-
 
     /**
      * Calculates the average completion percentage across the provided projects.
