@@ -6,7 +6,6 @@ import models.SoftwareProject;
 import models.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import services.ProjectService;
 import services.TaskService;
 import services.UserService;
@@ -30,7 +29,7 @@ class UserServiceTest {
         projectService = new ProjectService();
         taskService = new TaskService(projectService);
 
-        userService = new UserService(projectService, taskService);
+        userService = new UserService();
     }
 
     /**

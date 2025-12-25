@@ -1,11 +1,11 @@
 package models;
 
 public class StatusReport {
-    private String projectID;
-    private String projectName;
-    private int totalTask;
-    private int completedTasks;
-    private float completionPercentage;
+    private final String projectID;
+    private final String projectName;
+    private final int totalTask;
+    private final int completedTasks;
+    private final float completionPercentage;
 
     public StatusReport(String projectID, String projectName, int totalTask, int completedTasks,
             float completionPercentage) {

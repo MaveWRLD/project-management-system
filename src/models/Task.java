@@ -1,7 +1,5 @@
 package models;
 
-
-import interfaces.Completable;
 import utils.Status;
 
 public class Task  {

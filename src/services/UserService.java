@@ -8,23 +8,15 @@ import models.User;
  * The type User service.
  */
 public class UserService {
-    private ProjectService projectService;
-    private TaskService taskService;
-
-    private User adminUser;
-    private User regularUser;
+    private final User adminUser;
+    private final User regularUser;
 
     /**
      * Instantiates a new User service.
-     *
-     * @param projectService the project service
-     * @param taskService    the task service
      */
-    public UserService(ProjectService projectService, TaskService taskService) {
-        this.projectService = projectService;
-        this.taskService = taskService;
+    public UserService() {
 
-        this.adminUser = new AdminUser("Jacob Quaye", "kofimave@gmail.com", projectService, taskService);
+        this.adminUser = new AdminUser("Jacob Quaye", "kofimave@gmail.com");
         this.regularUser = new RegularUser("John Doe", "johndoe@gmail.com");
     }
 

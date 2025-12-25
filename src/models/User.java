@@ -4,14 +4,14 @@ import utils.IdGenerator;
 import utils.exceptions.TaskNotFoundException;
 
 public abstract class User {
-    private String id;
-    private String name;
-    private String email;
+    private final String id;
+    private final String name;
+    private final String email;
 
-    private final IdGenerator idGenerator = new IdGenerator();
     private static int userCounter = 1;
 
     public User(String name, String email) {
+        IdGenerator idGenerator = new IdGenerator();
         this.id = idGenerator.idGenerator('U', userCounter++);
         this.name = name;
         this.email = email;
@@ -19,7 +19,7 @@ public abstract class User {
 
     public void removeTask(String projectID, String taskId) throws TaskNotFoundException {
         throw new UnsupportedOperationException("You are not allowed to perform this action");
-    };
+    }
 
     public String getName() {
         return name;

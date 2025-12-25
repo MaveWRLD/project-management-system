@@ -3,8 +3,8 @@ package models;
 import java.text.NumberFormat;
 
 public class HardwareProject extends Project {
-    private String component;
-    private float weight;
+    private final String component;
+    private final float weight;
 
 
     public HardwareProject(String name, String description, int budget, int teamSize, String component, float weight) {

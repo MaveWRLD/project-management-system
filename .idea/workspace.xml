@@ -5,10 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1ff1f1f6-41ad-499a-b591-4d26bfd4925c" name="Changes" comment="Refactor: remove unused imports">
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/AdminUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/AdminUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/HardwareProject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/HardwareProject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Project.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/ProjectRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/ProjectRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/TaskService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/services/TaskServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/services/TaskServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/SoftwareProject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/SoftwareProject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/StatusReport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/StatusReport.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Task.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/services/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/services/UserServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +35,9 @@
   </component>
   <component name="GitRewordedCommitMessages">
     <option name="onto" value="2ec6f9b6f3315613e296e9feef7db8c5094c202a" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -104,7 +114,7 @@
       <recent name="test.java.services" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="JUnit.ReportServiceTest">
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="project-management-system" />
@@ -158,7 +168,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TaskServiceTest.testUpdateTaskStatus_taskNotFound" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UserServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="project-management-system" />
       <extension name="coverage">
         <pattern>
@@ -167,9 +177,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="test.java.services" />
-      <option name="MAIN_CLASS_NAME" value="test.java.services.TaskServiceTest" />
-      <option name="METHOD_NAME" value="testUpdateTaskStatus_taskNotFound" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="MAIN_CLASS_NAME" value="test.java.services.UserServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -193,10 +202,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.ReportServiceTest" />
-        <item itemvalue="JUnit.UserServiceTest.testAdminRemoveTask" />
+        <item itemvalue="JUnit.UserServiceTest" />
         <item itemvalue="JUnit.TaskServiceTest" />
+        <item itemvalue="JUnit.UserServiceTest.testAdminRemoveTask" />
         <item itemvalue="JUnit.TaskServiceTest.testUpdateTaskStatus_success" />
-        <item itemvalue="JUnit.TaskServiceTest.testUpdateTaskStatus_taskNotFound" />
       </list>
     </recent_temporary>
   </component>
@@ -303,7 +312,23 @@
       <option name="project" value="LOCAL" />
       <updated>1766672687397</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Refactor: remove unused imports">
+      <option name="closed" value="true" />
+      <created>1766672859804</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1766672859804</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Refactor: remove unused imports">
+      <option name="closed" value="true" />
+      <created>1766672925727</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1766672925727</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

@@ -10,13 +10,12 @@ import java.util.Collection;
 
 public class AdminUser extends User{
 
-    private ProjectService projectService;
-    private TaskService taskService;
+    private final ProjectService projectService = new ProjectService();
+    private final TaskService taskService = new TaskService(projectService);
 
-    public AdminUser(String name, String email, ProjectService projectService, TaskService taskService) {
+    public AdminUser(String name, String email) {
         super(name, email);
-        this.projectService = projectService;
-        this.taskService = taskService;
+
     }
 
     @Override

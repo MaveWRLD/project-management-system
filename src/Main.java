@@ -29,7 +29,7 @@ public class Main {
         taskService.addTaskToProject("P001", "Testing", Status.COMPLETED);
         taskService.addTaskToProject("P004", "Programming", Status.PENDING);
 
-        UserService userService = new UserService(projectService, taskService);
+        UserService userService = new UserService();
 
         User currentUser = userService.getAdminUser();
 

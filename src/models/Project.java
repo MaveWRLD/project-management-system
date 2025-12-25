@@ -6,12 +6,12 @@ import utils.IdGenerator;
 
 public abstract class Project {
 
-    private String id;
-    private String name;
-    private String description;
-    private int budget;
-    private String type;
-    private int teamSize;
+    private final String id;
+    private final String name;
+    private final String description;
+    private final int budget;
+    private final String type;
+    private final int teamSize;
 
     private final IdGenerator idGenerator = new IdGenerator();
 

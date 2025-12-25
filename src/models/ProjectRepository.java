@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ProjectRepository {
-    private Collection<Project> projects = new ArrayList<>();
-    private Map<Project, Collection<Task>> projectTaskMap = new HashMap<>();
+    private final Collection<Project> projects = new ArrayList<>();
+    private final Map<Project, Collection<Task>> projectTaskMap = new HashMap<>();
 
     public ProjectRepository() {
     }
