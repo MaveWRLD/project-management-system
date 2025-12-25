@@ -2,11 +2,13 @@ package services;
 
 import models.Project;
 import models.ProjectRepository;
+import models.Task;
 import utils.exceptions.ProjectsNotCreatedException;
 import utils.exceptions.ProjectNotFoundException;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 
 public class ProjectService {
@@ -30,6 +32,9 @@ public class ProjectService {
         return projectRepository.getProjects();
     }
 
+    public Map<Project, Collection<Task>> projectTaskMap(){
+        return projectRepository.getProjectTaskMap();
+    }
 
     /**
      * Adds a new project to the collection of projects.

@@ -8,65 +8,54 @@ import utils.Status;
 import utils.exceptions.EmptyProjectException;
 import utils.exceptions.ProjectNotFoundException;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 public class ReportService {
     private final TaskService taskService;
-    private ProjectService projectService;
 
     /**
      * Instantiates a new Report service.
      *
-     * @param taskService    the task service
-     * @param projectService the project service
+     * @param taskService the task service
      */
-    public ReportService(TaskService taskService, ProjectService projectService) {
+    public ReportService(TaskService taskService) {
         this.taskService = taskService;
-        this.projectService = projectService;
     }
 
 
     /**
      * Generates status reports for the given list of projects.
      *
-     * <p>This method iterates over the provided {@link Project} array and builds a corresponding
-     * {@link StatusReport} for each non-{@code null} project. Each report aggregates task metrics
-     * for the project, including:
-     * The method handles empty project task lists via {@link EmptyProjectException} (logged),
-     * and propagates {@link ProjectNotFoundException} if the underlying aggregation utilities
-     * require a valid project identifier that cannot be found.</p>
+     * <p>This method iterates through the given map of {@link Project}objects and collection {@link Task} objects,
+     * for each project key and builds a corresponding {@link StatusReport}.
+     * Each report aggregates task metrics for the project.
+     * The method handles empty project task lists via {@link EmptyProjectException} (logged)
+     * </p>
      *
-     * @throws ProjectNotFoundException if computing metrics for a project fails due to an unknown project ID.
      * @see Project
      * @see Task
      * @see StatusReport
      * @see EmptyProjectException
-     * @see ProjectNotFoundException
      */
-    public StatusReport[] generateReport(Collection<Project> projects) throws ProjectNotFoundException {
-        StatusReport[] reports = new StatusReport[100];
+    public Collection<StatusReport> generateReport(Map<Project, Collection<Task>> projectTaskMap) {
+        Collection<StatusReport> reports = new ArrayList<>();
         try {
-            int i = 0;
-            for (Project project : projects) {
-                if (project != null) {
-                    for (Task task : project.getTasks())
-                        if (task != null) {
-                            reports[i] = new StatusReport(
-                                    project.getId(),
-                                    project.getName(),
-                                    totalTask(project.getId()),
-                                    completedTasks(project.getId()),
-                                    completionPercentage(project.getId())
-                            );
-                        }
-                }
-                ++i;
+            for (Project project : projectTaskMap.keySet()) {
+                reports.add(new StatusReport(
+                                project.getId(),
+                                project.getName(),
+                                totalTask(project),
+                                completedTasks(project),
+                                completionPercentage(project)
+                        )
+                );
             }
         } catch (EmptyProjectException e) {
             System.out.println(e.getMessage());
         }
         return reports;
-
     }
 
 
@@ -77,15 +66,10 @@ public class ReportService {
      * obtains all tasks linked to that project. It counts only non-{@code null} tasks
      * and returns the total count.</p>
      *
-     * @throws EmptyProjectException    if the project has no tasks or is considered empty.
-     * @throws ProjectNotFoundException if no project with the given projectId exists.
      * @see Project
      * @see Task
-     * @see EmptyProjectException
-     * @see ProjectNotFoundException
      */
-    public int totalTask(String projectId) throws EmptyProjectException, ProjectNotFoundException {
-        Project project = projectService.filterProjectBYId(projectId);
+    public int totalTask(Project project){
         return taskService.getProjectTasks(project).size();
     }
 
@@ -102,21 +86,15 @@ public class ReportService {
      *
      * @see Project
      * @see Task
-     * @see EmptyProjectException
      * @see ProjectNotFoundException
      */
-    public int completedTasks(String projectId) {
+    public int completedTasks(Project project) {
         int completed = 0;
-        try {
-            Project project = projectService.filterProjectBYId(projectId);
-            Collection<Task> tasks = taskService.getProjectTasks(project);
-            for (Task task : tasks) {
-                if (isCompleted(() -> task.getStatus().equals(Status.COMPLETED))) {
-                    ++completed;
-                }
+        Collection<Task> tasks = taskService.getProjectTasks(project);
+        for (Task task : tasks) {
+            if (isCompleted(() -> task.getStatus().equals(Status.COMPLETED))) {
+                ++completed;
             }
-        } catch (EmptyProjectException | ProjectNotFoundException e) {
-            System.out.println(e.getMessage());
         }
         return completed;
     }
@@ -132,47 +110,37 @@ public class ReportService {
      * division by zero.</p>
      *
      * @throws EmptyProjectException    if the project has no tasks or is considered empty.
-     * @throws ProjectNotFoundException if no project with the given {@code projectId} exists.
      * @see Project
      * @see Task
      */
-    public float completionPercentage(String projectId) throws EmptyProjectException, ProjectNotFoundException {
-        float completed = completedTasks(projectId);
-        float totalTasks = totalTask(projectId);
+    public float completionPercentage(Project project) throws EmptyProjectException {
+        float completed = completedTasks(project);
+        float totalTasks = totalTask(project);
         if (completed == 0 || totalTasks == 0) {
             return 0f;
         }
         return (completed / totalTasks) * 100f;
-
     }
 
     /**
      * Calculates the average completion percentage across the provided projects.
      *
-     * <p>This method iterates through the given array of {@link Project} objects and, for each
-     * non-{@code null} project, computes its completion percentage via {@link #completionPercentage(String)}.
+     * <p>This method iterates through the given map of {@link Project} objects and collection {@link Task} objects, for each
+     * project key, computes its completion percentage via {@link #completionPercentage(Project)}.
      * The average is calculated as the sum of per-project completion percentages divided by the number
      * of projects considered.</p>
      *
-     * @throws ProjectNotFoundException if computing a project's completion requires a project ID that cannot be found.
      * @see Project
      * @see Task
-     * @see EmptyProjectException
-     * @see ProjectNotFoundException
      */
-    public float completionAverage(Collection<Project> projects) throws ProjectNotFoundException {
+    public float completionAverage(Map<Project, Collection<Task>> projectTaskMap){
         float totalPercentageCount = 0;
         float sumOfPercentages = 0;
         try {
-            for (Project project : projects) {
-                if (project != null) {
-                    for (Task task : project.getTasks())
-                        if (task != null) {
-                            float percent = completionPercentage(project.getId());
-                            sumOfPercentages += percent;
-                            totalPercentageCount++;
-                        }
-                }
+            for (Project project : projectTaskMap.keySet()) {
+                    float percent = completionPercentage(project);
+                    sumOfPercentages += percent;
+                    totalPercentageCount++;
             }
             if (totalPercentageCount == 0) return 0;
         } catch (EmptyProjectException e) {

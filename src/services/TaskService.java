@@ -6,12 +6,13 @@ import utils.exceptions.EmptyProjectException;
 import utils.exceptions.ProjectNotFoundException;
 import utils.exceptions.TaskNotFoundException;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 
 public class TaskService {
 
-    private ProjectService projectService;
+    private ProjectService projectService = new ProjectService();
 
     /**
      * Instantiates a new Task service.
@@ -20,22 +21,6 @@ public class TaskService {
      */
     public TaskService(ProjectService projectService) {
         this.projectService = projectService;
-    }
-
-    /**
-     * Adds a new {@link Task} to the specified project's task list.
-     *
-     * <p>This method locates the {@link Project} by its unique identifier, ensures the project's
-     * task array has sufficient capacity (resizing it if full via
-     */
-    public void addTaskToProject(String projectId, String name, Status status) {
-        try {
-            Project project = projectService.filterProjectBYId(projectId);
-            Task newTask = createTask(project, name, status);
-            project.getTasks().add(newTask);
-        } catch (ProjectNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
     }
 
     /**
@@ -52,9 +37,37 @@ public class TaskService {
         newTask.setName(name);
         newTask.setStatus(status);
         return newTask;
-
     }
 
+    /**
+     * Retrieves the tasks associated with a given {@link Project}.
+     *
+     * <p>This method returns the project's internal task array if it contains at least one
+     * non-{@code null} {@link Task}. If all entries are {@code null} (i.e., the project has
+     * no tasks), an {@link EmptyProjectException} is thrown.</p>
+     */
+    public Collection<Task> getProjectTasks(Project project){
+        var projectTaskMap = projectService.projectTaskMap();
+        if (!projectTaskMap.containsKey(project))
+            projectTaskMap.put(project, new ArrayList<>());
+        return projectTaskMap.get(project);
+    }
+
+    /**
+     * Adds a new {@link Task} to the specified project's task list.
+     *
+     * <p>This method locates the {@link Project} by its unique identifier, ensures the project's
+     * task array has sufficient capacity (resizing it if full via
+     */
+    public void addTaskToProject(String projectId, String name, Status status) {
+        try {
+            Project project = projectService.filterProjectBYId(projectId);
+            Task newTask = createTask(project, name, status);
+            getProjectTasks(project).add(newTask);
+        } catch (ProjectNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
     /**
      * Updates the status of a specific {@link Task} within a given {@link Project}.
@@ -71,25 +84,13 @@ public class TaskService {
             throws TaskNotFoundException, EmptyProjectException, ProjectNotFoundException {
         Project project = projectService.filterProjectBYId(projectID);
         Collection<Task> tasks = getProjectTasks(project);
-        Task task = getTask(tasks, taskID);
-        task.setStatus(status);
-    }
-
-
-    /**
-     * Retrieves the tasks associated with a given {@link Project}.
-     *
-     * <p>This method returns the project's internal task array if it contains at least one
-     * non-{@code null} {@link Task}. If all entries are {@code null} (i.e., the project has
-     * no tasks), an {@link EmptyProjectException} is thrown.</p>
-     */
-    public Collection<Task> getProjectTasks(Project project) throws EmptyProjectException {
-        if (project.getTasks().isEmpty()) {
+        if (tasks.isEmpty()) {
             throw new EmptyProjectException(
                     "Project with id " + project.getId() + " has no tasks associated with it"
             );
         }
-        return project.getTasks();
+        Task task = getTask(tasks, taskID);
+        task.setStatus(status);
     }
 
 

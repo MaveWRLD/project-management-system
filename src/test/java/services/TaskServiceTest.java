@@ -19,6 +19,7 @@ import static org.assertj.core.api.Assertions.*;
 class TaskServiceTest {
 
     private TaskService taskService;
+    ProjectService projectService = new ProjectService();
     private Project project;
 
     /**
@@ -35,7 +36,6 @@ class TaskServiceTest {
                 "Clean Coding",
                 "Git"
         );
-        ProjectService projectService = new ProjectService();
         projectService.addProject(project);
         taskService = new TaskService(projectService);
     }
@@ -67,8 +67,9 @@ class TaskServiceTest {
         taskService.addTaskToProject(project.getId(), "Design", Status.PENDING);
 
         taskService.updateTaskStatus(project.getId(), Status.COMPLETED, "T001");
+        Collection<Task> tasks = taskService.getProjectTasks(project);
 
-        assertThat(project.getTasks())
+        assertThat(tasks)
                 .filteredOn(Objects::nonNull)
                 .extracting(Task::getStatus)
                 .containsExactly(Status.COMPLETED);

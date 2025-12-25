@@ -145,7 +145,7 @@ public class ConsoleMenu {
                         System.out.printf("%-6s | %-20s | %-10s\n", task.getTaskID(), task.getName(), task.getStatus());
                     }
                 }
-                double completion = statusReport.completionPercentage(project.getId());
+                double completion = statusReport.completionPercentage(project);
                 System.out.println("Completion Rate: " + String.format("%.0f%%", completion));
             } catch (EmptyProjectException e) {
                 System.out.println(e.getMessage());
@@ -240,15 +240,9 @@ public class ConsoleMenu {
     }
 
     private void handleViewStatusReports() {
-        Collection<Project> projects = new ArrayList<>();
+        Collection<StatusReport> reports = new ArrayList<>() ;
         try {
-            projects = projectService.allProjects();
-        } catch (ProjectsNotCreatedException e) {
-            System.out.println(e.getMessage());
-        }
-        StatusReport[] reports = null;
-        try {
-            reports = statusReport.generateReport(projects);
+            reports = statusReport.generateReport(projectService.projectTaskMap());
         } catch (ProjectNotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -267,7 +261,7 @@ public class ConsoleMenu {
         }
         double avgCompletion = 0;
         try {
-            avgCompletion = statusReport.completionAverage(projects);
+            avgCompletion = statusReport.completionAverage(projectService.projectTaskMap());
         } catch (ProjectNotFoundException e) {
             System.out.println(e.getMessage());
         }
