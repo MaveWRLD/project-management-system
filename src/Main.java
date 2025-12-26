@@ -19,15 +19,15 @@ public class Main {
         SoftwareProject javaProject = new SoftwareProject("Data Science", "Difficult", 233, 4,  "Python", "Mobile", "Git");
         SoftwareProject pythonProject = new SoftwareProject("Java Basics", "Difficult", 233, 4, "Java", "Web", "Git");
 
-        projectService.addProject(systemUnitProject);
-        projectService.addProject(monitorProject);
-        projectService.addProject(keyboardProject);
-        projectService.addProject(javaProject);
-        projectService.addProject(pythonProject);
-
-
-        taskService.addTaskToProject("P001", "Testing", Status.COMPLETED);
-        taskService.addTaskToProject("P004", "Programming", Status.PENDING);
+//        projectService.addProject(systemUnitProject);
+//        projectService.addProject(monitorProject);
+//        projectService.addProject(keyboardProject);
+//        projectService.addProject(javaProject);
+//        projectService.addProject(pythonProject);
+//
+//
+//        taskService.addTaskToProject("P001", "Testing", Status.COMPLETED);
+//        taskService.addTaskToProject("P004", "Programming", Status.PENDING);
 
         UserService userService = new UserService();
 

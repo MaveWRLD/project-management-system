@@ -7,7 +7,6 @@ import services.ReportService;
 import services.TaskService;
 import services.UserService;
 import utils.exceptions.EmptyProjectException;
-import utils.exceptions.ProjectsNotCreatedException;
 import utils.exceptions.ProjectNotFoundException;
 import utils.exceptions.TaskNotFoundException;
 
@@ -66,41 +65,33 @@ public class ConsoleMenu {
     }
 
     private void handleManageProjects() {
-        Collection<Project> projects = new ArrayList<>();
-        try {
-            projects = projectService.allProjects();
-        } catch (ProjectsNotCreatedException e) {
-            System.out.println(e.getMessage());
-        }
         while (true) {
             printHeader("PROJECT CATALOG");
             String[] options = {"Filter Options: ",
-                    "1. View All Projects " +"(" + projects.size() + ")",
+                    "1. View All Projects " +"(" + projectService.allProjects().size() + ")",
                     "2. Add Project",
                     "3. Software Projects Only",
                     "4. Hardware Projects Only",
                     "5. Search by Budget Range",
             };
             printText(options);
-            try {
-                Collection<Project> filteredProjects = getFilteredProjects();
+            Collection<Project> filteredProjects = getFilteredProjects();
+            if (!filteredProjects.isEmpty()) {
+                System.out.println("Not empty");
                 System.out.printf("%-6s | %-20s | %-10s | %-8s | %-10s\n", "ID", "Project Name", "Type", "Team Size", "Budget");
                 System.out.println("-----------------------------------------------------------------");
                 for (Project project : filteredProjects) {
-                if (project != null) {
                     System.out.printf("%-6s | %-20s | %-10s | %-8d | $%-9d\n", project.getId(), project.getName(), project.getType(), project.getTeamSize(), project.getBudget());
                     System.out.printf("%-6s | %-20s", "", "Description: " + project.getDescription());
                     System.out.println("\n-----------------------------------------------------------------");
                 }
-                }
-            if (handleManageTasks()) return;
-            } catch (ProjectsNotCreatedException e) {
-                System.out.println(e.getMessage());
+               if (handleManageTasks()) return;
             }
+            System.out.println("No available project. Choose option 2 to add a project");
         }
     }
 
-    public Collection<Project> getFilteredProjects() throws ProjectsNotCreatedException {
+    public Collection<Project> getFilteredProjects() {
         int filterChoice = inputValidation.getValidInt("Enter Filter choice: ", 1, 5);
 
         Collection<Project> filteredProjects = new ArrayList<>();
@@ -147,8 +138,6 @@ public class ConsoleMenu {
                 }
                 double completion = statusReport.completionPercentage(project);
                 System.out.println("Completion Rate: " + String.format("%.0f%%", completion));
-            } catch (EmptyProjectException e) {
-                System.out.println(e.getMessage());
             } catch (ProjectNotFoundException e) {
                 throw new RuntimeException(e);
             }
@@ -250,14 +239,12 @@ public class ConsoleMenu {
         System.out.printf("%-10s | %-20s | %-6s | %-9s | %-10s\n", "Project ID", "Project Name", "Tasks", "Completed", "Progress(%)");
         System.out.println("---------------------------------------------------------------");
         for (StatusReport report : reports) {
-            if (report != null) {
-                System.out.printf("%-10s | %-20s | %-6d | %-9d | %1.0f%%\n",
-                        report.getProjectID(),
-                        report.getProjectName(),
-                        report.getTotalTask(),
-                        report.getCompletedTasks(),
-                        report.getCompletionPercentage());
-            }
+            System.out.printf("%-10s | %-20s | %-6d | %-9d | %1.0f%%\n",
+                    report.getProjectID(),
+                    report.getProjectName(),
+                    report.getTotalTask(),
+                    report.getCompletedTasks(),
+                    report.getCompletionPercentage());
         }
         double avgCompletion = 0;
         try {

@@ -3,7 +3,6 @@ package services;
 import models.Project;
 import models.ProjectRepository;
 import models.Task;
-import utils.exceptions.ProjectsNotCreatedException;
 import utils.exceptions.ProjectNotFoundException;
 
 import java.util.ArrayList;
@@ -20,15 +19,12 @@ public class ProjectService {
      * Retrieves all existing projects.
      *
      * <p>This method returns an array of {@link Project} objects representing all the projects
-     * currently available in the system. If no projects have been created, it throws a
-     * {@link ProjectsNotCreatedException} to indicate that the project list is empty </p>
+     * currently available in the system.
      *
      * @return an array of {@link Project} instances;
-     * @throws ProjectsNotCreatedException if no projects have been created (i.e., the projects array has null elements).
      * @see Project
-     * @see ProjectsNotCreatedException
      */
-    public Collection<Project> allProjects() throws ProjectsNotCreatedException {
+    public Collection<Project> allProjects() {
         return projectRepository.getProjects();
     }
 

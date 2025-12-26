@@ -5,7 +5,6 @@ import models.Project;
 import models.StatusReport;
 import models.Task;
 import utils.Status;
-import utils.exceptions.EmptyProjectException;
 import utils.exceptions.ProjectNotFoundException;
 
 import java.util.ArrayList;
@@ -31,29 +30,23 @@ public class ReportService {
      * <p>This method iterates through the given map of {@link Project}objects and collection {@link Task} objects,
      * for each project key and builds a corresponding {@link StatusReport}.
      * Each report aggregates task metrics for the project.
-     * The method handles empty project task lists via {@link EmptyProjectException} (logged)
      * </p>
      *
      * @see Project
      * @see Task
      * @see StatusReport
-     * @see EmptyProjectException
      */
     public Collection<StatusReport> generateReport(Map<Project, Collection<Task>> projectTaskMap) {
         Collection<StatusReport> reports = new ArrayList<>();
-        try {
-            for (Project project : projectTaskMap.keySet()) {
-                reports.add(new StatusReport(
-                                project.getId(),
-                                project.getName(),
-                                totalTask(project),
-                                completedTasks(project),
-                                completionPercentage(project)
-                        )
-                );
-            }
-        } catch (EmptyProjectException e) {
-            System.out.println(e.getMessage());
+        for (Project project : projectTaskMap.keySet()) {
+            reports.add(new StatusReport(
+                            project.getId(),
+                            project.getName(),
+                            totalTask(project),
+                            completedTasks(project),
+                            completionPercentage(project)
+                    )
+            );
         }
         return reports;
     }
@@ -109,11 +102,10 @@ public class ReportService {
      * the total number of tasks * the total number of tasks is zero, the method returns {@code 0} to avoid
      * division by zero.</p>
      *
-     * @throws EmptyProjectException    if the project has no tasks or is considered empty.
      * @see Project
      * @see Task
      */
-    public float completionPercentage(Project project) throws EmptyProjectException {
+    public float completionPercentage(Project project) {
         float completed = completedTasks(project);
         float totalTasks = totalTask(project);
         if (completed == 0 || totalTasks == 0) {
@@ -136,16 +128,12 @@ public class ReportService {
     public float completionAverage(Map<Project, Collection<Task>> projectTaskMap){
         float totalPercentageCount = 0;
         float sumOfPercentages = 0;
-        try {
-            for (Project project : projectTaskMap.keySet()) {
-                    float percent = completionPercentage(project);
-                    sumOfPercentages += percent;
-                    totalPercentageCount++;
-            }
-            if (totalPercentageCount == 0) return 0;
-        } catch (EmptyProjectException e) {
-            System.out.println(e.getMessage());
+        for (Project project : projectTaskMap.keySet()) {
+                float percent = completionPercentage(project);
+                sumOfPercentages += percent;
+                totalPercentageCount++;
         }
+        if (totalPercentageCount == 0) return 0;
         return sumOfPercentages / totalPercentageCount;
     }
 }

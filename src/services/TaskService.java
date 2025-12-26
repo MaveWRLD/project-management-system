@@ -43,8 +43,7 @@ public class TaskService {
      * Retrieves the tasks associated with a given {@link Project}.
      *
      * <p>This method returns the project's internal task array if it contains at least one
-     * non-{@code null} {@link Task}. If all entries are {@code null} (i.e., the project has
-     * no tasks), an {@link EmptyProjectException} is thrown.</p>
+     * non-{@code null} {@link Task}.
      */
     public Collection<Task> getProjectTasks(Project project){
         var projectTaskMap = projectService.projectTaskMap();

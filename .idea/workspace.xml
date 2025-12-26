@@ -4,18 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1ff1f1f6-41ad-499a-b591-4d26bfd4925c" name="Changes" comment="Refactor: remove unused imports">
+    <list default="true" id="1ff1f1f6-41ad-499a-b591-4d26bfd4925c" name="Changes" comment="Refactor: intellij code cleanup">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/AdminUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/AdminUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/HardwareProject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/HardwareProject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Project.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/ProjectRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/ProjectRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/SoftwareProject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/SoftwareProject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/StatusReport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/StatusReport.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Task.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/services/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/services/UserServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/ProjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/ProjectService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/ReportService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/ReportService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/TaskService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/ConsoleMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/ConsoleMenu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,7 +109,7 @@
       <recent name="test.java.services" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ReportServiceTest">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="project-management-system" />
@@ -328,7 +323,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766672925727</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Refactor: intellij code cleanup">
+      <option name="closed" value="true" />
+      <created>1766673483893</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1766673483893</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -361,7 +364,8 @@
     <MESSAGE value="Refactor: delete unused ResizeObjectSizeUtils.java after using Collection API" />
     <MESSAGE value="Refactor: remove tasks association to a project in the projects models and used a map to associate multiple tasks to relating project" />
     <MESSAGE value="Refactor: remove unused imports" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor: remove unused imports" />
+    <MESSAGE value="Refactor: intellij code cleanup" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor: intellij code cleanup" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
