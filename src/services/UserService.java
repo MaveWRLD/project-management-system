@@ -3,24 +3,30 @@ package services;
 import models.AdminUser;
 import models.RegularUser;
 import models.User;
+import models.UserRepository;
+
+import java.util.List;
 
 /**
  * The type User service.
  */
 public class UserService {
-    private final User adminUser;
-    private final User regularUser;
+    private User adminUser;
+    private User regularUser;
 
-    /**
-     * Instantiates a new User service.
-     */
-    public UserService() {
+    private UserRepository repo = new UserRepository();
+    List<User> users = repo.loadUsers();
 
-        this.adminUser = new AdminUser("Jacob Quaye", "kofimave@gmail.com");
-        this.regularUser = new RegularUser("John Doe", "johndoe@gmail.com");
+
+    public void registerUser(String userName, String email, String userType){
+        if (users.stream().map(u -> u ).anyMatch( u -> u.getEmail().equals(email)))
+            System.out.println("User already exists");
+        if ("ADMIN".equalsIgnoreCase(userType))
+            users.add(new AdminUser(userName, email));
+        if ("USER".equalsIgnoreCase(userType))
+            users.add(new RegularUser(userName, email));
+        repo.saveUsers(users);
     }
-
-
     /**
      * Switches the current user to the alternate user type.
      *

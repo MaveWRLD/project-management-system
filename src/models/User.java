@@ -3,7 +3,9 @@ package models;
 import utils.IdGenerator;
 import utils.exceptions.TaskNotFoundException;
 
-public abstract class User {
+import java.io.Serializable;
+
+public abstract class User implements Serializable {
     private final String id;
     private final String name;
     private final String email;
