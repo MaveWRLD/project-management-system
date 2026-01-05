@@ -1,31 +1,61 @@
 package services;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import models.AdminUser;
 import models.RegularUser;
 import models.User;
 import models.UserRepository;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * The type User service.
  */
 public class UserService {
-    private User adminUser;
-    private User regularUser;
+    private UserRepository repo;
 
-    private UserRepository repo = new UserRepository();
-    List<User> users = repo.loadUsers();
+    File file = new File("users.json");
 
+    public UserService(UserRepository repo) {
+        this.repo = repo;
+    }
+
+    public List<User> loadUsers(){
+        if (file.exists() && file.length() > 0)
+            try {
+                ObjectMapper mapper = new ObjectMapper();
+                repo = mapper.readValue(file, UserRepository.class);
+                return repo.getUsers();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        return new ArrayList<>();
+    }
+
+    public void saveUsers(List<User> users){
+        try (FileOutputStream os = new FileOutputStream(file)){
+            ObjectMapper mapper = new ObjectMapper();
+            repo.setUsers(users);
+            String jsonStr = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(repo);
+            os.write(jsonStr.getBytes());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
     public void registerUser(String userName, String email, String userType){
-        if (users.stream().map(u -> u ).anyMatch( u -> u.getEmail().equals(email)))
+        List<User> users = loadUsers();
+        if (users.stream().anyMatch(u -> u.getEmail().equals(email)))
             System.out.println("User already exists");
         if ("ADMIN".equalsIgnoreCase(userType))
             users.add(new AdminUser(userName, email));
-        if ("USER".equalsIgnoreCase(userType))
+        if ("Regular".equalsIgnoreCase(userType))
             users.add(new RegularUser(userName, email));
-        repo.saveUsers(users);
+        saveUsers(users);
     }
     /**
      * Switches the current user to the alternate user type.
@@ -36,18 +66,12 @@ public class UserService {
      *
      * @return the alternate {@link User} instance (either {@code regularUser} or {@code adminUser}).
      */
-    public User switchUser(User currentUser) {
-        if (currentUser instanceof AdminUser)
-            return regularUser;
-        return adminUser;
-    }
-
-    /**
-     * Gets admin user.
-     *
-     * @return the admin user
-     */
-    public User getAdminUser() {
-        return adminUser;
+    public User switchUser(String userName) throws Exception {
+        System.out.println(loadUsers());
+        for (User user : loadUsers()){
+            if (user.getName().equalsIgnoreCase(userName))
+                return user;
+        }
+        throw new Exception("User does not exist");
     }
 }

@@ -1,9 +1,6 @@
 package test.java.services;
 
-import models.AdminUser;
-import models.RegularUser;
-import models.SoftwareProject;
-import models.User;
+import models.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import services.ProjectService;
@@ -20,6 +17,7 @@ class UserServiceTest {
     private ProjectService projectService;
     private TaskService taskService;
     private UserService userService;
+    private UserRepository repo;
 
     /**
      * Sets up test.
@@ -28,63 +26,48 @@ class UserServiceTest {
     void setup() {
         projectService = new ProjectService();
         taskService = new TaskService(projectService);
+        repo = new UserRepository();
 
-        userService = new UserService();
-    }
-
-    /**
-     * Test admin user initialization.
-     */
-    @Test
-    void testAdminUserInitialization() {
-        User admin = userService.getAdminUser();
-
-        assertThat(admin)
-                .isNotNull()
-                .isInstanceOf(AdminUser.class);
-
-        assertThat(admin.getName()).isEqualTo("Jacob Quaye");
-        assertThat(admin.getEmail()).isEqualTo("kofimave@gmail.com");
+        userService = new UserService(repo);
+        userService.registerUser("Kwame", "kwame@gmail.com", "Admin");
+        userService.registerUser("Appiah", "appiah@gmail.com", "Regular");
     }
 
     /**
      * Test switch user from admin to regular user.
      */
     @Test
-    void testSwitchUser_fromAdminToRegular() {
-        User admin = userService.getAdminUser();
+    void testSwitchUser_toRegular() throws Exception {
 
-        User nextUser = userService.switchUser(admin);
+        User currentUser = userService.switchUser("Appiah");
 
-        assertThat(nextUser)
+        assertThat(currentUser)
                 .isNotNull()
                 .isInstanceOf(RegularUser.class);
 
-        assertThat(nextUser.getName()).isEqualTo("John Doe");
+        assertThat(currentUser.getName()).isEqualToIgnoringCase("Appiah");
     }
 
     /**
-     * Test switch user from regular to admin.
+     * Test switch user to admin user.
      */
     @Test
-    void testSwitchUser_fromRegularToAdmin() {
-        User regular = new RegularUser("John Doe", "johndoe@gmail.com");
+    void testSwitchUser_adminUser() throws Exception {
+        User currentUser = userService.switchUser("kwame");
 
-        User nextUser = userService.switchUser(regular);
-
-        assertThat(nextUser)
+        assertThat(currentUser)
                 .isNotNull()
                 .isInstanceOf(AdminUser.class);
 
-        assertThat(nextUser.getName()).isEqualTo("Jacob Quaye");
+        assertThat(currentUser.getName()).isEqualToIgnoringCase("kwame");
     }
 
     /**
      * Test admin remove task.
      */
     @Test
-    void testAdminRemoveTask() {
-        User admin = userService.getAdminUser();
+    void testAdminRemoveTask() throws Exception {
+        User admin = userService.switchUser("kwame");
         SoftwareProject javaProject = new SoftwareProject("Data Science", "Difficult", 233, 4,  "Python", "Mobile", "Git");
         projectService.addProject(javaProject);
         taskService.addTaskToProject("P001", "Test Admin Remove task", Status.COMPLETED);

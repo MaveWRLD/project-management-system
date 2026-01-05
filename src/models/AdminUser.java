@@ -18,6 +18,9 @@ public class AdminUser extends User{
 
     }
 
+    public AdminUser() {
+    }
+
     @Override
     public void removeTask(String projectID, String taskId) {
         try {

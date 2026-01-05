@@ -4,11 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1ff1f1f6-41ad-499a-b591-4d26bfd4925c" name="Changes" comment="Refactor: remove all inconsistent exception handling">
-      <change afterPath="$PROJECT_DIR$/src/models/UserRepository.java" afterDir="false" />
+    <list default="true" id="1ff1f1f6-41ad-499a-b591-4d26bfd4925c" name="Changes" comment="Feature: add file persistence to user using serializerable">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/fasterxml_jackson_core.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/fasterxml_jackson_core_databind.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/services/LoginPageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/project.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project-management-system.iml" beforeDir="false" afterPath="$PROJECT_DIR$/project-management-system.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/AdminUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/AdminUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/RegularUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/RegularUser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/ProjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/ProjectService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/services/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/services/UserServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/ConsoleMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/ConsoleMenu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,6 +72,10 @@
     "JUnit.TaskServiceTest.testUpdateTaskStatus_taskNotFound.executor": "Run",
     "JUnit.UserServiceTest.executor": "Run",
     "JUnit.UserServiceTest.testAdminRemoveTask.executor": "Run",
+    "JUnit.UserServiceTest.testAdminUserInitialization.executor": "Run",
+    "JUnit.UserServiceTest.testSwitchUser_adminUser.executor": "Run",
+    "JUnit.UserServiceTest.testSwitchUser_fromAdminToRegular.executor": "Run",
+    "JUnit.UserServiceTest.testSwitchUser_toRegular.executor": "Run",
     "JUnit.ValidationUtilsTest.executor": "Run",
     "JUnit.ValidationUtilsTest.testGetValidId_valid.executor": "Run",
     "JUnit.ValidationUtilsTest.testGetValidId_zeroSpecialCase.executor": "Run",
@@ -90,7 +105,7 @@
     "deletionFromPopupRequiresConfirmation": "false",
     "git-widget-placeholder": "feature/module-3",
     "kotlin-language-version-configured": "true",
-    "project.structure.last.edited": "Modules",
+    "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "preferences.lookFeel"
@@ -107,56 +122,10 @@
       <recent name="test.java.services" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="JUnit.UserServiceTest">
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="project-management-system" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ReportServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="project-management-system" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="test.java.services.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="test.java.services" />
-      <option name="MAIN_CLASS_NAME" value="test.java.services.ReportServiceTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TaskServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="project-management-system" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="test.java.services.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="test.java.services" />
-      <option name="MAIN_CLASS_NAME" value="test.java.services.TaskServiceTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TaskServiceTest.testUpdateTaskStatus_success" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="project-management-system" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="test.java.services.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="test.java.services" />
-      <option name="MAIN_CLASS_NAME" value="test.java.services.TaskServiceTest" />
-      <option name="METHOD_NAME" value="testUpdateTaskStatus_success" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -176,7 +145,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserServiceTest.testAdminRemoveTask" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UserServiceTest.testAdminUserInitialization" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="project-management-system" />
       <extension name="coverage">
         <pattern>
@@ -186,7 +155,55 @@
       </extension>
       <option name="PACKAGE_NAME" value="test.java.services" />
       <option name="MAIN_CLASS_NAME" value="test.java.services.UserServiceTest" />
-      <option name="METHOD_NAME" value="testAdminRemoveTask" />
+      <option name="METHOD_NAME" value="testAdminUserInitialization" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserServiceTest.testSwitchUser_adminUser" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="project-management-system" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.java.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test.java.services" />
+      <option name="MAIN_CLASS_NAME" value="test.java.services.UserServiceTest" />
+      <option name="METHOD_NAME" value="testSwitchUser_adminUser" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserServiceTest.testSwitchUser_fromAdminToRegular" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="project-management-system" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.java.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test.java.services" />
+      <option name="MAIN_CLASS_NAME" value="test.java.services.UserServiceTest" />
+      <option name="METHOD_NAME" value="testSwitchUser_fromAdminToRegular" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserServiceTest.testSwitchUser_toRegular" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="project-management-system" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.java.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test.java.services" />
+      <option name="MAIN_CLASS_NAME" value="test.java.services.UserServiceTest" />
+      <option name="METHOD_NAME" value="testSwitchUser_toRegular" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -194,11 +211,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ReportServiceTest" />
         <item itemvalue="JUnit.UserServiceTest" />
-        <item itemvalue="JUnit.TaskServiceTest" />
-        <item itemvalue="JUnit.UserServiceTest.testAdminRemoveTask" />
-        <item itemvalue="JUnit.TaskServiceTest.testUpdateTaskStatus_success" />
+        <item itemvalue="JUnit.UserServiceTest.testAdminUserInitialization" />
+        <item itemvalue="JUnit.UserServiceTest.testSwitchUser_toRegular" />
+        <item itemvalue="JUnit.UserServiceTest.testSwitchUser_adminUser" />
+        <item itemvalue="JUnit.UserServiceTest.testSwitchUser_fromAdminToRegular" />
       </list>
     </recent_temporary>
   </component>
@@ -337,7 +354,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766750683378</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Feature: add file persistence to user using serializerable">
+      <option name="closed" value="true" />
+      <created>1766993472779</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1766993472779</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -372,7 +397,22 @@
     <MESSAGE value="Refactor: remove unused imports" />
     <MESSAGE value="Refactor: intellij code cleanup" />
     <MESSAGE value="Refactor: remove all inconsistent exception handling" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor: remove all inconsistent exception handling" />
+    <MESSAGE value="Feature: add file persistence to user using serializerable" />
+    <option name="LAST_COMMIT_MESSAGE" value="Feature: add file persistence to user using serializerable" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.RuntimeException" package="java.lang" />
+          <option name="timeStamp" value="4" />
+        </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="5" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

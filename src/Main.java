@@ -1,7 +1,6 @@
 import models.*;
 import services.UserService;
 import utils.ConsoleMenu;
-import utils.Status;
 import services.ProjectService;
 import services.ReportService;
 import services.TaskService;
@@ -13,6 +12,7 @@ public class Main {
         ProjectService projectService = new ProjectService();
         TaskService taskService = new TaskService(projectService);
         ReportService statusReport = new ReportService(taskService);
+        UserRepository repo = new UserRepository();
         HardwareProject systemUnitProject = new HardwareProject("System unit Repair", "Difficult", 233, 4, "Screen", 1.4f);
         HardwareProject monitorProject = new HardwareProject("Monitor", "Difficult", 233, 4, "Board", 1.6f);
         HardwareProject keyboardProject = new HardwareProject("Keyboard", "Difficult", 233, 4, "Chip", 0.4f);
@@ -29,11 +29,10 @@ public class Main {
 //        taskService.addTaskToProject("P001", "Testing", Status.COMPLETED);
 //        taskService.addTaskToProject("P004", "Programming", Status.PENDING);
 
-        UserService userService = new UserService();
+        UserService userService = new UserService(repo);
+        //userService.registerUser("Appiah", "appiah@gmail.com", "Admin");
 
-        User currentUser = userService.getAdminUser();
-
-        ConsoleMenu consoleMenu = new ConsoleMenu(projectService, taskService, statusReport, userService, currentUser, inputValidation);
+        ConsoleMenu consoleMenu = new ConsoleMenu(projectService, taskService, statusReport, userService, inputValidation);
 
         consoleMenu.run();
     }

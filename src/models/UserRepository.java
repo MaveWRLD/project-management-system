@@ -1,25 +1,23 @@
 package models;
 
-import java.io.*;
-
 import java.util.List;
 
-public class UserRepository  {
-    public List<User> loadUsers(){
-        try {
-            ObjectInputStream is = new ObjectInputStream(new FileInputStream("users.ser"));
-            return (List<User>) is.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+public class UserRepository {
+
+    List<User> users;
+
+    public UserRepository(List<User> users) {
+        this.users = users;
     }
 
-    public void saveUsers(List<User> users){
-        try {
-            ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("users.ser"));
-            os.writeObject(users);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+    public UserRepository() {
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }

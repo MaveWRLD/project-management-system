@@ -1,14 +1,26 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import utils.IdGenerator;
 import utils.exceptions.TaskNotFoundException;
 
-import java.io.Serializable;
 
-public abstract class User implements Serializable {
-    private final String id;
-    private final String name;
-    private final String email;
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type"
+)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = AdminUser.class, name = "admin"),
+        @JsonSubTypes.Type(value = RegularUser.class, name = "regular")
+})
+public abstract class User{
+    private String id;
+    private String name;
+    private String email;
 
     private static int userCounter = 1;
 
@@ -17,6 +29,9 @@ public abstract class User implements Serializable {
         this.id = idGenerator.idGenerator('U', userCounter++);
         this.name = name;
         this.email = email;
+    }
+
+    public User() {
     }
 
     public void removeTask(String projectID, String taskId) throws TaskNotFoundException {

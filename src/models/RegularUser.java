@@ -6,6 +6,9 @@ public class RegularUser extends User {
         super(name, email);
     }
 
+    public RegularUser() {
+    }
+
     @Override
     public String getRole() {
         return "Regular User";

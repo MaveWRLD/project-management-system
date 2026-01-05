@@ -20,21 +20,21 @@ public class ConsoleMenu {
     private ReportService statusReport;
     private UserService userService;
     private ValidationUtils inputValidation;
-
     private User currentUser;
 
-    public ConsoleMenu(ProjectService projectService, TaskService taskService, ReportService statusReport, UserService userService, User currentUser, ValidationUtils inputValidation) {
+
+    public ConsoleMenu(ProjectService projectService, TaskService taskService, ReportService statusReport, UserService userService, ValidationUtils inputValidation) {
         this.projectService = projectService;
         this.taskService = taskService;
         this.statusReport = statusReport;
         this.userService = userService;
-        this.currentUser = currentUser;
         this.inputValidation = inputValidation;
     }
 
 
     public void run() {
         while (true) {
+            handleUserSwitch();
             displayMainMenu();
             int choice = inputValidation.getValidInt("Enter your choice: ", 1, 5);
             switch (choice) {
@@ -48,12 +48,21 @@ public class ConsoleMenu {
                     handleViewStatusReports();
                     break;
                 case 4:
-                    currentUser = userService.switchUser(currentUser);
+                    handleUserSwitch();
                     break;
                 case 5:
                     System.out.println("Exiting...");
                     System.exit(0);
             }
+        }
+    }
+
+    public void handleUserSwitch(){
+        String userName = inputValidation.getValidString("Enter Your Username");
+        try {
+            currentUser = userService.switchUser(userName);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 
