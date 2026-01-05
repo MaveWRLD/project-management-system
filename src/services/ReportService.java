@@ -36,7 +36,7 @@ public class ReportService {
      * @see Task
      * @see StatusReport
      */
-    public Collection<StatusReport> generateReport(Map<Project, Collection<Task>> projectTaskMap) {
+    public Collection<StatusReport> generateReport(Map<Project, ArrayList<Task>> projectTaskMap) {
         Collection<StatusReport> reports = new ArrayList<>();
         for (Project project : projectTaskMap.keySet()) {
             reports.add(new StatusReport(
@@ -125,7 +125,7 @@ public class ReportService {
      * @see Project
      * @see Task
      */
-    public float completionAverage(Map<Project, Collection<Task>> projectTaskMap){
+    public float completionAverage(Map<Project, ArrayList<Task>> projectTaskMap){
         float totalPercentageCount = 0;
         float sumOfPercentages = 0;
         for (Project project : projectTaskMap.keySet()) {

@@ -8,6 +8,7 @@ import services.ProjectService;
 import utils.exceptions.ProjectNotFoundException;
 
 import java.util.Collection;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -66,9 +67,9 @@ class ProjectServiceTest {
         projectService.addProject(new SoftwareProject("Range Project", "A", 2000, 4, "Java", "Backend", "Git"));
         projectService.addProject(new SoftwareProject("By Budget", "B", 8000, 6, "React", "Frontend", "Git"));
 
-        Collection<Project> filtered = projectService.filterProject(1000, 5000);
+        Map<String, Project> filtered = projectService.filterProject(1000, 5000);
 
-        assertThat(filtered)
+        assertThat(filtered.values())
                 .hasSize(1)
                 .extracting(Project::getName)
                 .containsExactly("Range Project");

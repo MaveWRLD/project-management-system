@@ -12,6 +12,8 @@ import utils.exceptions.TaskNotFoundException;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ConsoleMenu {
 
@@ -84,12 +86,12 @@ public class ConsoleMenu {
                     "5. Search by Budget Range",
             };
             printText(options);
-            Collection<Project> filteredProjects = getFilteredProjects();
+            Map<String, Project> filteredProjects = getFilteredProjects();
             if (!filteredProjects.isEmpty()) {
                 System.out.println("Not empty");
                 System.out.printf("%-6s | %-20s | %-10s | %-8s | %-10s\n", "ID", "Project Name", "Type", "Team Size", "Budget");
                 System.out.println("-----------------------------------------------------------------");
-                for (Project project : filteredProjects) {
+                for (Project project : filteredProjects.values()) {
                     System.out.printf("%-6s | %-20s | %-10s | %-8d | $%-9d\n", project.getId(), project.getName(), project.getType(), project.getTeamSize(), project.getBudget());
                     System.out.printf("%-6s | %-20s", "", "Description: " + project.getDescription());
                     System.out.println("\n-----------------------------------------------------------------");
@@ -100,10 +102,10 @@ public class ConsoleMenu {
         }
     }
 
-    public Collection<Project> getFilteredProjects() {
+    public Map<String, Project> getFilteredProjects() {
         int filterChoice = inputValidation.getValidInt("Enter Filter choice: ", 1, 5);
 
-        Collection<Project> filteredProjects = new ArrayList<>();
+        Map<String, Project> filteredProjects = new HashMap<>();
         switch (filterChoice) {
             case 1:
                 filteredProjects = projectService.allProjects();
