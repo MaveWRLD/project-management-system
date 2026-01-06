@@ -1,0 +1,72 @@
+{
+  "projects" : {
+    "P005" : {
+      "projectType" : "SOFTWARE",
+      "id" : "P005",
+      "name" : "Java Basics",
+      "description" : "Difficult",
+      "budget" : 233,
+      "projectType" : "SOFTWARE",
+      "teamSize" : 4,
+      "projectDetails" : [ "P005", "Java Basics", "4", "$233.00", null, null, null ]
+    },
+    "P004" : {
+      "projectType" : "SOFTWARE",
+      "id" : "P004",
+      "name" : "Data Science",
+      "description" : "Difficult",
+      "budget" : 233,
+      "projectType" : "SOFTWARE",
+      "teamSize" : 4,
+      "projectDetails" : [ "P004", "Data Science", "4", "$233.00", null, null, null ]
+    },
+    "P001" : {
+      "projectType" : "HARDWARE",
+      "id" : "P001",
+      "name" : "System unit Repair",
+      "description" : "Difficult",
+      "budget" : 233,
+      "projectType" : "HARDWARE",
+      "teamSize" : 4,
+      "component" : "Screen",
+      "weight" : 1.4,
+      "projectDetails" : [ "P001", "System unit Repair", "4", "$233.00", "1.4", "Screen" ]
+    },
+    "P003" : {
+      "projectType" : "HARDWARE",
+      "id" : "P003",
+      "name" : "Keyboard",
+      "description" : "Difficult",
+      "budget" : 233,
+      "projectType" : "HARDWARE",
+      "teamSize" : 4,
+      "component" : "Chip",
+      "weight" : 0.4,
+      "projectDetails" : [ "P003", "Keyboard", "4", "$233.00", "0.4", "Chip" ]
+    },
+    "P002" : {
+      "projectType" : "HARDWARE",
+      "id" : "P002",
+      "name" : "Monitor",
+      "description" : "Difficult",
+      "budget" : 233,
+      "projectType" : "HARDWARE",
+      "teamSize" : 4,
+      "component" : "Board",
+      "weight" : 1.6,
+      "projectDetails" : [ "P002", "Monitor", "4", "$233.00", "1.6", "Board" ]
+    }
+  },
+  "projectTaskMap" : {
+    "P004" : [ {
+      "taskID" : "T001",
+      "name" : "Programming",
+      "status" : "PENDING"
+    } ],
+    "P001" : [ {
+      "taskID" : "T001",
+      "name" : "Testing",
+      "status" : "COMPLETED"
+    } ]
+  }
+}

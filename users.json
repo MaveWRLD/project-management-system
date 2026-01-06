@@ -1,0 +1,13 @@
+{
+  "users" : [ {
+    "type" : "admin",
+    "name" : "Appiah",
+    "email" : "appiah@gmail.com",
+    "role" : "Admin"
+  }, {
+    "type" : "regular",
+    "name" : "Kwame",
+    "email" : "kwame@gmail.com",
+    "role" : "Regular"
+  } ]
+}

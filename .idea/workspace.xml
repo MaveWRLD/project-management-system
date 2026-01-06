@@ -4,24 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1ff1f1f6-41ad-499a-b591-4d26bfd4925c" name="Changes" comment="Refactor: make ProjectRepository to save projects to a map, using the projectId as key">
-      <change afterPath="$PROJECT_DIR$/src/utils/exceptions/UserNotFoundException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="1ff1f1f6-41ad-499a-b591-4d26bfd4925c" name="Changes" comment="Feature: add persistence to project data by save to a json file">
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/AdminUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/AdminUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/HardwareProject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/HardwareProject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Project.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/ProjectRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/ProjectRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/SoftwareProject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/SoftwareProject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/LoginPageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/LoginPageService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/ProjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/ProjectService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/ReportService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/ReportService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/TaskService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/services/ReportServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/services/ReportServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/services/TaskServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/services/TaskServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/services/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/services/UserServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/ConsoleMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/ConsoleMenu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -380,7 +364,39 @@
       <option name="project" value="LOCAL" />
       <updated>1767623319604</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Feature: add a login page">
+      <option name="closed" value="true" />
+      <created>1767708802121</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1767708802121</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Feature: add a login page">
+      <option name="closed" value="true" />
+      <created>1767708817806</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1767708817806</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Feature: add a login page">
+      <option name="closed" value="true" />
+      <created>1767708848816</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1767708848816</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Feature: add persistence to project data by save to a json file">
+      <option name="closed" value="true" />
+      <created>1767709030053</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1767709030053</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -418,7 +434,9 @@
     <MESSAGE value="Feature: add file persistence to user using serializerable" />
     <MESSAGE value="Feature: add file persistence to user using json" />
     <MESSAGE value="Refactor: make ProjectRepository to save projects to a map, using the projectId as key" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor: make ProjectRepository to save projects to a map, using the projectId as key" />
+    <MESSAGE value="Feature: add a login page" />
+    <MESSAGE value="Feature: add persistence to project data by save to a json file" />
+    <option name="LAST_COMMIT_MESSAGE" value="Feature: add persistence to project data by save to a json file" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
