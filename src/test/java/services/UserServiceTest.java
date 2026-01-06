@@ -29,8 +29,6 @@ class UserServiceTest {
         repo = new UserRepository();
 
         userService = new UserService(repo);
-        userService.registerUser("Kwame", "kwame@gmail.com", "Admin");
-        userService.registerUser("Appiah", "appiah@gmail.com", "Regular");
     }
 
     /**
@@ -43,7 +41,7 @@ class UserServiceTest {
 
         assertThat(currentUser)
                 .isNotNull()
-                .isInstanceOf(RegularUser.class);
+                .isInstanceOf(AdminUser.class);
 
         assertThat(currentUser.getName()).isEqualToIgnoringCase("Appiah");
     }
@@ -57,7 +55,7 @@ class UserServiceTest {
 
         assertThat(currentUser)
                 .isNotNull()
-                .isInstanceOf(AdminUser.class);
+                .isInstanceOf(RegularUser.class);
 
         assertThat(currentUser.getName()).isEqualToIgnoringCase("kwame");
     }
@@ -67,7 +65,7 @@ class UserServiceTest {
      */
     @Test
     void testAdminRemoveTask() throws Exception {
-        User admin = userService.switchUser("kwame");
+        User admin = userService.switchUser("Appiah");
         SoftwareProject javaProject = new SoftwareProject("Data Science", "Difficult", 233, 4,  "Python", "Mobile", "Git");
         projectService.addProject(javaProject);
         taskService.addTaskToProject("P001", "Test Admin Remove task", Status.COMPLETED);

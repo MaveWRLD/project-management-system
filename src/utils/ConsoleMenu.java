@@ -36,7 +36,16 @@ public class ConsoleMenu {
 
     public void run() {
         while (true) {
-            handleUserSwitch();
+            System.out.println("Login Page");
+            System.out.println(" ");
+            LoginPageService loginPageService = new LoginPageService(userService);
+            try {
+                currentUser = loginPageService.login();
+            } catch (UserNotFoundException e) {
+                System.out.println(e.getMessage());
+                return; // or System.exit(1);
+            }
+            projectService.loadProjectsRepository();
             displayMainMenu();
             int choice = inputValidation.getValidInt("Enter your choice: ", 1, 5);
             switch (choice) {

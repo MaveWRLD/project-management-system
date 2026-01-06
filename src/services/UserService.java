@@ -5,6 +5,7 @@ import models.AdminUser;
 import models.RegularUser;
 import models.User;
 import models.UserRepository;
+import utils.exceptions.UserNotFoundException;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -47,10 +48,10 @@ public class UserService {
         }
     }
 
-    public void registerUser(String userName, String email, String userType){
+    public void registerUser(String userName, String email, String userType) {
         List<User> users = loadUsers();
         if (users.stream().anyMatch(u -> u.getEmail().equals(email)))
-            System.out.println("User already exists");
+            throw new IllegalArgumentException("User already exist");
         if ("ADMIN".equalsIgnoreCase(userType))
             users.add(new AdminUser(userName, email));
         if ("Regular".equalsIgnoreCase(userType))
@@ -66,12 +67,13 @@ public class UserService {
      *
      * @return the alternate {@link User} instance (either {@code regularUser} or {@code adminUser}).
      */
-    public User switchUser(String userName) throws Exception {
-        System.out.println(loadUsers());
-        for (User user : loadUsers()){
-            if (user.getName().equalsIgnoreCase(userName))
+    public User switchUser(String userName) throws UserNotFoundException {
+        for (User user : loadUsers()) {
+            if (userName.equalsIgnoreCase(user.getName())) {
                 return user;
+            }
         }
-        throw new Exception("User does not exist");
+        throw new UserNotFoundException("User does not exist: " + userName);
     }
+
 }

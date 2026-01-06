@@ -24,8 +24,7 @@ public class AdminUser extends User{
     @Override
     public void removeTask(String projectID, String taskId) {
         try {
-            Project project = projectService.filterProjectBYId(projectID);
-            Collection<Task> tasks = taskService.getProjectTasks(project);
+            Collection<Task> tasks = taskService.getProjectTasks(projectID);
             Task task = taskService.getTask(tasks, taskId);
             tasks.remove(task);
         } catch (ProjectNotFoundException | TaskNotFoundException e){
