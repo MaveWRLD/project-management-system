@@ -3,14 +3,17 @@ package models;
 import java.text.NumberFormat;
 
 public class HardwareProject extends Project {
-    private final String component;
-    private final float weight;
+    private String component;
+    private float weight;
 
 
     public HardwareProject(String name, String description, int budget, int teamSize, String component, float weight) {
         super(name, "HARDWARE", description, budget, teamSize);
         this.component = component;
         this.weight = weight;
+    }
+
+    public HardwareProject() {
     }
 
     @Override

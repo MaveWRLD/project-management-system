@@ -31,8 +31,9 @@ public class TaskService {
      *
      * @return a fully initialized {@link Task} instance.
      */
-    public Task createTask(Project project, String name, Status status) {
+    public Task createTask(String projectId, String name, Status status) {
         Task newTask = new Task();
+        Project project = projectService.filterProjectBYId(projectId);
         newTask.setTaskID(project.generateTaskId());
         newTask.setName(name);
         newTask.setStatus(status);
@@ -45,11 +46,11 @@ public class TaskService {
      * <p>This method returns the project's internal task array if it contains at least one
      * non-{@code null} {@link Task}.
      */
-    public Collection<Task> getProjectTasks(Project project){
+    public Collection<Task> getProjectTasks(String projectId){
         var projectTaskMap = projectService.projectTaskMap();
-        if (!projectTaskMap.containsKey(project))
-            projectTaskMap.put(project, new ArrayList<>());
-        return projectTaskMap.get(project);
+        if (!projectTaskMap.containsKey(projectId))
+            projectTaskMap.put(projectId, new ArrayList<>());
+        return projectTaskMap.get(projectId);
     }
 
     /**
@@ -60,9 +61,8 @@ public class TaskService {
      */
     public void addTaskToProject(String projectId, String name, Status status) {
         try {
-            Project project = projectService.filterProjectBYId(projectId);
-            Task newTask = createTask(project, name, status);
-            getProjectTasks(project).add(newTask);
+            Task newTask = createTask(projectId, name, status);
+            getProjectTasks(projectId).add(newTask);
         } catch (ProjectNotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -77,15 +77,14 @@ public class TaskService {
      *
      * @throws TaskNotFoundException    if no task with the given {@code taskID} exists within the project.
      * @throws EmptyProjectException    if the project has no tasks or tasks cannot be retrieved.
-     * @throws ProjectNotFoundException if no project with the given {@code projectID} exists.
+     * @throws ProjectNotFoundException if no project with the given {@code projectId} exists.
      */
-    public void updateTaskStatus(String projectID, Status status, String taskID)
+    public void updateTaskStatus(String projectId, Status status, String taskID)
             throws TaskNotFoundException, EmptyProjectException, ProjectNotFoundException {
-        Project project = projectService.filterProjectBYId(projectID);
-        Collection<Task> tasks = getProjectTasks(project);
+        Collection<Task> tasks = getProjectTasks(projectId);
         if (tasks.isEmpty()) {
             throw new EmptyProjectException(
-                    "Project with id " + project.getId() + " has no tasks associated with it"
+                    "Project with id " + projectId + " has no tasks associated with it"
             );
         }
         Task task = getTask(tasks, taskID);

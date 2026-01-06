@@ -12,15 +12,20 @@ import java.util.Collection;
 import java.util.Map;
 
 public class ReportService {
-    private final TaskService taskService;
+    private TaskService taskService;
+    private ProjectService projectService;
 
     /**
      * Instantiates a new Report service.
      *
      * @param taskService the task service
      */
-    public ReportService(TaskService taskService) {
+    public ReportService(TaskService taskService, ProjectService projectService) {
         this.taskService = taskService;
+        this.projectService = projectService;
+    }
+
+    public ReportService() {
     }
 
 
@@ -36,15 +41,15 @@ public class ReportService {
      * @see Task
      * @see StatusReport
      */
-    public Collection<StatusReport> generateReport(Map<Project, ArrayList<Task>> projectTaskMap) {
+    public Collection<StatusReport> generateReport(Map<String, ArrayList<Task>> projectTaskMap) {
         Collection<StatusReport> reports = new ArrayList<>();
-        for (Project project : projectTaskMap.keySet()) {
+        for (String key : projectTaskMap.keySet()){
             reports.add(new StatusReport(
-                            project.getId(),
-                            project.getName(),
-                            totalTask(project),
-                            completedTasks(project),
-                            completionPercentage(project)
+                            key,
+                            projectService.filterProjectBYId(key).getName(),
+                            totalTask(key),
+                            completedTasks(key),
+                            completionPercentage(key)
                     )
             );
         }
@@ -62,8 +67,8 @@ public class ReportService {
      * @see Project
      * @see Task
      */
-    public int totalTask(Project project){
-        return taskService.getProjectTasks(project).size();
+    public int totalTask(String projectId){
+        return taskService.getProjectTasks(projectId).size();
     }
 
     public boolean isCompleted(Completable completable) {
@@ -81,9 +86,9 @@ public class ReportService {
      * @see Task
      * @see ProjectNotFoundException
      */
-    public int completedTasks(Project project) {
+    public int completedTasks(String projectId) {
         int completed = 0;
-        Collection<Task> tasks = taskService.getProjectTasks(project);
+        Collection<Task> tasks = taskService.getProjectTasks(projectId);
         for (Task task : tasks) {
             if (isCompleted(() -> task.getStatus().equals(Status.COMPLETED))) {
                 ++completed;
@@ -105,9 +110,9 @@ public class ReportService {
      * @see Project
      * @see Task
      */
-    public float completionPercentage(Project project) {
-        float completed = completedTasks(project);
-        float totalTasks = totalTask(project);
+    public float completionPercentage(String projectId) {
+        float completed = completedTasks(projectId);
+        float totalTasks = totalTask(projectId);
         if (completed == 0 || totalTasks == 0) {
             return 0f;
         }
@@ -118,18 +123,19 @@ public class ReportService {
      * Calculates the average completion percentage across the provided projects.
      *
      * <p>This method iterates through the given map of {@link Project} objects and collection {@link Task} objects, for each
-     * project key, computes its completion percentage via {@link #completionPercentage(Project)}.
+     * project key, computes its completion percentage via {@link #completionPercentage(String)}.
      * The average is calculated as the sum of per-project completion percentages divided by the number
      * of projects considered.</p>
      *
      * @see Project
      * @see Task
      */
-    public float completionAverage(Map<Project, ArrayList<Task>> projectTaskMap){
+    public float completionAverage(Map<String, ArrayList<Task>> projectTaskMap){
         float totalPercentageCount = 0;
         float sumOfPercentages = 0;
-        for (Project project : projectTaskMap.keySet()) {
-                float percent = completionPercentage(project);
+
+        for (String key : projectTaskMap.keySet()){
+                float percent = completionPercentage(key);
                 sumOfPercentages += percent;
                 totalPercentageCount++;
         }

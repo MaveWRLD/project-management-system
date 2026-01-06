@@ -2,13 +2,11 @@ package utils;
 
 
 import models.*;
-import services.ProjectService;
-import services.ReportService;
-import services.TaskService;
-import services.UserService;
+import services.*;
 import utils.exceptions.EmptyProjectException;
 import utils.exceptions.ProjectNotFoundException;
 import utils.exceptions.TaskNotFoundException;
+import utils.exceptions.UserNotFoundException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -62,6 +60,7 @@ public class ConsoleMenu {
                     handleUserSwitch();
                     break;
                 case 5:
+                    projectService.saveProjectDataToFile();
                     System.out.println("Exiting...");
                     System.exit(0);
             }
@@ -101,7 +100,7 @@ public class ConsoleMenu {
                 System.out.printf("%-6s | %-20s | %-10s | %-8s | %-10s\n", "ID", "Project Name", "Type", "Team Size", "Budget");
                 System.out.println("-----------------------------------------------------------------");
                 for (Project project : filteredProjects.values()) {
-                    System.out.printf("%-6s | %-20s | %-10s | %-8d | $%-9d\n", project.getId(), project.getName(), project.getType(), project.getTeamSize(), project.getBudget());
+                    System.out.printf("%-6s | %-20s | %-10s | %-8d | $%-9d\n", project.getId(), project.getName(), project.getProjectType(), project.getTeamSize(), project.getBudget());
                     System.out.printf("%-6s | %-20s", "", "Description: " + project.getDescription());
                     System.out.println("\n-----------------------------------------------------------------");
                 }
@@ -143,12 +142,12 @@ public class ConsoleMenu {
     private void displayProjectDetails(Project project) {
         while (true) {
             printHeader("PROJECT DETAILS: ", project.getId());
-            String[] detailsProject = {"Project Name: " + project.getName(), "Type: " + project.getType(), "Team Size: " + project.getTeamSize(),
+            String[] detailsProject = {"Project Name: " + project.getName(), "Type: " + project.getProjectType(), "Team Size: " + project.getTeamSize(),
                     "Budget: $" + project.getBudget()};
             printText(detailsProject);
 
             try {
-                Collection<Task> tasks = taskService.getProjectTasks(project);
+                Collection<Task> tasks = taskService.getProjectTasks(project.getId());
                 System.out.printf("%-6s | %-20s | %-10s\n", "ID", "Task Name", "Status");
                 System.out.println("---------------------------------------");
                 for (Task task : tasks) {
@@ -156,7 +155,7 @@ public class ConsoleMenu {
                         System.out.printf("%-6s | %-20s | %-10s\n", task.getTaskID(), task.getName(), task.getStatus());
                     }
                 }
-                double completion = statusReport.completionPercentage(project);
+                double completion = statusReport.completionPercentage(project.getId());
                 System.out.println("Completion Rate: " + String.format("%.0f%%", completion));
             } catch (ProjectNotFoundException e) {
                 throw new RuntimeException(e);

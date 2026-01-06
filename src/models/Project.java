@@ -1,17 +1,29 @@
 package models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import utils.IdGenerator;
 
-
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "projectType"
+)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = HardwareProject.class, name = "HARDWARE"),
+        @JsonSubTypes.Type(value = SoftwareProject.class, name = "SOFTWARE")
+})
 public abstract class Project {
 
-    private final String id;
-    private final String name;
-    private final String description;
-    private final int budget;
-    private final String type;
-    private final int teamSize;
+    private String id;
+    private String name;
+    private String description;
+    private int budget;
+    private String projectType;
+    private int teamSize;
 
     private final IdGenerator idGenerator = new IdGenerator();
 
@@ -19,16 +31,17 @@ public abstract class Project {
 
     private int taskCounter = 1;
 
+    public Project(){}
 
-    public Project(String name, String type, String description, int budget, int teamSize) {
-
+    public Project(String name, String projectType, String description, int budget, int teamSize) {
         this.id = idGenerator.idGenerator('P', projectCounter++);
         this.name = name;
-        this.type = type;
+        this.projectType = projectType;
         this.description = description;
         this.budget = budget;
         this.teamSize = teamSize;
     }
+
 
     @Override
     public String toString(){
@@ -58,8 +71,8 @@ public abstract class Project {
         return teamSize;
     }
 
-    public String getType() {
-        return type;
+    public String getProjectType() {
+        return projectType;
     }
 
     public String generateTaskId() {

@@ -1,10 +1,13 @@
 package services;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import models.Project;
 import models.ProjectRepository;
 import models.Task;
 import utils.exceptions.ProjectNotFoundException;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -13,8 +16,20 @@ import java.util.stream.Collectors;
 
 public class ProjectService {
 
-    private final ProjectRepository projectRepository = new ProjectRepository();
+    private ProjectRepository projectRepository =  new ProjectRepository();
 
+    File file = new File("projects_data.json");
+
+    public void loadProjectsRepository() {
+        if (file.exists() && file.length() > 0){
+            ObjectMapper objectMapper = new ObjectMapper();
+            try {
+                projectRepository = objectMapper.readValue(file, ProjectRepository.class);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
 
     /**
      * Retrieves all existing projects.
@@ -29,8 +44,25 @@ public class ProjectService {
         return projectRepository.getProjects();
     }
 
-    public Map<Project, ArrayList<Task>> projectTaskMap(){
+    public Map<String, ArrayList<Task>> projectTaskMap(){
         return projectRepository.getProjectTaskMap();
+    }
+
+
+    public void saveProjectDataToFile(){
+        try  {
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            ProjectRepository repo = new ProjectRepository(
+                    projectRepository.getProjects(),
+                    projectRepository.getProjectTaskMap()
+            );
+
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, repo);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -58,7 +90,7 @@ public class ProjectService {
 //                filteredProjects.add(project);
 //            }
 //        }
-        Predicate<Map.Entry<String, Project>> type = e -> e.getValue().getType().equals(projectType);
+        Predicate<Map.Entry<String, Project>> type = e -> e.getValue().getProjectType().equals(projectType);
         return allProjects().entrySet().stream().filter(type).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         }
 

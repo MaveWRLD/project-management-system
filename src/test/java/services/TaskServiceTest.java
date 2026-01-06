@@ -48,7 +48,7 @@ class TaskServiceTest {
     void testAddTask_success() {
 
         taskService.addTaskToProject(project.getId(),"Setup Repo", Status.PENDING);
-        Collection<Task> tasks = taskService.getProjectTasks(project);
+        Collection<Task> tasks = taskService.getProjectTasks(project.getId());
 
         assertThat(tasks)
                 .filteredOn(Objects::nonNull)
@@ -66,7 +66,7 @@ class TaskServiceTest {
         taskService.addTaskToProject(project.getId(), "Design", Status.PENDING);
 
         taskService.updateTaskStatus(project.getId(), Status.COMPLETED, "T001");
-        Collection<Task> tasks = taskService.getProjectTasks(project);
+        Collection<Task> tasks = taskService.getProjectTasks(project.getId());
 
         assertThat(tasks)
                 .filteredOn(Objects::nonNull)
