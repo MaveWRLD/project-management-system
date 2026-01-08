@@ -4,8 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1ff1f1f6-41ad-499a-b591-4d26bfd4925c" name="Changes" comment="Feature: add persistence to project data by save to a json file">
+    <list default="true" id="1ff1f1f6-41ad-499a-b591-4d26bfd4925c" name="Changes" comment="Refactor: move remove task logic to task service class to project for per project task.">
+      <change afterPath="$PROJECT_DIR$/src/concurrency/SimulateTaskStatusUpdate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/concurrency/TaskStatusUpdater.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/interfaces/Identifiable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects_data.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Task.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/ProjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/ProjectService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/services/ProjectServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/services/ProjectServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/services/ReportServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/services/ReportServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/ConsoleMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/ConsoleMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/ValidationUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/ValidationUtils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,8 +28,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JUnit5 Test Class" />
-        <option value="Class" />
         <option value="Exception" />
+        <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -28,7 +41,7 @@
     <option name="onto" value="2ec6f9b6f3315613e296e9feef7db8c5094c202a" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -39,65 +52,71 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;JUnit.ProjectServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ProjectServiceTest.testCreateProject_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ProjectServiceTest.testFilterByBudgetRange.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ProjectServiceTest.testGetProjectById_notFound.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ProjectServiceTests.addProject.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ProjectServiceTests.addProjectResize.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ProjectServiceTests.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ReportServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ReportServiceTest.testGenerateReport.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TaskServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TaskServiceTest.testAddTask_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TaskServiceTest.testUpdateTaskStatus_emptyProject.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TaskServiceTest.testUpdateTaskStatus_success.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TaskServiceTest.testUpdateTaskStatus_taskNotFound.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserServiceTest.testAdminRemoveTask.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserServiceTest.testAdminUserInitialization.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserServiceTest.testSwitchUser_adminUser.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserServiceTest.testSwitchUser_fromAdminToRegular.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserServiceTest.testSwitchUser_toRegular.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ValidationUtilsTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ValidationUtilsTest.testGetValidId_valid.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ValidationUtilsTest.testGetValidId_zeroSpecialCase.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ValidationUtilsTest.testGetValidInt_minOnly.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ValidationUtilsTest.testGetValidInt_outOfRange_thenValid.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ValidationUtilsTest.testGetValidInt_withinRange.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ValidationUtilsTest.testGetValidStatus_completed.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ValidationUtilsTest.testGetValidStatus_inProgress.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ValidationUtilsTest.testGetValidStatus_pending.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ValidationUtilsTest.testGetValidString_empty_thenValid.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ValidationUtilsTest.testGetValidString_nonEmpty.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ValidationUtilsTest.testGetValidType_hardware.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ValidationUtilsTest.testGetValidType_software.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ValidationUtilsTest.testIsValidId_correctAndIncorrect.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ValidationUtilsTest.testValidStatus.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;create.test.in.the.same.root&quot;: &quot;true&quot;,
-    &quot;deletionFromPopupRequiresConfirmation&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/module-3&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "Application.SimulateTaskStatusUpdate.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "false",
+    "JUnit.ProjectServiceTest.executor": "Run",
+    "JUnit.ProjectServiceTest.testConcurrentFileWrites.executor": "Run",
+    "JUnit.ProjectServiceTest.testCreateProject_success.executor": "Run",
+    "JUnit.ProjectServiceTest.testFilterByBudgetRange.executor": "Run",
+    "JUnit.ProjectServiceTest.testGetProjectById_notFound.executor": "Run",
+    "JUnit.ProjectServiceTest.testReadJsonUsingStreams.executor": "Run",
+    "JUnit.ProjectServiceTest.testSaveProjectDataToFile.executor": "Run",
+    "JUnit.ProjectServiceTests.addProject.executor": "Run",
+    "JUnit.ProjectServiceTests.addProjectResize.executor": "Run",
+    "JUnit.ProjectServiceTests.executor": "Run",
+    "JUnit.ReportServiceTest.executor": "Run",
+    "JUnit.ReportServiceTest.testGenerateReport.executor": "Run",
+    "JUnit.TaskServiceTest.executor": "Run",
+    "JUnit.TaskServiceTest.testAddTaskUpdatesCollection.executor": "Run",
+    "JUnit.TaskServiceTest.testAddTask_success.executor": "Run",
+    "JUnit.TaskServiceTest.testUpdateTaskStatus_emptyProject.executor": "Run",
+    "JUnit.TaskServiceTest.testUpdateTaskStatus_success.executor": "Run",
+    "JUnit.TaskServiceTest.testUpdateTaskStatus_taskNotFound.executor": "Run",
+    "JUnit.UserServiceTest.executor": "Run",
+    "JUnit.UserServiceTest.testAdminRemoveTask.executor": "Run",
+    "JUnit.UserServiceTest.testAdminUserInitialization.executor": "Run",
+    "JUnit.UserServiceTest.testSwitchUser_adminUser.executor": "Run",
+    "JUnit.UserServiceTest.testSwitchUser_fromAdminToRegular.executor": "Run",
+    "JUnit.UserServiceTest.testSwitchUser_toRegular.executor": "Run",
+    "JUnit.ValidationUtilsTest.executor": "Run",
+    "JUnit.ValidationUtilsTest.testGetValidId_valid.executor": "Run",
+    "JUnit.ValidationUtilsTest.testGetValidId_zeroSpecialCase.executor": "Run",
+    "JUnit.ValidationUtilsTest.testGetValidInt_minOnly.executor": "Run",
+    "JUnit.ValidationUtilsTest.testGetValidInt_outOfRange_thenValid.executor": "Run",
+    "JUnit.ValidationUtilsTest.testGetValidInt_withinRange.executor": "Run",
+    "JUnit.ValidationUtilsTest.testGetValidStatus_completed.executor": "Run",
+    "JUnit.ValidationUtilsTest.testGetValidStatus_inProgress.executor": "Run",
+    "JUnit.ValidationUtilsTest.testGetValidStatus_pending.executor": "Run",
+    "JUnit.ValidationUtilsTest.testGetValidString_empty_thenValid.executor": "Run",
+    "JUnit.ValidationUtilsTest.testGetValidString_nonEmpty.executor": "Run",
+    "JUnit.ValidationUtilsTest.testGetValidType_hardware.executor": "Run",
+    "JUnit.ValidationUtilsTest.testGetValidType_software.executor": "Run",
+    "JUnit.ValidationUtilsTest.testIsValidId_correctAndIncorrect.executor": "Run",
+    "JUnit.ValidationUtilsTest.testValidStatus.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "create.test.in.the.same.root": "true",
+    "deletionFromPopupRequiresConfirmation": "false",
+    "git-widget-placeholder": "feature/module-3",
+    "kotlin-language-version-configured": "true",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "two.files.diff.last.used.file": "C:/Users/JacobQuaye/Desktop/project-management-system/projects_data.json"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -117,7 +136,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProjectServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ProjectServiceTest.testConcurrentFileWrites" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="project-management-system" />
       <extension name="coverage">
         <pattern>
@@ -127,12 +146,60 @@
       </extension>
       <option name="PACKAGE_NAME" value="test.java.services" />
       <option name="MAIN_CLASS_NAME" value="test.java.services.ProjectServiceTest" />
+      <option name="METHOD_NAME" value="testConcurrentFileWrites" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProjectServiceTest.testReadJsonUsingStreams" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="project-management-system" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.java.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test.java.services" />
+      <option name="MAIN_CLASS_NAME" value="test.java.services.ProjectServiceTest" />
+      <option name="METHOD_NAME" value="testReadJsonUsingStreams" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProjectServiceTest.testSaveProjectDataToFile" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="project-management-system" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.java.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test.java.services" />
+      <option name="MAIN_CLASS_NAME" value="test.java.services.ProjectServiceTest" />
+      <option name="METHOD_NAME" value="testSaveProjectDataToFile" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TaskServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="project-management-system" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.java.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test.java.services" />
+      <option name="MAIN_CLASS_NAME" value="test.java.services.TaskServiceTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProjectServiceTest.testCreateProject_success" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TaskServiceTest.testAddTaskUpdatesCollection" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="project-management-system" />
       <extension name="coverage">
         <pattern>
@@ -141,67 +208,20 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="test.java.services" />
-      <option name="MAIN_CLASS_NAME" value="test.java.services.ProjectServiceTest" />
-      <option name="METHOD_NAME" value="testCreateProject_success" />
+      <option name="MAIN_CLASS_NAME" value="test.java.services.TaskServiceTest" />
+      <option name="METHOD_NAME" value="testAddTaskUpdatesCollection" />
       <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ProjectServiceTest.testFilterByBudgetRange" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="project-management-system" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="test.java.services.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="test.java.services" />
-      <option name="MAIN_CLASS_NAME" value="test.java.services.ProjectServiceTest" />
-      <option name="METHOD_NAME" value="testFilterByBudgetRange" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ProjectServiceTest.testGetProjectById_notFound" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="project-management-system" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="test.java.services.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="test.java.services" />
-      <option name="MAIN_CLASS_NAME" value="test.java.services.ProjectServiceTest" />
-      <option name="METHOD_NAME" value="testGetProjectById_notFound" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="UserServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="project-management-system" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="test.java.services.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="test.java.services" />
-      <option name="MAIN_CLASS_NAME" value="test.java.services.UserServiceTest" />
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.UserServiceTest" />
-        <item itemvalue="JUnit.ProjectServiceTest" />
-        <item itemvalue="JUnit.ProjectServiceTest.testCreateProject_success" />
-        <item itemvalue="JUnit.ProjectServiceTest.testGetProjectById_notFound" />
-        <item itemvalue="JUnit.ProjectServiceTest.testFilterByBudgetRange" />
+        <item itemvalue="JUnit.ProjectServiceTest.testReadJsonUsingStreams" />
+        <item itemvalue="JUnit.ProjectServiceTest.testConcurrentFileWrites" />
+        <item itemvalue="JUnit.ProjectServiceTest.testSaveProjectDataToFile" />
+        <item itemvalue="JUnit.TaskServiceTest.testAddTaskUpdatesCollection" />
+        <item itemvalue="JUnit.TaskServiceTest" />
       </list>
     </recent_temporary>
   </component>
@@ -396,7 +416,31 @@
       <option name="project" value="LOCAL" />
       <updated>1767709030053</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Feature: add persistence to project data by save to a json file">
+      <option name="closed" value="true" />
+      <created>1767709137126</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1767709137126</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Refactor: add task arraylist to project for per project task.">
+      <option name="closed" value="true" />
+      <created>1767888173831</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1767888173831</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Refactor: move remove task logic to task service class to project for per project task.">
+      <option name="closed" value="true" />
+      <created>1767888664475</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1767888664475</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -436,7 +480,9 @@
     <MESSAGE value="Refactor: make ProjectRepository to save projects to a map, using the projectId as key" />
     <MESSAGE value="Feature: add a login page" />
     <MESSAGE value="Feature: add persistence to project data by save to a json file" />
-    <option name="LAST_COMMIT_MESSAGE" value="Feature: add persistence to project data by save to a json file" />
+    <MESSAGE value="Refactor: add task arraylist to project for per project task." />
+    <MESSAGE value="Refactor: move remove task logic to task service class to project for per project task." />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor: move remove task logic to task service class to project for per project task." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

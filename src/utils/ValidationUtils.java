@@ -4,6 +4,7 @@ import utils.exceptions.InvalidInputException;
 
 import java.util.EnumSet;
 import java.util.Scanner;
+import java.util.function.Predicate;
 
 /**
  * The type Validation utils.
@@ -137,42 +138,38 @@ public class ValidationUtils {
      * @param prefix the prefix
      * @return the valid id
      */
-    public String getValidId(String prompt, char prefix)  {
+    public String getValidId(String prompt, char prefix) {
+        Predicate<String> validator = isValidId(prefix);
+
         while (true) {
             System.out.print(prompt);
             String id = scanner.nextLine().trim().toUpperCase();
             try {
-            if (isValidId(id, prefix)) {
-                return id;
-            }
-            throw new InvalidInputException("Error: Invalid ID. Please enter a valid prefixed ID (e.g., " + prefix + "001).");
+                if (validator.test(id)) {
+                    return id;
+                }
+                throw new InvalidInputException(
+                        "Error: Invalid ID. Please enter a valid prefixed ID (e.g., " + prefix + "001)."
+                );
             } catch (InvalidInputException e) {
                 System.out.println(e.getMessage());
             }
         }
     }
 
+
     /**
      * Is valid id boolean.
      *
-     * @param id     the id
-     * @param prefix the prefix
+         * @param prefix the prefix
      * @return the boolean
      */
-    public boolean isValidId(String id, char prefix) {
-        if (id.equals("0")) {
-            return true;
-        }
-        if (id.length() != 4 || id.charAt(0) != prefix) {
-            return false;
-        }
-        try {
-            Integer.parseInt(id.substring(1));
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
+    public Predicate<String> isValidId(char prefix) {
+        String regex = "^" + prefix + "\\d{3}$";
+
+        return id -> "0".equals(id) || id.matches(regex);
     }
+
 }
 
 

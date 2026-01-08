@@ -1,6 +1,7 @@
 package utils;
 
 
+import concurrency.SimulateTaskStatusUpdate;
 import models.*;
 import services.*;
 import utils.exceptions.EmptyProjectException;
@@ -21,7 +22,6 @@ public class ConsoleMenu {
     private UserService userService;
     private ValidationUtils inputValidation;
     private User currentUser;
-
 
     public ConsoleMenu(ProjectService projectService, TaskService taskService, ReportService statusReport, UserService userService, ValidationUtils inputValidation) {
         this.projectService = projectService;
@@ -82,7 +82,7 @@ public class ConsoleMenu {
     private void displayMainMenu() {
         printHeader("JAVA PROJECT MANAGEMENT SYSTEM");
         System.out.println("Current User: " + currentUser.getName() + " (" + currentUser.getRole() + ")");
-        String[] options = {"1. Manage Projects", "2. Manage Tasks", "3. View Status Reports", "4. Switch User", "5. Exit"};
+        String[] options = {"1. Manage Projects", "2. Manage Tasks", "3. View Status Reports", "4. Switch User", "5. Simulate Task Status Update", "6. Exit"};
         printText(options);
     }
 
@@ -90,7 +90,7 @@ public class ConsoleMenu {
         while (true) {
             printHeader("PROJECT CATALOG");
             String[] options = {"Filter Options: ",
-                    "1. View All Projects " +"(" + projectService.allProjects().size() + ")",
+                    "1. View All Projects " +"(" + projectService.allProjects().values().stream().toList().size() + ")",
                     "2. Add Project",
                     "3. Software Projects Only",
                     "4. Hardware Projects Only",
@@ -228,7 +228,7 @@ public class ConsoleMenu {
     private void removeTask(String projectID) {
         String taskId = inputValidation.getValidId("Enter Task ID to remove: ", 'T');
         try {
-            currentUser.removeTask(projectID, taskId);
+            currentUser.removeTask(projectID, taskId, taskService);
             System.out.println("Task removed successfully.");
         } catch (UnsupportedOperationException | TaskNotFoundException e) {
             System.out.println(e.getMessage());
@@ -253,7 +253,7 @@ public class ConsoleMenu {
     private void handleViewStatusReports() {
         Collection<StatusReport> reports = new ArrayList<>() ;
         try {
-            reports = statusReport.generateReport(projectService.projectTaskMap());
+            reports = statusReport.generateReport(projectService.allProjects());
         } catch (ProjectNotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -270,7 +270,7 @@ public class ConsoleMenu {
         }
         double avgCompletion = 0;
         try {
-            avgCompletion = statusReport.completionAverage(projectService.projectTaskMap());
+            avgCompletion = statusReport.completionAverage(projectService.allProjects());
         } catch (ProjectNotFoundException e) {
             System.out.println(e.getMessage());
         }
