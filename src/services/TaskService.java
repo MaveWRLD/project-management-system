@@ -8,6 +8,7 @@ import utils.exceptions.TaskNotFoundException;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 
 public class TaskService {
@@ -31,10 +32,9 @@ public class TaskService {
      *
      * @return a fully initialized {@link Task} instance.
      */
-    public Task createTask(String projectId, String name, Status status) {
+    public Task createTask(String Id, String name, Status status) {
         Task newTask = new Task();
-        Project project = projectService.filterProjectBYId(projectId);
-        newTask.setTaskID(project.generateTaskId());
+        newTask.setTaskID(Id);
         newTask.setName(name);
         newTask.setStatus(status);
         return newTask;
@@ -46,11 +46,9 @@ public class TaskService {
      * <p>This method returns the project's internal task array if it contains at least one
      * non-{@code null} {@link Task}.
      */
-    public Collection<Task> getProjectTasks(String projectId){
-        var projectTaskMap = projectService.projectTaskMap();
-        if (!projectTaskMap.containsKey(projectId))
-            projectTaskMap.put(projectId, new ArrayList<>());
-        return projectTaskMap.get(projectId);
+    public List<Task> getProjectTasks(String projectId){
+        Project project = projectService.filterProjectBYId(projectId);
+        return project.getTasks();
     }
 
     /**
@@ -61,8 +59,12 @@ public class TaskService {
      */
     public void addTaskToProject(String projectId, String name, Status status) {
         try {
-            Task newTask = createTask(projectId, name, status);
-            getProjectTasks(projectId).add(newTask);
+            Project project = projectService.filterProjectBYId(projectId);
+            ArrayList<Task> tasks =  project.getTasks();
+            String taskId = project.generateTaskId();
+            Task newTask = createTask(taskId, name, status);
+            tasks.add(newTask);
+            project.setTasks(tasks);
         } catch (ProjectNotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -89,6 +91,18 @@ public class TaskService {
         }
         Task task = getTask(tasks, taskID);
         task.setStatus(status);
+    }
+
+    public void removeTask(String projectId, String taskId, TaskService taskService) {
+        try {
+            Project project = projectService.filterProjectBYId(projectId);
+            ArrayList<Task> tasks =  project.getTasks();
+            Task task = taskService.getTask(tasks, taskId);
+            tasks.remove(task);
+            project.setTasks(tasks);
+        } catch (ProjectNotFoundException | TaskNotFoundException e){
+            System.out.println(e.getMessage());
+        }
     }
 
 

@@ -1,5 +1,6 @@
 package test.java.services;
 
+import models.ProjectRepository;
 import models.Task;
 import models.Project;
 import models.SoftwareProject;
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import services.ProjectService;
 import services.TaskService;
+import utils.IdGenerator2;
 import utils.Status;
 import utils.exceptions.EmptyProjectException;
 import utils.exceptions.TaskNotFoundException;
@@ -19,7 +21,7 @@ import static org.assertj.core.api.Assertions.*;
 class TaskServiceTest {
 
     private TaskService taskService;
-    ProjectService projectService = new ProjectService();
+    ProjectService projectService;
     private Project project;
 
     /**
@@ -27,6 +29,7 @@ class TaskServiceTest {
      */
     @BeforeEach
     void setUp() {
+        projectService = new ProjectService(new ProjectRepository());
         project = new SoftwareProject(
                 "Java Testing",
                 "Readable Codes",

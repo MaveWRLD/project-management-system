@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import utils.IdGenerator;
 
+import java.util.ArrayList;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
@@ -25,6 +27,8 @@ public abstract class Project {
     private String projectType;
     private int teamSize;
 
+    private ArrayList<Task> tasks;
+
     private final IdGenerator idGenerator = new IdGenerator();
 
     private static int projectCounter = 1;
@@ -40,6 +44,7 @@ public abstract class Project {
         this.description = description;
         this.budget = budget;
         this.teamSize = teamSize;
+        this.tasks = new ArrayList<>();
     }
 
 
@@ -73,6 +78,14 @@ public abstract class Project {
 
     public String getProjectType() {
         return projectType;
+    }
+
+    public ArrayList<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(ArrayList<Task> tasks) {
+        this.tasks = tasks;
     }
 
     public String generateTaskId() {

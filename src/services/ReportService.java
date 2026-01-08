@@ -25,9 +25,6 @@ public class ReportService {
         this.projectService = projectService;
     }
 
-    public ReportService() {
-    }
-
 
     /**
      * Generates status reports for the given list of projects.
@@ -41,9 +38,9 @@ public class ReportService {
      * @see Task
      * @see StatusReport
      */
-    public Collection<StatusReport> generateReport(Map<String, ArrayList<Task>> projectTaskMap) {
+    public Collection<StatusReport> generateReport(Map<String, Project> project) {
         Collection<StatusReport> reports = new ArrayList<>();
-        for (String key : projectTaskMap.keySet()){
+        for (String key : project.keySet()){
             reports.add(new StatusReport(
                             key,
                             projectService.filterProjectBYId(key).getName(),
@@ -130,11 +127,11 @@ public class ReportService {
      * @see Project
      * @see Task
      */
-    public float completionAverage(Map<String, ArrayList<Task>> projectTaskMap){
+    public float completionAverage(Map<String, Project> projectMap){
         float totalPercentageCount = 0;
         float sumOfPercentages = 0;
 
-        for (String key : projectTaskMap.keySet()){
+        for (String key : projectMap.keySet()){
                 float percent = completionPercentage(key);
                 sumOfPercentages += percent;
                 totalPercentageCount++;

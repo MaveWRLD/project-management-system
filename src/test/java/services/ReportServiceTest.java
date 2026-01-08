@@ -1,12 +1,14 @@
 package test.java.services;
 
 import models.Project;
+import models.ProjectRepository;
 import models.SoftwareProject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import services.ProjectService;
 import services.ReportService;
 import services.TaskService;
+import utils.IdGenerator2;
 import utils.Status;
 
 import static org.assertj.core.api.Assertions.*;
@@ -26,8 +28,8 @@ class ReportServiceTest {
      */
     @BeforeEach
     void setUp() {
-        projectService = new ProjectService();
-        taskService = new TaskService(projectService);
+        projectService = new ProjectService(new ProjectRepository());
+        taskService = new TaskService(projectService, new IdGenerator2());
         reportService = new ReportService(taskService, projectService);
 
         project = new SoftwareProject("P1", "AI Project", 5000, 3, "Java", "ML", "Git");

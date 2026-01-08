@@ -1,11 +1,22 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import interfaces.Identifiable;
 import utils.Status;
 
-public class Task  {
+public class Task implements Identifiable {
     private String taskID;
     private String name;
     private Status status;
+
+    public Task(String taskID, String name, Status status) {
+        this.taskID = taskID;
+        this.name = name;
+        this.status = status;
+    }
+
+    public Task() {
+    }
 
     public String getTaskID() {
         return taskID;
@@ -29,6 +40,12 @@ public class Task  {
 
     public void setTaskID(String taskID) {
         this.taskID = taskID;
+    }
+
+    @JsonIgnore
+    @Override
+    public String getId() {
+        return "";
     }
 }
 
