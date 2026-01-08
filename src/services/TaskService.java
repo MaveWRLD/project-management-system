@@ -93,11 +93,11 @@ public class TaskService {
         task.setStatus(status);
     }
 
-    public void removeTask(String projectId, String taskId, TaskService taskService) {
+    public void removeTask(String projectId, String taskId) {
         try {
             Project project = projectService.filterProjectBYId(projectId);
             ArrayList<Task> tasks =  project.getTasks();
-            Task task = taskService.getTask(tasks, taskId);
+            Task task = getTask(tasks, taskId);
             tasks.remove(task);
             project.setTasks(tasks);
         } catch (ProjectNotFoundException | TaskNotFoundException e){

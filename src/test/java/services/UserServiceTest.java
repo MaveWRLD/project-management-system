@@ -24,7 +24,7 @@ class UserServiceTest {
      */
     @BeforeEach
     void setup() {
-        projectService = new ProjectService();
+        projectService = new ProjectService(new ProjectRepository());
         taskService = new TaskService(projectService);
         repo = new UserRepository();
 
@@ -70,7 +70,7 @@ class UserServiceTest {
         projectService.addProject(javaProject);
         taskService.addTaskToProject("P001", "Test Admin Remove task", Status.COMPLETED);
 
-        assertThatCode(() -> admin.removeTask("P001", "T001")).doesNotThrowAnyException();
+        assertThatCode(() -> admin.removeTask("P001", "T001", taskService)).doesNotThrowAnyException();
     }
 }
 

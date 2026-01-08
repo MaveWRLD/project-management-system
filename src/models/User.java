@@ -3,6 +3,7 @@ package models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import services.TaskService;
 import utils.IdGenerator;
 import utils.exceptions.TaskNotFoundException;
 
@@ -34,7 +35,7 @@ public abstract class User{
     public User() {
     }
 
-    public void removeTask(String projectID, String taskId) throws TaskNotFoundException {
+    public void removeTask(String projectID, String taskId, TaskService taskService) throws TaskNotFoundException {
         throw new UnsupportedOperationException("You are not allowed to perform this action");
     }
 
