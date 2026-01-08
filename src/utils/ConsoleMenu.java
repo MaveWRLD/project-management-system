@@ -60,6 +60,9 @@ public class ConsoleMenu {
                     handleUserSwitch();
                     break;
                 case 5:
+                    SimulateTaskStatusUpdate.simulate();
+                    break;
+                case 6:
                     projectService.saveProjectDataToFile();
                     System.out.println("Exiting...");
                     System.exit(0);
