@@ -3,12 +3,11 @@ package services;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import models.Project;
 import models.ProjectRepository;
-import models.Task;
 import utils.exceptions.ProjectNotFoundException;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -16,18 +15,43 @@ import java.util.stream.Collectors;
 
 public class ProjectService {
 
-    private ProjectRepository projectRepository =  new ProjectRepository();
+    private ProjectRepository projectRepository;
 
-    File file = new File("projects_data.json");
+    public ProjectService(ProjectRepository projectRepository) {
+        this.projectRepository = projectRepository;
+    }
 
     public void loadProjectsRepository() {
-        if (file.exists() && file.length() > 0){
-            ObjectMapper objectMapper = new ObjectMapper();
-            try {
-                projectRepository = objectMapper.readValue(file, ProjectRepository.class);
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
+        Path filePath = Path.of("projects_data.json");
+        try {
+            if (Files.exists(filePath) && Files.size(filePath) > 0) {
+                ObjectMapper objectMapper = new ObjectMapper();
+
+                String json = Files.lines(filePath)
+                        .collect(Collectors.joining());
+
+                projectRepository = objectMapper.readValue(json, ProjectRepository.class);
             }
+        } catch (IOException e) {
+            System.out.println("Failed to load project repository: " + e.getMessage());
+            projectRepository = new ProjectRepository();
+        }
+    }
+
+    public void saveProjectDataToFile() {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            ProjectRepository repo = new ProjectRepository(projectRepository.getProjects());
+
+            String json = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(repo);
+
+            Path filePath = Path.of("projects_data.json");
+
+            Files.write(filePath, json.lines().toList());
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -44,27 +68,6 @@ public class ProjectService {
         return projectRepository.getProjects();
     }
 
-    public Map<String, ArrayList<Task>> projectTaskMap(){
-        return projectRepository.getProjectTaskMap();
-    }
-
-
-    public void saveProjectDataToFile(){
-        try  {
-            ObjectMapper objectMapper = new ObjectMapper();
-
-            ProjectRepository repo = new ProjectRepository(
-                    projectRepository.getProjects(),
-                    projectRepository.getProjectTaskMap()
-            );
-
-            objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, repo);
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     /**
      * Adds a new project to the collection of projects.
      *
@@ -72,8 +75,7 @@ public class ProjectService {
      * @see Project
      */
     public void addProject(Project project) {
-        Map<String, Project> projectMap = projectRepository.getProjects();
-        projectMap.put(project.getId(), project);
+        projectRepository.getProjects().put(project.getId(), project);
     }
 
     /**
@@ -84,12 +86,6 @@ public class ProjectService {
      *
      */
     public Map<String, Project> filterProject(String projectType) {
-//       Project filteredProjects = new ArrayList<>();
-//        for (Project project : projectRepository.getProjects()) {
-//            if (project != null && project.getType().equals(projectType)) {
-//                filteredProjects.add(project);
-//            }
-//        }
         Predicate<Map.Entry<String, Project>> type = e -> e.getValue().getProjectType().equals(projectType);
         return allProjects().entrySet().stream().filter(type).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         }
@@ -106,12 +102,7 @@ public class ProjectService {
      *
      */
     public Map<String, Project> filterProject(int minBudget, int maxBudget) {
-//        Map<String, Project> filteredProjects = new HashMap<>();
-//        for (Project project : allProjects()) {
-//            if (project != null && project.getBudget() > minBudget && project.getBudget() < maxBudget) {
-//                filteredProjects.add(project);
-//            }
-//        }
+
         Predicate<Map.Entry<String, Project>> minRange = e -> e.getValue().getBudget() > minBudget;
         Predicate<Map.Entry<String, Project>> maxRange = e -> e.getValue().getBudget() < maxBudget;
 
