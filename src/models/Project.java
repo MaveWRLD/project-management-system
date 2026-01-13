@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import utils.IdGenerator;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(
@@ -33,7 +34,7 @@ public abstract class Project {
 
     private static int projectCounter = 1;
 
-    private int taskCounter = 1;
+    private int taskCounter;
 
     public Project(){}
 
@@ -88,7 +89,8 @@ public abstract class Project {
         this.tasks = tasks;
     }
 
-    public String generateTaskId() {
-        return idGenerator.idGenerator('T', taskCounter++);
+    public String generateTaskId(List<Task> tasks) {
+        taskCounter = tasks.size();
+        return idGenerator.idGenerator('T', ++taskCounter);
     }
 }

@@ -41,7 +41,7 @@ public class Main {
         projectService.addProject(projectP005);
 
         taskService.addTaskToProject("P001", "Optimization", Status.COMPLETED);
-        taskService.addTaskToProject("P001", "Optimi", Status.COMPLETED);
+        taskService.addTaskToProject("P001", "Optimal", Status.COMPLETED);
 
         taskService.addTaskToProject("P004", "Debugging", Status.IN_PROGRESS);
 
@@ -50,7 +50,6 @@ public class Main {
         ConsoleMenu consoleMenu = new ConsoleMenu(projectService, taskService, statusReport, userService, inputValidation);
 
         System.out.println("Login Page");
-        System.out.println(" ");
         LoginPageService loginPageService = new LoginPageService(userService);
         User user;
         try {
