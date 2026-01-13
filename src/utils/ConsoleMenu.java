@@ -7,12 +7,8 @@ import services.*;
 import utils.exceptions.EmptyProjectException;
 import utils.exceptions.ProjectNotFoundException;
 import utils.exceptions.TaskNotFoundException;
-import utils.exceptions.UserNotFoundException;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ConsoleMenu {
 
@@ -91,7 +87,6 @@ public class ConsoleMenu {
             printText(options);
             Map<String, Project> filteredProjects = getFilteredProjects();
             if (!filteredProjects.isEmpty()) {
-                System.out.println("Not empty");
                 System.out.printf("%-6s | %-20s | %-10s | %-8s | %-10s\n", "ID", "Project Name", "Type", "Team Size", "Budget");
                 System.out.println("-----------------------------------------------------------------");
                 for (Project project : filteredProjects.values()) {
@@ -108,7 +103,7 @@ public class ConsoleMenu {
     public Map<String, Project> getFilteredProjects() {
         int filterChoice = inputValidation.getValidInt("Enter Filter choice: ", 1, 5);
 
-        Map<String, Project> filteredProjects = new HashMap<>();
+        Map<String, Project> filteredProjects = new LinkedHashMap<>();
         switch (filterChoice) {
             case 1:
                 filteredProjects = projectService.allProjects();

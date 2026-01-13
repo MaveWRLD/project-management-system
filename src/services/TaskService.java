@@ -60,11 +60,13 @@ public class TaskService {
     public void addTaskToProject(String projectId, String name, Status status) {
         try {
             Project project = projectService.filterProjectBYId(projectId);
-            ArrayList<Task> tasks =  project.getTasks();
-            String taskId = project.generateTaskId();
+            ArrayList<Task> tasks = project.getTasks();
+            String taskId = project.generateTaskId(tasks);
             Task newTask = createTask(taskId, name, status);
             tasks.add(newTask);
-            project.setTasks(tasks);
+
+            projectService.saveProjectDataToFile();
+
         } catch (ProjectNotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -91,6 +93,9 @@ public class TaskService {
         }
         Task task = getTask(tasks, taskID);
         task.setStatus(status);
+
+        projectService.saveProjectDataToFile();
+
     }
 
     public void removeTask(String projectId, String taskId) {
@@ -99,7 +104,9 @@ public class TaskService {
             ArrayList<Task> tasks =  project.getTasks();
             Task task = getTask(tasks, taskId);
             tasks.remove(task);
-            project.setTasks(tasks);
+
+            projectService.saveProjectDataToFile();
+
         } catch (ProjectNotFoundException | TaskNotFoundException e){
             System.out.println(e.getMessage());
         }

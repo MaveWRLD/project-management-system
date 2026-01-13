@@ -42,9 +42,7 @@ public class ProjectService {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
 
-            ProjectRepository repo = new ProjectRepository(projectRepository.getProjects());
-
-            String json = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(repo);
+            String json = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(projectRepository);
 
             Path filePath = Path.of("projects_data.json");
 
