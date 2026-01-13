@@ -59,7 +59,7 @@ public class ProjectService {
      * <p>This method returns an array of {@link Project} objects representing all the projects
      * currently available in the system.
      *
-     * @return an array of {@link Project} instances;
+     * @return a map of {@link Project} instances;
      * @see Project
      */
     public Map<String, Project> allProjects() {
@@ -95,7 +95,7 @@ public class ProjectService {
      * <p>This method returns a new array containing all {@link Project} instances whose budget
      * is strictly greater than minBudget and strictly less than maxBudget.</p>
      *
-     * @return an array of {@link Project} objects that fall within the specified budget range.
+     * @return a map of {@link Project} objects that fall within the specified budget range.
      * If no projects match, an empty array is returned (never {@code null}).
      *
      */

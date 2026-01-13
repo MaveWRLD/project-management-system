@@ -34,8 +34,6 @@ public abstract class Project {
 
     private static int projectCounter = 1;
 
-    private int taskCounter;
-
     public Project(){}
 
     public Project(String name, String projectType, String description, int budget, int teamSize) {
@@ -85,12 +83,8 @@ public abstract class Project {
         return tasks;
     }
 
-    public void setTasks(ArrayList<Task> tasks) {
-        this.tasks = tasks;
-    }
-
     public String generateTaskId(List<Task> tasks) {
-        taskCounter = tasks.size();
+        int taskCounter = tasks.size();
         return idGenerator.idGenerator('T', ++taskCounter);
     }
 }
