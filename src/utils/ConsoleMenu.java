@@ -32,20 +32,12 @@ public class ConsoleMenu {
     }
 
 
-    public void run() {
+    public void run(User user) {
         while (true) {
-            System.out.println("Login Page");
-            System.out.println(" ");
-            LoginPageService loginPageService = new LoginPageService(userService);
-            try {
-                currentUser = loginPageService.login();
-            } catch (UserNotFoundException e) {
-                System.out.println(e.getMessage());
-                return; // or System.exit(1);
-            }
+            currentUser = user;
             projectService.loadProjectsRepository();
             displayMainMenu();
-            int choice = inputValidation.getValidInt("Enter your choice: ", 1, 5);
+            int choice = inputValidation.getValidInt("Enter your choice: ", 1, 6);
             switch (choice) {
                 case 1:
                     handleManageProjects();

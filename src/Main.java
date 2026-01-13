@@ -3,6 +3,7 @@ import services.*;
 import utils.ConsoleMenu;
 import utils.Status;
 import utils.ValidationUtils;
+import utils.exceptions.UserNotFoundException;
 
 public class Main {
     public static void main(String[] args) {
@@ -48,8 +49,16 @@ public class Main {
 
         ConsoleMenu consoleMenu = new ConsoleMenu(projectService, taskService, statusReport, userService, inputValidation);
 
-        System.out.println("main");
-
-        consoleMenu.run();
+        System.out.println("Login Page");
+        System.out.println(" ");
+        LoginPageService loginPageService = new LoginPageService(userService);
+        User user;
+        try {
+            user = loginPageService.login();
+        } catch (UserNotFoundException e) {
+            System.out.println(e.getMessage());
+            return;
+        }
+        consoleMenu.run(user);
     }
 }
