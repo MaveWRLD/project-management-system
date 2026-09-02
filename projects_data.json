@@ -1,0 +1,19 @@
+{
+  "projects" : {
+    "P011" : {
+      "projectType" : "SOFTWARE",
+      "id" : "P011",
+      "name" : "P1",
+      "description" : "AI Project",
+      "budget" : 5000,
+      "projectType" : "SOFTWARE",
+      "teamSize" : 3,
+      "tasks" : [ {
+        "taskID" : "T001",
+        "name" : "Status Report",
+        "status" : "COMPLETED"
+      } ],
+      "projectDetails" : [ "P011", "P1", "3", "¤5,000.00", "Java", "ML", "Git" ]
+    }
+  }
+}
