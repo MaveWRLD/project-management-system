@@ -17,7 +17,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.Assert.assertTrue;
 
 /**
  * The type Project service test.

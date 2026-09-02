@@ -60,13 +60,13 @@ cd <your-repo-name>
 
 ### **3. Build & Compile the Project**
 
-If you’re using raw Java:
+Using the included Maven wrapper (no Maven installation required):
 
 ```bash
-javac -d out $(find src -name "*.java")
+./mvnw clean install
 ```
 
-If you're using Maven:
+If you have Maven installed globally:
 
 ```bash
 mvn clean install
@@ -74,24 +74,24 @@ mvn clean install
 
 ### **4. Run the Application**
 
-Raw Java:
+Using the Maven wrapper:
 
 ```bash
-java -cp out ConsoleMenu
+./mvnw exec:java
 ```
 
-Maven:
+Or run the built JAR directly:
 
 ```bash
-mvn exec:java
+java -jar target/project-management-system-1.0.0.jar
 ```
 
 ### **5. Run Tests**
 
-If the project uses Maven:
+Using the Maven wrapper:
 
 ```bash
-mvn test
+./mvnw test
 ```
 
 If testing manually through IntelliJ:
