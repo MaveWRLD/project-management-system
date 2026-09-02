@@ -1,3 +1,7 @@
+### Maven ###
+target/
+dependency-reduced-pom.xml
+
 ### IntelliJ IDEA ###
 out/
 !**/src/main/**/out/
